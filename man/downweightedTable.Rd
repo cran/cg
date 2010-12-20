@@ -1,0 +1,92 @@
+\name{downweightedTable}
+\docType{methods}
+\alias{downweightedTable}
+\title{
+  Create a table of downweighted observations from a Resistant & Robust fit.
+}
+\description{
+  Create a table of downweighted observations in a resistant & robust
+  fit with the \pkg{cg} package.  
+}
+\usage{
+downweightedTable(fit, cutoffwt, display="print", \dots)
+}
+\arguments{
+  \item{fit }{
+    An object created by calling a 
+    \code{\link{fit}} method from the \pkg{cg} package. The only class
+    of object currently
+    valid is \code{\link{cgOneFactorDownweightedTable}}, which is prepared by the
+    \code{\link{downweightedTable.cgOneFactorFit}} method.  
+  }
+  \item{cutoffwt }{
+    It has no default and must be specified as a numeric between 0 and 1
+    exclusive. It is a threshold on which observations to identify. All
+    observations that exceed this specified value will be
+    identified. For example, a \code{cutoffwt=0.90} will yield
+    those observations that were downweighted by at least 10\%. 
+  }
+  \item{display}{One of three valid values:
+	
+    \describe{
+      \item{\code{"print"}}{
+	The default value, it calls a \code{print} method for the
+	created \code{downweightedTable} object, which is
+	a formatted text output of the table(s).
+      }
+      \item{\code{"none"}}{
+	Supresses any printing. Useful, for example, when just assignment
+	of the resulting object is desired.
+      }
+      \item{\code{"show"}}{
+	Calls the default \code{\link{showDefault}} method, which
+	will just print out the \code{downweightedTable} components.
+      }
+    }
+  }
+  \item{\dots }{
+    Additional arguments, depending on the specific method written for
+    the object. See the method-specific documentation for additional
+    details.
+  }
+}
+\value{
+  A method-specific \code{downweightedTable} object is returned.
+  See the specific methods for discussion of return values. 
+}
+\seealso{
+  \code{\link{downweightedTable.cgOneFactorFit}}, MASS::\code{\link{rlm}} 
+}
+\references{
+  Venables, W. N. and Ripley, B. D. (2002), 
+  \emph{Modern Applied Statistics with S.}  Fourth edition. Springer.
+}
+\author{
+  Bill Pikounis and John Oleynick
+}
+\note{
+  Contact \email{cg@billpikounis.net} for bug reports, questions,
+  concerns, and comments. 
+}
+\examples{
+data(canine)
+canine.data <- prepareCGOneFactorData(canine, format="groupcolumns",
+                                      analysisname="Canine",
+                                      endptname="Prostate Volume",
+                                      endptunits=expression(plain(cm)^3),
+                                      digits=1, logscale=TRUE, refgrp="CC")
+canine.fit <- fit(canine.data)
+
+canine.dwtable <- downweightedTable(canine.fit, cutoff=0.95)
+
+downweightedTable(canine.fit, cutoff=0.75) ## No observation
+                                           ## downweighted at least 25\%
+
+}
+\concept{weights}
+\concept{resistance}
+\concept{robust}
+
+
+
+

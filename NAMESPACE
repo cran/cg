@@ -1,0 +1,57 @@
+import("methods","graphics")
+importFrom("VGAM","vgam","cnormal1")
+import("Hmisc")
+
+export("prepare", "prepareCGOneFactorData",
+       "comparisons", "comparisonsgraph","errorbargraph",
+       "factorInSeq"	
+       )
+
+exportMethods(
+              "comparisonsGraph",
+              "comparisonsTable",
+              "descriptiveTable",
+              "downweightedTable",
+              "errorBarGraph",
+              "fit",
+              "globalTest",
+              "grpSummaryTable",
+              "kmGraph",
+              "pointGraph",
+              "qqGraph",
+              "samplesizeGraph",
+              "samplesizeTable",
+              "varianceGraph"
+              )
+
+exportPattern("print[.*]",
+              "show[.*]",
+              "boxplot[.*]",
+              "comparisonsGraph[.*]",
+              "comparisonsTable[.*]",
+              "descriptiveTable[.*]",
+              "downweightedTable[.*]",
+              "errorBarGraph[.*]",
+              "fit[.*]",
+              "globalTest[.*]",
+              "grpSummaryTable[.*]",
+              "kmGraph[.*]",
+              "pointGraph[.*]",
+              "qqGraph[.*]",
+              "samplesizeGraph[.*]",
+              "samplesizeTable[.*]",
+              "varianceGraph[.*]")
+
+exportClasses(
+              "olsfit","rrfit","aftfit","uvfit",
+              "numericOrNULL","dataframeMatrixOrNULL",
+              "dataframeOrNULL","characterOrNULL","characterOrExpression",
+              "cgOneFactorComparisonsTable",
+              "cgOneFactorData",
+              "cgOneFactorDescriptiveTable",
+              "cgOneFactorDownweightedTable",
+              "cgOneFactorFit",
+              "cgOneFactorGlobalTest",
+              "cgOneFactorGrpSummaryTable",
+              "cgOneFactorSampleSizeTable"
+              )
