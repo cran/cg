@@ -1,4 +1,4 @@
-## $Id: p05SampleSizeOneFactorData.R 166 2010-10-29 01:56:50Z user $ 
+## $Id: p05SampleSizeOneFactorData.R 180 2010-12-20 19:23:26Z user $ 
 ## One-Factor Unpaired Groups Case
 
 ## Sample Size Calculations for One-Factor Unpaired Groups Data

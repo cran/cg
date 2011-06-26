@@ -1,5 +1,5 @@
 import("methods","graphics")
-importFrom("VGAM","vgam","cnormal1")
+importFrom("VGAM","vgam","cennormal1")
 import("Hmisc")
 
 export("prepare", "prepareCGOneFactorData",

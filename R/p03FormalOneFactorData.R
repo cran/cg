@@ -1,4 +1,4 @@
-## $Id: p03FormalOneFactorData.R 175 2010-12-05 06:14:04Z user $
+## $Id: p03FormalOneFactorData.R 180 2010-12-20 19:23:26Z user $
 ## One-Factor Unpaired Groups Case
 
 ## Formal Analysis methods for One-Factor Unpaired Groups Data

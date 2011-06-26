@@ -1,0 +1,20 @@
+
+
+26 June 2011: Version 0.9-1
+---------------------------
+
+* Changed calls of VGAM:::cnormal1 to VGAM:::cennormal1 due to rename in 
+VGAM package when version 0.8-3 was released 17 June 2011. 
+
+* Since VGAM 0-8.3 would not load in R 2.11 in my Windows installation, the cg package
+now requires >= R 2.12.0 and VGAM >= 0.8-3.
+
+* Removed duplication of author and maintained email address contact in the
+DESCRIPTION FILE.
+
+* Switched to more conventional packae number versioning (from initial release
+0.9.0 (on 20 December 2010) to 0.9-1 .
+
+* No functional changes were made in the package in this release.
+
+* Added this CHANGES file. 
