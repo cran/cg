@@ -1,4 +1,4 @@
-## $Id: utilities.R 176 2010-12-06 12:37:27Z user $ 
+## $Id: utilities.R 185 2011-06-21 17:09:14Z user $ 
 
 ## Functions & objects internal for the cg Library
 ## and definitely not intended for user-level calls
@@ -1377,16 +1377,16 @@ residualgrptrend.helper <- function(tukeyresids, fitteds, tukeyresids2=NULL,
       forvgam.dfr <- data.frame(x=fitteds, y=tukeyresids)
       extra <- list(leftcensored = (status==2),
                     rightcensored = (status==0))
-      thefit <- try(VGAM::vgam(y ~ s(x, 4), VGAM::cnormal1(zero=2),
+      thefit <- try(VGAM::vgam(y ~ s(x, 4), VGAM::cennormal1(zero=2),
                                data=forvgam.dfr, trace=FALSE,
                                extra=extra))
       if(inherits(thefit, "try-error")) {
-        thefit <- try(VGAM:::vgam(y ~ s(x, 3), VGAM::cnormal1(zero=2),
+        thefit <- try(VGAM:::vgam(y ~ s(x, 3), VGAM::cennormal1(zero=2),
                                   data=forvgam.dfr, trace=FALSE,
                                   extra=extra))
       }
       if(inherits(thefit, "try-error")) {
-        thefit <- try(VGAM:::vgam(y ~ s(x, 2), VGAM::cnormal1(zero=2),
+        thefit <- try(VGAM:::vgam(y ~ s(x, 2), VGAM::cennormal1(zero=2),
                                   data=forvgam.dfr, trace=FALSE,
                                   extra=extra))
       }
