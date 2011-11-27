@@ -3,7 +3,7 @@
 \alias{print,cgOneFactorGlobalTest-method}
 \alias{print.cgOneFactorGlobalTest}
 \title{
-  Print One Factor Global F-test object wiht some format options 
+  Print One Factor Global F-test object with some format options 
 }
 \description{
   Print a \code{cgOneFactorGlobalTest} object, which contains global

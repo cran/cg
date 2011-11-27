@@ -9,7 +9,7 @@
   package.
 }
 \usage{
-fit(data, type, ...)
+fit(data, type, \dots)
 }
 \arguments{
   \item{data}{

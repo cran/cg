@@ -1,4 +1,4 @@
-## $Id: p01FitOneFactorData.R 180 2010-12-20 19:23:26Z user $
+## $Id: p01FitOneFactorData.R 2825 2010-12-20 19:23:26Z user $
 ## One-Factor Unpaired Groups Case
 
 ## Fit One-Factor Unpaired Groups Data
@@ -165,9 +165,197 @@ setMethod("fit", "cgOneFactorData",
                              aftfit=aftfit,
                              uvfit=uvfit,
                              settings=settings)
-            
+
+            ## return
             returnObj
           })
+
+
+setMethod("print", "cgOneFactorFit",
+          print.cgOneFactorFit <-
+          function(x, title=NULL, endptname=NULL,...) {
+            ##
+            ## PURPOSE: Simple print version of cgOneFactorFit
+            ## object. Echoes print methods for individual
+            ## object classes, such as lm and rlm
+            ##
+            ## Input arguments check
+            dots <- list(...)
+            validDotsArgs(dots, names="model")
+
+            modelarg <- getDotsArgName(dots, "model")
+            if(!is.na(modelarg)) {
+              model <- eval(parse(text=paste("dots$", modelarg, sep="")))
+              model <- validArgMatch(model, choices=c("both", "olsonly","rronly"))
+            }
+            else {
+              model <- "both"
+            }
+            
+            olsfit <- x@olsfit
+            rrfit <- x@rrfit
+            aftfit <- x@aftfit
+            uvfit <- x@uvfit
+
+            settings <- x@settings
+
+            ols <- rr <- uv <- aft <- FALSE  ## Initializations
+            if(class(aftfit)[1]=="survreg") {
+              aft <- TRUE
+              validArgModel(...)
+            }
+            else if(class(uvfit)[1]=="gls") {
+              uv <- TRUE
+              validArgModel(...)              
+            }
+            if(class(rrfit)[1]=="rlm" & model!="olsonly" & !aft & !uv) {
+              rr <- TRUE
+            }
+            if(class(olsfit)[1]=="lm" & (model!="rronly") & !aft & !uv) {
+              ols <- TRUE
+              if(!rr) model <- "olsonly"
+            }
+
+          if(is.null(title)) {
+              title <- paste("Fitted Models of", settings$analysisname) 
+            }
+            else {
+              validCharacter(title)
+            }
+            
+            if(is.null(endptname)) {
+              endptname <- settings$endptname
+              if(!is.character(endptname)) {
+                endptname <- ""
+              }
+            }
+            else {
+              validCharacter(endptname)
+            }
+
+            cat(title,"\n")
+            if(endptname!="") { cat(paste("Endpoint:", endptname, "\n")) }
+
+            if(ols) {
+              cat("\nLeast Squares Model Fit\n")
+              print(olsfit, ...)
+            }
+            
+            if(rr) {
+              cat("\nResistant & Robust Model Fit\n\n")
+              print(rrfit, ...)
+            }
+
+            if(aft) {
+              cat("\nAccelerated Failure Time Model Fit\n")
+              print(aftfit, ...)
+            }
+
+            if(uv) {
+              cat("\nUnequal Variances Model Fit\n")
+              print(uvfit, ...)
+            }
+
+            invisible()  
+          }
+          )
+
+
+setMethod("show", "cgOneFactorFit", function(object) print(object))
+
+setMethod("showObj", "cgOneFactorFit",
+          showObj.cgOneFactorFit <- function(object) showDefault(object))
+
+setMethod("summary", "cgOneFactorFit",
+          summary.cgOneFactorFit <-
+          function(object, title=NULL, endptname=NULL, ...) {
+            ##
+            ## PURPOSE: Simple summary of cgOneFactorFit
+            ## object. Echoes summary methods for individual
+            ## object classes, such as lm and rlm
+            ##
+            ## Input arguments check
+            dots <- list(...)
+            validDotsArgs(dots, names="model")
+
+            modelarg <- getDotsArgName(dots, "model")
+            if(!is.na(modelarg)) {
+              model <- eval(parse(text=paste("dots$", modelarg, sep="")))
+              model <- validArgMatch(model, choices=c("both", "olsonly","rronly"))
+            }
+            else {
+              model <- "both"
+            }
+            
+            olsfit <- object@olsfit
+            rrfit <- object@rrfit
+            aftfit <- object@aftfit
+            uvfit <- object@uvfit
+
+            settings <- object@settings
+
+            ols <- rr <- uv <- aft <- FALSE  ## Initializations
+            if(class(aftfit)[1]=="survreg") {
+              aft <- TRUE
+              validArgModel(...)
+            }
+            else if(class(uvfit)[1]=="gls") {
+              uv <- TRUE
+              validArgModel(...)              
+            }
+            if(class(rrfit)[1]=="rlm" & model!="olsonly" & !aft & !uv) {
+              rr <- TRUE
+            }
+            if(class(olsfit)[1]=="lm" & (model!="rronly") & !aft & !uv) {
+              ols <- TRUE
+              if(!rr) model <- "olsonly"
+            }
+
+            if(is.null(title)) {
+              title <- paste("Fitted Model Summaries of", settings$analysisname) 
+            }
+            else {
+              validCharacter(title)
+            }
+            
+            if(is.null(endptname)) {
+              endptname <- settings$endptname
+              if(!is.character(endptname)) {
+                endptname <- ""
+              }
+            }
+            else {
+              validCharacter(endptname)
+            }
+
+            cat(title,"\n")
+            if(endptname!="") { cat(paste("Endpoint:", endptname, "\n")) }
+
+            if(ols) {
+              cat("\nLeast Squares Model Fit Summary\n")
+              print(summary(olsfit, ...))
+            }
+            
+            if(rr) {
+              cat("\nResistant & Robust Model Fit Summary\n")
+              print(summary(rrfit, ...))
+            }
+
+            if(aft) {
+              cat("\nAccelerated Failure Time Model Fit Summary\n")
+              print(summary(aftfit, ...))
+            }
+
+            if(uv) {
+              cat("\nUnequal Variances Model Fit Summary\n")
+              print(summary(uvfit, ...))
+            }
+
+            invisible()  
+
+          }
+          )
+
 
 validAft <- function(type, dfru) {
   if(type=="aft" & ncol(dfru)!=5) {

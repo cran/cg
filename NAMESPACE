@@ -21,11 +21,13 @@ exportMethods(
               "qqGraph",
               "samplesizeGraph",
               "samplesizeTable",
+			  "showObj",
               "varianceGraph"
               )
 
 exportPattern("print[.*]",
               "show[.*]",
+			  "summary[.*]",
               "boxplot[.*]",
               "comparisonsGraph[.*]",
               "comparisonsTable[.*]",
@@ -40,6 +42,7 @@ exportPattern("print[.*]",
               "qqGraph[.*]",
               "samplesizeGraph[.*]",
               "samplesizeTable[.*]",
+			  "showObj[.*]",
               "varianceGraph[.*]")
 
 exportClasses(

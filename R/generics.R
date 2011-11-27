@@ -1,4 +1,4 @@
-## $Id: generics.R 150 2010-09-17 20:56:35Z user $
+## $Id: generics.R 2795 2010-09-17 20:56:35Z user $
 
 setGeneric("fit",
            function(data, type, ...) {
@@ -82,5 +82,8 @@ setGeneric("samplesizeGraph",
            })
 
 
-         
+setGeneric("showObj",
+           function(object) {
+             standardGeneric("showObj")
+           })
                                            
