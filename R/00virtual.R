@@ -1,4 +1,4 @@
-## $Id: 00virtual.R 143 2010-09-06 01:58:42Z user $ 
+## $Id: 00virtual.R 2788 2010-09-06 01:58:42Z user $ 
 
 ## Virtual Classes for cg package
 ## For Polymorphic slots

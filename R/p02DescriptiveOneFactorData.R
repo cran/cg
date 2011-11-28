@@ -1,4 +1,4 @@
-## $Id: p02DescriptiveOneFactorData.R 180 2010-12-20 19:23:26Z user $
+## $Id: p02DescriptiveOneFactorData.R 2825 2010-12-20 19:23:26Z user $
 ## One-Factor Unpaired Groups Case
 
 ## Descriptive methods for One-Factor Unpaired Groups Data
@@ -883,7 +883,8 @@ setMethod("print", "cgOneFactorDescriptiveTable",
             invisible()
           })
 
-setMethod("show", "cgOneFactorDescriptiveTable", function(object) showDefault(object))
+setMethod("show", "cgOneFactorDescriptiveTable",
+          show.cgOneFactorDescriptiveTable <- function(object) showDefault(object))
 
 ## Rates Graph for Survival Data, or also, special case
 ## of Empirical CDF when no censoring is involved

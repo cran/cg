@@ -1,4 +1,4 @@
-## $Id: p05SampleSizeOneFactorData.R 180 2010-12-20 19:23:26Z user $ 
+## $Id: p05SampleSizeOneFactorData.R 2825 2010-12-20 19:23:26Z user $ 
 ## One-Factor Unpaired Groups Case
 
 ## Sample Size Calculations for One-Factor Unpaired Groups Data
@@ -612,7 +612,8 @@ setMethod("print", "cgOneFactorSampleSizeTable",
             invisible()
           })
 
-setMethod("show", "cgOneFactorSampleSizeTable", function(object) showDefault(object))
+setMethod("show", "cgOneFactorSampleSizeTable",
+          show.cgOneFactorSampleSizeTable <- function(object) showDefault(object))
 
 setMethod("samplesizeGraph", "cgOneFactorSampleSizeTable",
           samplesizeGraph.cgOneFactorSampleSizeTable <-

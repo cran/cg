@@ -1,4 +1,4 @@
-## $Id: p03FormalOneFactorData.R 180 2010-12-20 19:23:26Z user $
+## $Id: p03FormalOneFactorData.R 2825 2010-12-20 19:23:26Z user $
 ## One-Factor Unpaired Groups Case
 
 ## Formal Analysis methods for One-Factor Unpaired Groups Data
@@ -216,7 +216,8 @@ setMethod("print", "cgOneFactorGlobalTest",
             
           })
 
-setMethod("show", "cgOneFactorGlobalTest", function(object) showDefault(object))
+setMethod("show", "cgOneFactorGlobalTest",
+          show.cgOneFactorGlobalTest <- function(object) showDefault(object))
 
 ## Comparisons Tables
 comparisons <- function(estimates,
@@ -415,39 +416,6 @@ comparisons <- function(estimates,
     mcp$seB <- mcp$meanB * mcp$seB
   }
   
-  ## Adjust estimated means, differences, and standard errors by offset if appropriate
-  ##  if(!is.null(offset)) {
-
-  ## if we get to here we know that endptscale == "log"
-  ##    mcp$meanA <- mcp$meanA - offset
-  ##    mcp$meanB <- mcp$meanB - offset
-  ##    adjoff <- function(mA, seA, mB, seB, offset) {
-  ##      ema <- exp(mA)
-  ##      emb <- exp(mB)
-
-  ##      ## the SE is estimated via the delta method
-  ##      ## (single valued function of a vector)
-  ##      list(ema=ema,
-  ##           emb=emb,
-  ##           estratio = (ema - offset) / (emb - offset),
-  ##           estseratio = sqrt( (((ema - offset)^2 * emb^2 / (emb - offset)^4) *
-  ##             seA^2) +
-  ##             ((ema / (emb - c))^2 * seB^2 ) ),
-  ##           cimf = (ema / (ema - offset)) * ((emb - offset) / emb))
-  ##    }
-
-  ##    adjoffests <- adjoff(mA=estimates[compAindx], seA=sevec[compAindx],
-  ##                         mB=estimates[compBindx], seB=sevec[compBindx],
-  ##                         offset=offset)
-
-  ##    replacements
-  ##    mcp[, 1] <- 100 * (adjoffests$estratio - 1)
-  ##    mcp[, 2] <- 100 * (adjoffests$estseratio)
-  ##    mcp[, 3:4] <- 100* ( (adjoffests$cimf*(emb/ema)*pctToRatio(mcp[, 3:4])) - 1 )
-  
-  ##  }
-  ##  }
-  
   if(cnames[1]!="derive") { row.names(mcp) <- cnames }
 
   if(endptscale=="original" && addpct==TRUE) {
@@ -478,6 +446,14 @@ comparisons <- function(estimates,
         fmt.mcp$meanB <- fround(fmt.mcp$meanB, digits=digits)
         fmt.mcp$seB <- fround(fmt.mcp$seB, digits=digits)
       }
+      { names(fmt.mcp)[is.element(names(fmt.mcp),
+                                  c("meanA","seA",
+                                    "meanB","seB"))] <- c("geomeanA","seA",
+                                                          "geomeanB","seB") }
+       { names(mcp)[is.element(names(mcp), c("meanA","seA",
+                                             "meanB","seB"))] <-
+                                               c("geomeanA","seA",
+                                                 "geomeanB","seB") }
     }
     else { ## Simple Differences
       pctdiff <- mcp$pctdiff
@@ -604,7 +580,6 @@ setMethod("comparisonsTable", "cgOneFactorFit",
             if(ols) {
               olsestimates <- olsfit$coef
               varcov.olsfit <- vcov(olsfit)
-              
               ols.comprs <- comparisons(olsestimates[grpnamesindex],
                                         varcov.olsfit[grpnamesindex, grpnamesindex],
                                         errordf=df.residual,
@@ -869,26 +844,31 @@ setMethod("print", "cgOneFactorComparisonsTable",
 
             fmtdig <- function(x, diffmetric, digits) {
               pvalfmt <- fmtPvalue(x$pval)
+              fmt.x <- x
               if(regexpr("Percent", diffmetric) > 0) {
-                x$estimate <- fmtPercent(x$estimate)
-                x$se <- fmtPercent(x$se)
-                x$lowerci <- fmtPercent(x$lowerci)
-                x$upperci <- fmtPercent(x$upperci)
-                x$pval <- pvalfmt
-                x$meanA <- fround(x$meanA, digits=digits)
-                x$seA <- fround(x$seA, digits=digits)
-                x$meanB <- fround(x$meanB, digits=digits)
-                x$seB <- fround(x$seB, digits=digits)
+                fmt.x$estimate <- fmtPercent(x$estimate)
+                fmt.x$se <- fmtPercent(x$se)
+                fmt.x$lowerci <- fmtPercent(x$lowerci)
+                fmt.x$upperci <- fmtPercent(x$upperci)
+                fmt.x$pval <- pvalfmt
+                fmt.x$meanA <- fround(x$meanA, digits=digits)
+                fmt.x$seA <- fround(x$seA, digits=digits)
+                fmt.x$meanB <- fround(x$meanB, digits=digits)
+                fmt.x$seB <- fround(x$seB, digits=digits)
+                { names(fmt.x)[is.element(names(fmt.x), c("meanA","seA",
+                                                          "meanB","seB"))] <-
+                                                            c("geomeanA","seA",
+                                                              "geomeanB","seB") }
               }
               else { ## Simple Differences
-                x <- fround(x, digits)
+                fmt.x <- fround(x, digits)
                 if(addpct==TRUE) {
                   pctdiff.fmt <- fmtPercent(x$pctdiff)
-                  x$pctdiff <- pctdiff.fmt
+                  fmt.x$pctdiff <- pctdiff.fmt
                 }
-                x$pval <- pvalfmt
+                fmt.x$pval <- pvalfmt
               }
-              return(x)
+              return(fmt.x)
             }
 
             informConfidence <- function() {
@@ -938,7 +918,8 @@ setMethod("print", "cgOneFactorComparisonsTable",
             invisible()
           })
 
-setMethod("show", "cgOneFactorComparisonsTable", function(object) showDefault(object))
+setMethod("show", "cgOneFactorComparisonsTable",
+          show.cgOneFactorComparisonsTable <- function(object) showDefault(object))
 
 
 ## Error Bar Graph
@@ -1922,7 +1903,8 @@ setMethod("print", "cgOneFactorGrpSummaryTable",
             invisible()
           })
 
-setMethod("show", "cgOneFactorGrpSummaryTable", function(object) showDefault(object))
+setMethod("show", "cgOneFactorGrpSummaryTable",
+          show.cgOneFactorGrpSummaryTable <- function(object) showDefault(object))
 
 
 comparisonsgraph <- function(compstable,

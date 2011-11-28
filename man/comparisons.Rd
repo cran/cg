@@ -211,21 +211,23 @@ comparisons(estimates, varcovmatrix, errordf = Inf, endptscale,
     }
     \item{\code{pval}}{The computed p-value from the test of the difference \code{estimate}.
     }
-    \item{\code{meanA}}{The estimated "mean" for the left hand side "A" of the A
+    \item{\code{meanA} or \code{geomeanA}}{The estimated "mean" for the left hand side "A" of the A
       vs. B  comparison. If \code{endptscale="log"},
       this is a back-transform to the original scale,
-      and therefore is a "geometric" mean.
+      and therefore is a "geometric" mean, and will be labelled
+	\code{geomeanA}. Otherwise it is the arithmetic mean and labelled \code{meanA}.
     }
     \item{\code{seA}}{The estimated standard error of the \code{meanA}
       \code{estimate}. If \code{endptscale="log"}, this estimate will be based on the Delta
       method, and will particularly begin to be a poor approximation when the
       standard error in the logscale exceeds 0.50. 
     }
-    \item{\code{meanB}}{The estimated "mean" for the right hand side "B" of the A
+    \item{\code{meanB} or \code{geomeanB}}{The estimated "mean" for the right hand side "B" of the A
       vs. B comparison. If \code{endptscale="log"}, this is a back-transform to the original scale,
-      and therefore is a "geometric" mean.
-
-    }
+      and therefore is a "geometric" mean, and will be labelled
+	\code{geomeanB}.
+	Otherwise it is the arithmetic mean and labelled \code{meanB}.
+      }
     \item{\code{seB}}{The estimated standard error of the \code{meanB}
       \code{estimate}. If \code{endptscale="log"}, this estimate will be based on the Delta
       method, and will particularly begin to be a poor approximation when the
