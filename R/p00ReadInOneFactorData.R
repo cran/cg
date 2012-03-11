@@ -1,4 +1,4 @@
-## $Id: p00ReadInOneFactorData.R 2816 2010-11-22 18:59:48Z user $
+## $Id: p00ReadInOneFactorData.R 2911 2012-02-21 11:39:27Z bpikouni $
 ## One-Factor Unpaired Groups Case
 
 ## Read-in functionality
@@ -510,8 +510,7 @@ validAddConstant <- function(addconstant, endpt, grpf) {
     if(addconstant=="simple") {
       if(min(endpt) > 0) {
         stop(cgMessage("All endpoint values are greater than zero",
-                       "so the addconstant value must be set to NULL."),
-             seeHelpFile("prepareCGOneFactorData"))
+                       "so the addconstant value must be set to NULL."))
       }
       ## From S-PLUS white book page 68
       return((max(endpt)-min(endpt))*0.0001)

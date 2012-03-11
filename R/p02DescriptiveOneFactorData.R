@@ -1,4 +1,4 @@
-## $Id: p02DescriptiveOneFactorData.R 2825 2010-12-20 19:23:26Z user $
+## $Id: p02DescriptiveOneFactorData.R 2959 2012-03-10 23:48:30Z bpikouni $
 ## One-Factor Unpaired Groups Case
 
 ## Descriptive methods for One-Factor Unpaired Groups Data
@@ -17,7 +17,7 @@ setMethod("pointGraph", "cgOneFactorData",
             validDotsArgs(dots, names=c("logscale", "ticklabels"))
             
             settings <- data@settings
-
+            
             dfru <- data@dfru
             digits <- settings$digits
             ## potential override of logscale value
@@ -127,12 +127,12 @@ setMethod("pointGraph", "cgOneFactorData",
 
             ## Axes Customization
             grpnameticksettings <- setupGrpNameTicks(grpnames, 1:numberofgrps)
-            plotGrpNameTicks(grpnames, settings=grpnameticksettings)
+            plotGrpNameTicks((grpnames), settings=grpnameticksettings)
 
             minmaxTicks(endpt, theaxis="y", logscale=logscale, digits=digits,
                         offset=offset, zeroscore=zeroscore)
 
-            if(settings$stamps) graphStampCG()
+            if(settings$stamps) graphStampCG(grid=FALSE)
             box()
 
             ## faint gray vertical dividers between groups
@@ -180,7 +180,7 @@ setMethod("boxplot", "cgOneFactorData",
 
             grpf <- dfru$grpf
             endpt <- dfru$endpt
-            grpnames <- levels(grpf)
+            grpnames <- settings$grpnames
             numberofgrps <- length(grpnames)
 
             options(warn=-1)
@@ -283,14 +283,14 @@ setMethod("boxplot", "cgOneFactorData",
 
             ## Axes Customization
             grpnameticksettings <- setupGrpNameTicks(grpnames, 1:numberofgrps)
-            plotGrpNameTicks(grpnames, settings=grpnameticksettings)
+            plotGrpNameTicks((grpnames), settings=grpnameticksettings)
 
             minmaxTicks(endpt, theaxis="y", logscale=logscale, digits=digits,
                         offset=offset, zeroscore=zeroscore)
 
             box()
-            if(settings$stamps) graphStampCG()
-            boxplotStamp()
+            if(settings$stamps) graphStampCG(grid=FALSE)
+            if(!has.censored) boxplotStamp()
             
             invisible()
           })
@@ -320,10 +320,10 @@ boxplotcensoreddata <- function(dfru, logscale, pars, ylab,
   ## Use estimated survival distribution function
   ## values to get quantiles
   scfit.dfr <- with(summ.scfit,
-                                        # The factors in summ.scfit$grpf sometimes have "grpf="
-                                        # prepended to the original factors from dfru$grpf
-                                        # Remove that (if it is there) and 
-                                        # refactor them using the original factor levels.
+                    ## The factors in summ.scfit$grpf sometimes have "grpf="
+                    ## prepended to the original factors from dfru$grpf
+                    ## Remove that (if it is there) and 
+                    ## refactor them using the original factor levels.
                     data.frame(grpf=factor(sub ("^grpf=", "", strata),
                                  levels=levels(dfru$grpf)),
                                endpt=time,
@@ -584,8 +584,8 @@ descriptive.censoreddata <- function(dfru, logscale, digits=NULL, offset=NULL,
   ## Use estimated survival distribution function
   ## values to get quantiles
   scfit.dfr <- with(summ.scfit,
-                                        # See comment on scfit.dfr assignment in 
-                                        # boxplotcensoreddata() for details.
+                    ## See comment on scfit.dfr assignment in 
+                    ## boxplotcensoreddata() for details.
                     data.frame(grpf=factor(sub ("^grpf=", "", strata),
                                  levels=levels(dfru$grpf)),
                                endpt=time,
@@ -947,7 +947,7 @@ setMethod("kmGraph", "cgOneFactorData",
             }
             
             options(warn=-1)
-            if(all(dfru$status==1)) { ## no censoted values
+            if(all(dfru$status==1)) { ## no censored values
               thesurvfit <-  survfit(survival::Surv(endpt, status) ~ -1 + grpf,
                                      data=dfru)
             }
@@ -1148,6 +1148,9 @@ setMethod("kmGraph", "cgOneFactorData",
               
             }
             print(thegraph)
+
+            if(settings$stamps) graphStampCG()
+            
             invisible()
             
           }

@@ -1,4 +1,4 @@
-## $Id: p04DiagnosticsOneFactorData.R 2825 2010-12-20 19:23:26Z user $
+## $Id: p04DiagnosticsOneFactorData.R 2959 2012-03-10 23:48:30Z bpikouni $
 ## One-Factor Unpaired Groups Case
 
 ## Diagnostics methods for One-Factor Unpaired Groups Data
@@ -158,7 +158,7 @@ variancegraph <- function(resids, fitteds,
     
     ## Axes Customization
     grpnameticksettings <- setupGrpNameTicks(grpnames, 1:numberofgrps)
-    plotGrpNameTicks(grpnames, settings=grpnameticksettings)
+    plotGrpNameTicks((grpnames), settings=grpnameticksettings)
 
     ## faint gray horizontal dividers between groups
     abline(v=seq(1.5, numberofgrps-0.5, 1), col="gray")
@@ -243,10 +243,11 @@ setMethod("varianceGraph", "cgOneFactorFit",
               if(!rr) model <- "olsonly"
             }
 
-            analysisname <- fit@settings$analysisname
-            endptlabel <- makeEndptLabel(fit@settings$endptname, fit@settings$endptunits)
+            settings <- fit@settings
+            analysisname <- settings$analysisname
+            endptlabel <- makeEndptLabel(settings$endptname, settings$endptunits)
 
-            numberofgrps <- length(fit@settings$grpnames)
+            numberofgrps <- length(settings$grpnames)
             thetitle <- "Variance Graph"
             thesmoothmsg <- paste("smoothed line with x-axis ordered by fitted group means")
 
@@ -310,26 +311,23 @@ setMethod("varianceGraph", "cgOneFactorFit",
                                  ~ grpn | typef,
                                  data=all.dfr,
                                  panel=function(x, y, subscripts=TRUE, ...) {
-				   panel.number <- panel.number ()
+                                   panel.number <- panel.number()
                                    curgrplabels <- grplabels[[panel.number]]
-                                   setup <- setupGrpNameTicks(curgrplabels,
-                                                              grplocation=
-                                                              1:length(curgrplabels),
-                                                              cexinit=0.8,
-                                                              cexthreshold=0.5,
-                                                              grid=TRUE)
-                                   panel.axis(side="bottom",
-                                              at=1:length(curgrplabels),
-                                              labels=curgrplabels,
-                                              tck=0, text.cex=setup$cex, rot=setup$srt,
-                                              outside=TRUE)
+
+                                   grpnameticksettings <- setupGrpNameTicks(curgrplabels,
+                                                                            grplocation=
+                                                                            1:length(curgrplabels),
+                                                                            cexinit=0.8,
+                                                                            cexthreshold=0.5,
+                                                                            grid=TRUE)
+                                   plotGrpNameTicks(curgrplabels, grpnameticksettings, grid=TRUE)
                                    if(is.element(panel.number,
                                                  c(1, nlevels(all.dfr$typef)))) {
                                      panelside <- ifelse(panel.number==1,
                                                          "left", "right") 
                                      tickmarks <- setupAxisTicks(all.dfr$tukeyresids^2,
                                                                  logscale=FALSE, grid=TRUE)
-                                     panel.axis(side=panelside,
+                                    panel.axis(side=panelside,
                                                 at=sqrt(tickmarks),
                                                 labels=names(tickmarks),
                                                 tck=0.20, text.cex=0.6,
@@ -360,6 +358,7 @@ setMethod("varianceGraph", "cgOneFactorFit",
                                  main=list(label=paste(thetitle, "\n",
                                              fit@settings$analysisname, sep=""), cex=1.1),
                                  par.strip.text=list(cex=0.7))
+
               print(thegraph, position=c(0,0,0.95,1))
 
               seekViewport(trellis.vpname("ylab"))
@@ -374,8 +373,8 @@ setMethod("varianceGraph", "cgOneFactorFit",
                         y=unit(-1, "lines"))
               upViewport(0)
               
-              if(fit@settings$stamps) graphStampCG()
-              
+              if(settings$stamps) graphStampCG()
+
               invisible()
             }
             
@@ -385,7 +384,9 @@ setMethod("varianceGraph", "cgOneFactorFit",
                             analysisname=analysisname, 
                             endptname=catCharExpr(" Fit of ", endptlabel),
                             trend=trend,
-                            titlestamp = TRUE, trendstamp=TRUE) 
+                            titlestamp = TRUE, trendstamp=TRUE)
+              if(settings$stamps) graphStampCG(grid=FALSE)
+
             }
 
             else if((model=="rronly" | model=="rrwtdonly") & rr
@@ -396,7 +397,8 @@ setMethod("varianceGraph", "cgOneFactorFit",
                             analysisname=analysisname, 
                             endptname=catCharExpr(" Fit of ", endptlabel),
                             trend=trend,
-                            titlestamp = TRUE, trendstamp=TRUE) 
+                            titlestamp = TRUE, trendstamp=TRUE)
+              if(settings$stamps) graphStampCG(grid=FALSE)
             }
 
             else if(model=="rrunwtdonly" & rr & device=="single") {
@@ -406,7 +408,8 @@ setMethod("varianceGraph", "cgOneFactorFit",
                             analysisname=analysisname, 
                             endptname=catCharExpr(" Fit of ", endptlabel),
                             trend=trend,
-                            titlestamp = TRUE, trendstamp=TRUE) 
+                            titlestamp = TRUE, trendstamp=TRUE)
+              if(settings$stamps) graphStampCG(grid=FALSE)
             }
 
             else if(rr & ols &
@@ -427,6 +430,7 @@ setMethod("varianceGraph", "cgOneFactorFit",
                             endptname=catCharExpr(" Fit of ", endptlabel),
                             trend=trend,
                             titlestamp = TRUE, trendstamp=TRUE)
+              if(settings$stamps) graphStampCG(grid=FALSE)
 
               if(device=="multiple") {
                 do.call("cgDevice", c(list(new=TRUE), dots))
@@ -437,7 +441,9 @@ setMethod("varianceGraph", "cgOneFactorFit",
                             analysisname=analysisname, 
                             endptname=catCharExpr(" Fit of ", endptlabel),
                             trend=trend,
-                            titlestamp = TRUE, trendstamp=TRUE) 
+                            titlestamp = TRUE, trendstamp=TRUE)
+              if(settings$stamps) graphStampCG(grid=FALSE)
+
               if(model=="extended") {
                 if(device=="multiple") {
                   do.call("cgDevice", c(list(new=TRUE), dots))
@@ -448,7 +454,8 @@ setMethod("varianceGraph", "cgOneFactorFit",
                               analysisname=analysisname, 
                               endptname=catCharExpr(" Fit of ", endptlabel),
                               trend=trend,
-                              titlestamp = TRUE, trendstamp=TRUE) 
+                              titlestamp = TRUE, trendstamp=TRUE)
+                if(settings$stamps) graphStampCG(grid=FALSE)
               }
             }
             
@@ -460,7 +467,8 @@ setMethod("varianceGraph", "cgOneFactorFit",
                             endptname=catCharExpr("  , Standardized  ",
                               catCharExpr(" Fit of ", endptlabel), rev=TRUE),
                             trend=trend,
-                            titlestamp=TRUE, trendstamp=TRUE) 
+                            titlestamp=TRUE, trendstamp=TRUE)
+              if(settings$stamps) graphStampCG(grid=FALSE)
             }
 
             else if(aft & device=="single") {
@@ -473,6 +481,7 @@ setMethod("varianceGraph", "cgOneFactorFit",
                             endptname=catCharExpr(" Fit of ", endptlabel),
                             trend=trend,
                             titlestamp = TRUE, trendstamp=TRUE)
+              if(settings$stamps) graphStampCG(grid=FALSE)
             }
 
             else {
@@ -481,6 +490,8 @@ setMethod("varianceGraph", "cgOneFactorFit",
                              "or with the fitted model(s) in the fit object.",
                              seeHelpFile("varianceGraph")))
             }
+
+            
             
             invisible()
           }
@@ -678,13 +689,13 @@ setMethod("qqGraph", "cgOneFactorFit",
               if(!rr) model <- "olsonly"
             }
 
-            analysisname <- fit@settings$analysisname
-            endptlabel <- makeEndptLabel(fit@settings$endptname, fit@settings$endptunits)
+            settings <- fit@settings
+            analysisname <- settings$analysisname
+            endptlabel <- makeEndptLabel(settings$endptname, settings$endptunits)
 
-            numberofgrps <- length(fit@settings$grpnames)
+            numberofgrps <- length(settings$grpnames)
             thetitle <- "Quantile-Quantile (QQ) Graph on\nGaussian (Normal) Distribution"
             
-
             residual.helper <- function(resid, type) {
               return(data.frame(resid=resid,
                                 type=rep(type, length(resid))))
@@ -787,7 +798,7 @@ setMethod("qqGraph", "cgOneFactorFit",
                         x = unit(0, "lines"), rot=90, gp=gpar(cex=0.9))
               upViewport(0)
               
-              if(fit@settings$stamps) graphStampCG()
+              if(settings$stamps) graphStampCG()
             }
 
             else if(model=="olsonly" & ols & device=="single") {
@@ -796,7 +807,8 @@ setMethod("qqGraph", "cgOneFactorFit",
                       desc="Classical fit",
                       endptname=catCharExpr(" Fit of ", endptlabel),
                       line=line,
-                      titlestamp = TRUE) 
+                      titlestamp = TRUE)
+              if(settings$stamps) graphStampCG(grid=FALSE)
             }
 
             else if((model=="rronly" | model=="rrwtdonly") & rr
@@ -806,7 +818,8 @@ setMethod("qqGraph", "cgOneFactorFit",
                       desc = "Resistant & Robust fit Weighted",
                       analysisname = analysisname, 
                       endptname=catCharExpr(" Fit of ", endptlabel),
-                      titlestamp = TRUE) 
+                      titlestamp = TRUE)
+              if(settings$stamps) graphStampCG(grid=FALSE)
             }
 
             else if(model=="rrunwtdonly" & rr & device=="single") {
@@ -815,7 +828,8 @@ setMethod("qqGraph", "cgOneFactorFit",
                       desc = "Resistant & Robust fit Unweighted",
                       analysisname = analysisname, 
                       endptname = endptlabel,
-                      titlestamp = TRUE) 
+                      titlestamp = TRUE)
+              if(settings$stamps) graphStampCG(grid=FALSE)
             }
 
             else if(rr & ols &
@@ -836,6 +850,7 @@ setMethod("qqGraph", "cgOneFactorFit",
                       analysisname = analysisname, 
                       endptname=catCharExpr(" Fit of ", endptlabel),
                       titlestamp = TRUE)
+              if(settings$stamps) graphStampCG(grid=FALSE)
               
               if(device=="multiple") {
                 do.call("cgDevice", c(list(new=TRUE), dots))
@@ -845,7 +860,9 @@ setMethod("qqGraph", "cgOneFactorFit",
                       desc = "Resistant & Robust fit Weighted",
                       analysisname = analysisname, 
                       endptname=catCharExpr(" Fit of ", endptlabel),
-                      titlestamp = TRUE) 
+                      titlestamp = TRUE)
+              if(settings$stamps) graphStampCG(grid=FALSE)
+
               if(model=="extended") {
                 if(device=="multiple") {
                   do.call("cgDevice", c(list(new=TRUE), dots))
@@ -855,7 +872,8 @@ setMethod("qqGraph", "cgOneFactorFit",
                         desc = "Resistant & Robust fit Unweighted",
                         analysisname = analysisname, 
                         endptname=catCharExpr(" Fit of ", endptlabel),
-                        titlestamp = TRUE) 
+                        titlestamp = TRUE)
+                if(settings$stamps) graphStampCG(grid=FALSE)
               }
             }            
 
@@ -866,7 +884,8 @@ setMethod("qqGraph", "cgOneFactorFit",
                       analysisname = analysisname, 
                       endptname=catCharExpr("  , Standardized  ",
                         catCharExpr(" Fit of ", endptlabel), rev=TRUE),
-                      titlestamp = TRUE) 
+                      titlestamp = TRUE)
+              if(settings$stamps) graphStampCG(grid=FALSE)
             }
 
             else if(aft & device=="single") {
@@ -877,6 +896,7 @@ setMethod("qqGraph", "cgOneFactorFit",
                       analysisname = analysisname, 
                       endptname=catCharExpr(" Fit of ", endptlabel),
                       titlestamp = TRUE)
+              if(settings$stamps) graphStampCG(grid=FALSE)
             }
 
             else {
@@ -1018,7 +1038,8 @@ setMethod("print", "cgOneFactorDownweightedTable",
             invisible()
           })
 
-setMethod("show", "cgOneFactorDownweightedTable", function(object) showDefault(object))
+setMethod("show", "cgOneFactorDownweightedTable",
+          show.cgOneFactorDownweightedTable <- function(object) showDefault(object))
 
 
 validCutoffWt <- function(x) {
