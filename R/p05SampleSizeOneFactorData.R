@@ -1,4 +1,4 @@
-## $Id: p05SampleSizeOneFactorData.R 2825 2010-12-20 19:23:26Z user $ 
+## $Id: p05SampleSizeOneFactorData.R 2959 2012-03-10 23:48:30Z bpikouni $ 
 ## One-Factor Unpaired Groups Case
 
 ## Sample Size Calculations for One-Factor Unpaired Groups Data
@@ -921,6 +921,7 @@ setMethod("samplesizeGraph", "cgOneFactorSampleSizeTable",
                         y=unit(-1, "lines"), rot=0, gp=gpar(cex=0.60),
                         just="center")
               upViewport(0)
+              usedgrid <- TRUE
             }
             
             else if(((model=="olsonly" & ols) | (ols & !rr & model=="both")) &
@@ -954,8 +955,8 @@ setMethod("samplesizeGraph", "cgOneFactorSampleSizeTable",
                       "of ",
                       signif(sigmaest$ols, 4),
                       sep=""), cex=0.60)
+              usedgrid <- FALSE
               
-
             }
 
             else if(((model=="rronly" & rr) | (!ols & rr & model=="both")) &
@@ -989,6 +990,7 @@ setMethod("samplesizeGraph", "cgOneFactorSampleSizeTable",
                       "of ",
                       signif(sigmaest$rr, 4),
                       sep=""), cex=0.60)
+              usedgrid <- FALSE
               
             }
             else if(rr & ols &
@@ -1030,7 +1032,7 @@ setMethod("samplesizeGraph", "cgOneFactorSampleSizeTable",
                       "of ",
                       signif(sigmaest$ols, 4),
                       sep=""), cex=0.60)
-              if(stamps) graphStampCG()
+              if(stamps) graphStampCG(grid=FALSE)
 
               if(device=="multiple") {
                 if(!is.null(dots$model)) dots$model <- NULL ## since we only
@@ -1074,7 +1076,7 @@ setMethod("samplesizeGraph", "cgOneFactorSampleSizeTable",
                       "of ",
                       signif(sigmaest$rr, 4),
                       sep=""), cex=0.60)
-              if(stamps) graphStampCG()
+              usedgrid <- FALSE
             }
             else {
               stop(cgMessage("The chosen device and model arguments",
@@ -1083,7 +1085,7 @@ setMethod("samplesizeGraph", "cgOneFactorSampleSizeTable",
                              seeHelpFile("SampleSizeTable")))
             }
 
-            if(stamps) graphStampCG()
+            if(stamps) graphStampCG(grid=usedgrid)
             invisible()
             
           }

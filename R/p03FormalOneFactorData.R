@@ -1,4 +1,4 @@
-## $Id: p03FormalOneFactorData.R 2825 2010-12-20 19:23:26Z user $
+## $Id: p03FormalOneFactorData.R 2959 2012-03-10 23:48:30Z bpikouni $
 ## One-Factor Unpaired Groups Case
 
 ## Formal Analysis methods for One-Factor Unpaired Groups Data
@@ -1009,7 +1009,7 @@ errorbargraph <- function(estimates, centralvar,
 
   ## Axes Customization
   grpnameticksettings <- setupGrpNameTicks(grpnames, 1:numberofgrps)
-  plotGrpNameTicks(grpnames, settings=grpnameticksettings)
+  plotGrpNameTicks((grpnames), settings=grpnameticksettings)
   
   minmaxTicks(if(logscale) exp(unlist(bardata)) else
               unlist(bardata),
@@ -1224,18 +1224,13 @@ setMethod("errorBarGraph", "cgOneFactorFit",
                                    data=all.dfr,
                                    digits=digits,
                                    panel = function(x, y, ...) {
-                                     grplabels <- setupGrpNameTicks(grpnames,
-                                                                    grplocation=
-                                                                    1:length(grpnames),
-                                                                    cexinit=0.8,
-                                                                    cexthreshold=0.5,
-                                                                    grid=TRUE)
-                                     panel.axis(side="bottom",
-                                                at=1:length(grpnames),
-                                                labels=grpnames,
-                                                tck=0, text.cex=grplabels$cex,
-                                                rot=grplabels$srt,
-                                                outside=TRUE)
+                                     grpnameticksettings <- setupGrpNameTicks(grpnames,
+                                                                              grplocation=
+                                                                              1:length(grpnames),
+                                                                              cexinit=0.8,
+                                                                              cexthreshold=0.5,
+                                                                              grid=TRUE)
+                                     plotGrpNameTicks(grpnames, grpnameticksettings, grid=TRUE)
                                      if(is.element(panel.number(),
                                                    c(1, nlevels(all.dfr$type)))) {
                                        panelside <- ifelse(panel.number()==1,
@@ -1291,18 +1286,13 @@ setMethod("errorBarGraph", "cgOneFactorFit",
                                    data=all.dfr,
                                    digits=digits,
                                    panel = function(x, y, ...) {
-                                     grplabels <- setupGrpNameTicks(grpnames,
-                                                                    grplocation=
-                                                                    1:length(grpnames),
-                                                                    cexinit=0.8,
-                                                                    cexthreshold=0.5,
-                                                                    grid=TRUE)
-                                     panel.axis(side="bottom",
-                                                at=1:length(grpnames),
-                                                labels=grpnames,
-                                                tck=0, text.cex=grplabels$cex,
-                                                rot=grplabels$srt,
-                                                outside=TRUE)
+                                     grpnameticksettings <- setupGrpNameTicks(grpnames,
+                                                                              grplocation=
+                                                                              1:length(grpnames),
+                                                                              cexinit=0.8,
+                                                                              cexthreshold=0.5,
+                                                                              grid=TRUE)
+                                     plotGrpNameTicks(grpnames, grpnameticksettings, grid=TRUE)
                                      if(is.element(panel.number(),
                                                    c(1, nlevels(all.dfr$type)))) {
                                        panelside <- ifelse(panel.number()==1,
@@ -1374,7 +1364,7 @@ setMethod("errorBarGraph", "cgOneFactorFit",
                             titlestamp=FALSE, offset=offset,
                             ticklabels=ticklabels)              
               
-              if(stamps) graphStampCG()
+              if(stamps) graphStampCG(grid=FALSE)
               ## Text Annotations
               title(main=paste("Error Bar Graph, Classical analysis\n",
                       analysisname, sep=""), line=2, cex.main=1.1)
@@ -1395,7 +1385,7 @@ setMethod("errorBarGraph", "cgOneFactorFit",
                             offset=offset,
                             ticklabels=ticklabels)
               
-              if(stamps) graphStampCG()
+              if(stamps) graphStampCG(grid=FALSE)
               ## Text Annotations
               title(main=paste("Error Bar Graph, Resistant & Robust analysis\n",
                       analysisname, sep=""), line=2, cex.main=1.1)
@@ -1423,7 +1413,7 @@ setMethod("errorBarGraph", "cgOneFactorFit",
                             approxstamp={nharmonic[1]!=n[1]},
                             titlestamp=FALSE, offset=offset,
                             ticklabels=ticklabels)
-              if(stamps) graphStampCG()
+              if(stamps) graphStampCG(grid=FALSE)
               ## Text Annotations
               title(main=paste("Error Bar Graph, Classical analysis\n",
                       analysisname, sep=""), line=2, cex.main=1.1)
@@ -1453,7 +1443,7 @@ setMethod("errorBarGraph", "cgOneFactorFit",
                             offset=offset,
                             ticklabels=ticklabels)
 
-              if(stamps) graphStampCG()
+              if(stamps) graphStampCG(grid=FALSE)
               ## Text Annotations
               title(main=paste("Error Bar Graph, Resistant & Robust analysis\n",
                       analysisname, sep=""), line=2, cex.main=1.1)
@@ -2360,6 +2350,7 @@ setMethod("comparisonsGraph", "cgOneFactorComparisonsTable",
 
               comparisonsGraphStamp(mcadjust, alphapercent, grid=TRUE,
                                     desc=settings$type)
+              if(stamps) graphStampCG()
               
             }
             else if((model=="olsonly" | (ols & !rr & model=="both")) &
@@ -2370,6 +2361,7 @@ setMethod("comparisonsGraph", "cgOneFactorComparisonsTable",
                                wraplength=wraplength,
                                cex.comps=cex.comps,
                                ticklabels=ticklabels)
+              if(stamps) graphStampCG(grid=FALSE)
               ## Text Annotations
               title(main=paste("Comparisons Graph, Classical analysis\n",
                       analysisname, sep=""), line=2, cex.main=1.1)
@@ -2386,7 +2378,7 @@ setMethod("comparisonsGraph", "cgOneFactorComparisonsTable",
                                wraplength=wraplength,
                                cex.comps=cex.comps,
                                ticklabels=ticklabels)
-              if(stamps) graphStampCG()
+              if(stamps) graphStampCG(grid=FALSE)
               ## Text Annotations
               title(main=paste("Comparisons Graph, Resistant & Robust analysis\n",
                       analysisname, sep=""), line=2, cex.main=1.1)
@@ -2410,7 +2402,7 @@ setMethod("comparisonsGraph", "cgOneFactorComparisonsTable",
                                wraplength=wraplength,
                                cex.comps=cex.comps,
                                ticklabels=ticklabels)
-              if(stamps) graphStampCG()
+              if(stamps) graphStampCG(grid=FALSE)
               ## Text Annotations
               title(main=paste("Comparisons Graph, Classical analysis\n",
                       analysisname, sep=""), line=2, cex.main=1.1)
@@ -2435,6 +2427,7 @@ setMethod("comparisonsGraph", "cgOneFactorComparisonsTable",
                                wraplength=wraplength,
                                cex.comps=cex.comps,
                                ticklabels=ticklabels)
+              if(stamps) graphStampCG(grid=FALSE)
               ## Text Annotations
               title(main=paste("Comparisons Graph, Resistant & Robust analysis\n",
                       analysisname, sep=""), line=2, cex.main=1.1)
@@ -2449,6 +2442,7 @@ setMethod("comparisonsGraph", "cgOneFactorComparisonsTable",
                                wraplength=wraplength,
                                cex.comps=cex.comps,
                                explanation=FALSE, ticklabels=ticklabels)
+              if(stamps) graphStampCG(grid=FALSE)
               ## Text Annotations
               title(main=paste("Comparisons Graph, AFT analysis\n",
                       analysisname, sep=""), line=2, cex.main=1.1)
@@ -2462,6 +2456,7 @@ setMethod("comparisonsGraph", "cgOneFactorComparisonsTable",
                                wraplength=wraplength,
                                cex.comps=cex.comps,
                                ticklabels=ticklabels)
+              if(stamps) graphStampCG(grid=FALSE)
               ## Text Annotations
               title(main=paste("Comparisons Graph, Unequal Variances analysis\n",
                       analysisname, sep=""), line=2, cex.main=1.1)
@@ -2475,7 +2470,6 @@ setMethod("comparisonsGraph", "cgOneFactorComparisonsTable",
                              seeHelpFile("comparisonsGraph")))
             }
 
-            if(stamps) graphStampCG()
             invisible()
             
           }

@@ -1,4 +1,4 @@
-## $Id: p01FitOneFactorData.R 2825 2010-12-20 19:23:26Z user $
+## $Id: p01FitOneFactorData.R 2835 2011-11-28 04:07:24Z bpikouni $
 ## One-Factor Unpaired Groups Case
 
 ## Fit One-Factor Unpaired Groups Data

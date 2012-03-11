@@ -1,4 +1,4 @@
-## $Id: utilities.R 2830 2011-06-21 17:09:14Z user $ 
+## $Id: utilities.R 2960 2012-03-11 02:46:45Z bpikouni $ 
 
 ## Functions & objects internal for the cg Library
 ## and definitely not intended for user-level calls
@@ -53,9 +53,11 @@ unwrap <- unwind
 
 #####################
 
-graphStampCG <- function() {
+graphStampCG <- function(grid=TRUE) {
   ##
   ## PURPOSE: ID Stamp on graphs
+  ##
+  validBoolean(grid)
   ## Reads off package object "cgVersion"
   dateitems <- unlist(strsplit(date(), split=" "))
   ## Remove extraneous string if present due to single digit days
@@ -64,13 +66,21 @@ graphStampCG <- function() {
   ## sequence: daynumber, month, year, time, weekday
   newdate <- paste(dateitems[3]," ",dateitems[2]," ",
                    dateitems[5],"  \n",dateitems[4]," local  \n",sep="")
-  mtext(text=paste("cg",
-          " v", cgVersion, "  \n",
-          newdate,"", sep=""),
-        side = 1,
-        line = -1, outer = TRUE,
-        adj = 1, cex = 0.6)
-  
+  thetext <- paste("cg",
+            " v", cgVersion, "  \n",
+            newdate,"", sep="")
+  if(grid) {
+    grid::grid.text(thetext, x = 0.99, y = 0.01, 
+                    default.units = "npc", 
+                    just = c("right", "bottom"),
+                    gp=gpar(cex=0.6))
+  }
+  else { ## not grid
+    mtext(text=thetext,
+          side = 1,
+          line = -1, outer = TRUE,
+          adj = 1, cex = 0.6)
+  }
   invisible()
 }
 
@@ -516,16 +526,15 @@ setupGrpNameTicks <- function(x, grplocation=1:length(x),
     ## shrunk within the margin available.
     ## Only worry about this for traditional graphics
     if(thesrt!=0) {
-      themaxlength <- max(strwidth(paste(x, " ", sep=""),
-                                   units="inches"))/sqrt(2)
+      themaxlength <- max(strwidth(x,
+                          units="inches"))/sqrt(2)
       thecex <- min(thecex, (par("mai")[1]/themaxlength)*thecex)
     }
   }
-  
+
   return(list(cex=thecex, srt=thesrt, adj=theadj))
   
 }
-
 
 xTicksCex <- function(x, thenames=names(x),
                       cexinit=1, cexthreshold=0.70,
@@ -835,21 +844,40 @@ minmaxTicks <- function(x, theaxis="y", logscale=TRUE,
 
 #####################
 
-plotGrpNameTicks <- function(grpnames, settings) {
+plotGrpNameTicks <- function(grpnames, settings, grid=FALSE) {
   ##
   ## PURPOSE:  Add group labels to x-axis
   ##
-  numberofgrps <- length(grpnames)
-  if(settings$srt==0) {
-    axis(1, at=1:numberofgrps, labels=grpnames,
-         cex=settings$cex, adj=settings$adj)
+  padEnd <- function(x, length=2) {
+    paste(x, paste(rep(" ", length), collapse=""), sep="")
   }
-  else if(settings$srt!=0) {
-    axis(1, at=1:numberofgrps, labels=FALSE)
-    text(1:numberofgrps, par("usr")[3], srt = settings$srt,
-         adj = settings$adj, cex=settings$cex,
-         labels = paste(grpnames, " ", sep=""), 
-         xpd = TRUE)
+  
+  numberofgrps <- length(grpnames)
+  if(!grid) {
+    if(settings$srt==0) {
+      axis(1, at=1:numberofgrps, labels=grpnames,
+           cex=settings$cex, adj=settings$adj)
+    }
+    else if(settings$srt!=0) {
+      axis(1, at=1:numberofgrps, labels=FALSE)
+      text(1:numberofgrps, par("usr")[3], srt = settings$srt,
+           adj = settings$adj, cex=settings$cex,
+           labels = padEnd(grpnames), ## to prevent axis overlap
+           xpd = TRUE)
+    }
+  }
+  else { ## grid, lattice
+     panel.axis(side="bottom",
+                at=1:length(grpnames),
+                labels=if(settings$srt!=0) {
+                  padEnd(grpnames)
+                }
+                else {
+                  grpnames
+                },
+                tck=0, text.cex=settings$cex,
+                rot=settings$srt,
+                outside=TRUE)
   }
   invisible()
 
@@ -863,14 +891,13 @@ boxplotStamp <- function() {
   ## PURPOSE: Add explanatory message to boxplot rendering
   ##
   u <- par("usr")
-  text(u[2] - 0.01 *(u[2] - u[1]),
-       u[4] + 0.10 * (u[4] - u[3]),
+  text(u[2] - 0.15 *(u[2] - u[1]),
+       u[4] + 0.15 * (u[4] - u[3]),
        labels=paste("Open circles \"o\" ",
          "inside boxes are medians;",
          "Plus signs \"+\" are means", sep="\n"),
-       cex=0.7, adj=0)
+       cex=0.6, adj=0, xpd=TRUE)
   invisible()
-
 }
 
 #####################
@@ -1081,11 +1108,9 @@ fmtPvalue <- function(x) {
 
 #####################
 
-
 cgDevice <- function(cgtheme=TRUE, new=FALSE, ...) {
   ##
   ## PURPOSE: Ensure trellis device with limited color scheme
-  ## INCOMPLETE AT THIS STAGE
   if(cgtheme) {
     thetheme <- list(background = list(col = "white"),
                      strip.shingle = list(col = "white"),
@@ -1094,13 +1119,10 @@ cgDevice <- function(cgtheme=TRUE, new=FALSE, ...) {
   else {   
     thetheme <- trellis.par.get()
   }
+  if(.Device=="null device") {
+    new <- TRUE
+  }
   trellis.device(theme=thetheme, new=new, ...)
-  newparstg <- par("new")
-  warnoptstg <- options()$warn
-  on.exit(function() { par(new=newparstg); options(warn=warnoptstg) }, add=TRUE ) 
-  options(warn=-1)
-  par(new=TRUE)
-  plot.new()
   invisible()
 }
 
