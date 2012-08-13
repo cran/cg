@@ -1,4 +1,4 @@
-## $Id: generics.R 2946 2012-03-02 18:37:07Z yye $
+## $Id: generics.R 3169 2012-05-17 18:52:51Z yye $
 
 setGeneric("fit",
            function(data, type, ...) {
@@ -10,25 +10,39 @@ setGeneric("pointGraph",
              standardGeneric("pointGraph")
            })
 
+if(F) {
 setGeneric("subjProfile",
-           function(data) {
+           function(data,...) {
              standardGeneric("subjProfile")
            })
 
 setGeneric("diffPlot",
-           function(data) {
+           function(data,...) {
              standardGeneric("diffPlot")
            })
+
+setGeneric("marginalProfile",
+           function(data,...) {
+             standardGeneric("marginalProfile")
+           })
+
+setGeneric("timeSlicePointBoxGraph",
+           function(data,...) {
+             standardGeneric("timeSlicePointBoxGraph")
+           })
+}
 
 setGeneric("descriptiveTable",
            function(data, display="print", ...) {
              standardGeneric("descriptiveTable")
            })
 
-setGeneric("correlationTable",
+if(F) {
+  setGeneric("correlationTable",
            function(data, display="print", ...) {
              standardGeneric("correlationTable")
            })
+}
 
 setGeneric("globalTest",
            function(fit, display="print", ...) {
@@ -41,8 +55,7 @@ setGeneric("comparisonsTable",
                     type="pairwisereflect", contrastmatrix=NULL,
                     refgrp=NULL, alpha=0.05, addpct=FALSE, display="print", ...) {
              standardGeneric("comparisonsTable")
-           },
-           )
+           })
 
 setGeneric("grpSummaryTable",
 
