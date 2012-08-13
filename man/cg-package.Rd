@@ -14,19 +14,19 @@ methods, and useful displays of results are emphasized.
 \details{
 Package: cg\cr
 Type: Package\cr
-Version: 0.9.0\cr
-Date: 2010-12-10\cr
+Version: 0.9-5\cr
+Date: 2012-08-13\cr
 License: GPL (>= 2)\cr
 LazyLoad: yes\cr
 LazyData: yes\cr
-Depends: R (>= 2.11.0), Hmisc, base, utils, methods, stats, graphics,\cr
+Depends: R (>= 2.14.0), Hmisc, base, utils, methods, stats, graphics,\cr
 grid, lattice, MASS, survival, multcomp, nlme
-Imports: VGAM
+Imports: VGAM (>=0.8.6)
 }
 \author{
 Bill Pikounis and John Oleynick
 
-Maintainers: Bill Pikounis <cg@billpikounis.net> and John Oleynick <cg@billpikounis.net>
+Maintainer: Bill Pikounis <cg@billpikounis.net>
 
 }
 \examples{
