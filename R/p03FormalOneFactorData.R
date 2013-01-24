@@ -1,4 +1,4 @@
-## $Id: p03FormalOneFactorData.R 2959 2012-03-10 23:48:30Z bpikouni $
+## $Id: p03FormalOneFactorData.R 3781 2013-01-11 20:07:34Z yye $
 ## One-Factor Unpaired Groups Case
 
 ## Formal Analysis methods for One-Factor Unpaired Groups Data
@@ -50,15 +50,15 @@ setMethod("globalTest", "cgOneFactorFit",
               validArgModel(...)
             }
 
-            if(class(rrfit)[1]=="rlm" & model!="olsonly" & !aft & !uv) {
+            if(class(rrfit)[1]=="rlm" && model!="olsonly" && !aft && !uv) {
               rr <- TRUE
             }
-            if(class(olsfit)[1]=="lm" & model!="rronly" & !aft & !uv) {
+            if(class(olsfit)[1]=="lm" && model!="rronly" && !aft && !uv) {
               ols <- TRUE
               if(!rr) model <- "olsonly"
             }
 
-            if(rr | ols) {
+            if(rr || ols) {
               df.residual <- olsfit$df.residual
               df.grpf <- length(settings$grpnames) - 1
               upform <- update(formula(olsfit), . ~ grpf)
@@ -166,10 +166,10 @@ setMethod("print", "cgOneFactorGlobalTest",
               uv <- TRUE
               validArgModel(...)              
             }
-            if(!is.null(rrgrps) & model!="olsonly" & !aft & !uv) {
+            if(!is.null(rrgrps) && model!="olsonly" && !aft && !uv) {
               rr <- TRUE
             }
-            if(!is.null(olsgrps) & (model!="rronly") & !aft & !uv) {
+            if(!is.null(olsgrps) && (model!="rronly") && !aft && !uv) {
               ols <- TRUE
             }
 
@@ -197,7 +197,7 @@ setMethod("print", "cgOneFactorGlobalTest",
             if(endptname!="") { cat(paste("Endpoint:", endptname, "\n")) }
 
             if(ols) {
-              cat("\nLeast Squares Model Fit:", fmtPvalue(olsgrps), "\n")
+              cat("\nClassical Least Squares Model Fit:", fmtPvalue(olsgrps), "\n")
             }
             
             if(rr) {
@@ -559,21 +559,21 @@ setMethod("comparisonsTable", "cgOneFactorFit",
               thens <- with(uvfit$dfru, sapply(split(endpt, grpf), length))
             }
 
-            if(class(rrfit)[1]=="rlm" & model!="olsonly" & !aft & !uv) {
+            if(class(rrfit)[1]=="rlm" && model!="olsonly" && !aft && !uv) {
               rr <- TRUE
             }
-            if(class(olsfit)[1]=="lm" & model!="rronly" & !aft & !uv) {
+            if(class(olsfit)[1]=="lm" && model!="rronly" && !aft && !uv) {
               ols <- TRUE
               if(!rr) model <- "olsonly"
             }
 
             numberofgrps <- length(grpnames)
             grpnamesindex <- 1:numberofgrps
-            if(!is.null(refgrp) & type=="allgroupstocontrol") {
+            if(!is.null(refgrp) && type=="allgroupstocontrol") {
               grpnamesindex <- c(which(grpnames==refgrp), which(grpnames!=refgrp))
             }
             
-            if(rr | ols) {
+            if(rr || ols) {
               df.residual <- olsfit$df.residual
             }
 
@@ -590,7 +590,7 @@ setMethod("comparisonsTable", "cgOneFactorFit",
                                         contrastmatrix=contrastmatrix,
                                         offset=offset, addpct=addpct, display="none",
                                         ...)
-              if(mcadjust) { multcompDone("Least Squares") }
+              if(mcadjust) { multcompDone("Classical Least Squares") }
             }
             
             if(rr) {
@@ -799,10 +799,10 @@ setMethod("print", "cgOneFactorComparisonsTable",
               uv <- TRUE
               validArgModel(...)              
             }
-            if(!is.null(rrcomprs) & model!="olsonly" & !aft & !uv) {
+            if(!is.null(rrcomprs) && model!="olsonly" && !aft && !uv) {
               rr <- TRUE
             }
-            if(!is.null(olscomprs) & (model!="rronly") & !aft & !uv) {
+            if(!is.null(olscomprs) && (model!="rronly") && !aft && !uv) {
               ols <- TRUE
             }
 
@@ -884,7 +884,7 @@ setMethod("print", "cgOneFactorComparisonsTable",
             if(curwidth < 500) { options(width=500) }
             
             if(ols) {
-              cat("\nLeast Squares Model Fit\n")
+              cat("\nClassical Least Squares Model Fit\n")
               informConfidence()
               print(fmtdig(olscomprs, diffmetric, digits), quote=FALSE)
             }
@@ -1041,7 +1041,7 @@ setMethod("errorBarGraph", "cgOneFactorFit",
             dots <- list(...)
             validDotsArgs(dots, names=c("model", "ticklabels"))
             
-            if(class(fit@uvfit)[1]=="gls" | class(fit@aftfit)[1]=="survreg") {
+            if(class(fit@uvfit)[1]=="gls" || class(fit@aftfit)[1]=="survreg") {
               stop(cgMessage("There is no errorBarGraph method",
                              "defined for a fitted model that allowed",
                              "unequal variances or censored observations.",
@@ -1098,10 +1098,10 @@ setMethod("errorBarGraph", "cgOneFactorFit",
             L <- contrastMatrix(list(grpnames), "pairwise")
 
             ols <- rr <- FALSE  ## Initializations
-            if(class(rrfit)[1]=="rlm" & model!="olsonly") {
+            if(class(rrfit)[1]=="rlm" && model!="olsonly") {
               rr <- TRUE
             }
-            if(class(olsfit)[1]=="lm" & model!="rronly") {
+            if(class(olsfit)[1]=="lm" && model!="rronly") {
               ols <- TRUE
             }
 
@@ -1139,7 +1139,7 @@ setMethod("errorBarGraph", "cgOneFactorFit",
                   ## assign this value:
                   attr(confint(glhtobj, level=1-alpha)$confint, "calpha")
                 }
-              if(mcadjust) { multcompDone("Least Squares") }
+              if(mcadjust) { multcompDone("Classical Least Squares") }
             }
 
             if(rr) {
@@ -1170,7 +1170,7 @@ setMethod("errorBarGraph", "cgOneFactorFit",
               
             }
 
-            if(rr & ols & is.element(model, "both") & device=="single") {
+            if(rr && ols && is.element(model, "both") && device=="single") {
               ols.dfr <- data.frame(type=rep("Classical", numberofgrps),
                                     grpf=factorInSeq(grpnames), estimate=olsestimates,
                                     lower=olsestimates -
@@ -1351,7 +1351,7 @@ setMethod("errorBarGraph", "cgOneFactorFit",
               
             }
 
-            else if((model=="olsonly" | (ols & !rr & model=="both")) &
+            else if((model=="olsonly" || (ols && !rr && model=="both")) &&
                     device=="single") {
               errorbargraph(olsestimates, olscentralvar,
                             olscritpoint,
@@ -1372,7 +1372,7 @@ setMethod("errorBarGraph", "cgOneFactorFit",
 
             }
 
-            else if(model=="rronly" & rr & device=="single") {
+            else if(model=="rronly" && rr && device=="single") {
               errorbargraph(rrestimates, rrcentralvar,
                             rrcritpoint,
                             endptscale,
@@ -1393,8 +1393,8 @@ setMethod("errorBarGraph", "cgOneFactorFit",
 
             }
 
-            else if(rr & ols &
-                    is.element(device, c("ask","multiple")) &
+            else if(rr && ols &&
+                    is.element(device, c("ask","multiple")) &&
                     is.element(model, "both")) { 
               
               device <- validArgMatch(device, c("multiple", "ask"))
@@ -1426,7 +1426,7 @@ setMethod("errorBarGraph", "cgOneFactorFit",
                 cat(cgMessage("A new graphics device has been generated",
                               "to hold the Resistant & Robust",
                               "errorBarGraph version.",
-                              "The Classical version is on the previous",
+                              "The Classical Least Squares version is on the previous",
                               "device.\n",
                               warning=TRUE))
               }
@@ -1656,17 +1656,17 @@ setMethod("grpSummaryTable", "cgOneFactorFit",
               validArgModel(...)
             }
 
-            if(class(rrfit)[1]=="rlm" & model!="olsonly" & !aft & !uv) {
+            if(class(rrfit)[1]=="rlm" && model!="olsonly" && !aft && !uv) {
               rr <- TRUE
             }
-            if(class(olsfit)[1]=="lm" & model!="rronly" & !aft & !uv) {
+            if(class(olsfit)[1]=="lm" && model!="rronly" && !aft && !uv) {
               ols <- TRUE
               if(!rr) model <- "olsonly"
             }
 
             n <- with(olsfit$dfru, sapply(split(endpt, grpf), length))
 
-            if(rr | ols) {
+            if(rr || ols) {
               df.residual <- olsfit$df.residual
             }
 
@@ -1681,7 +1681,7 @@ setMethod("grpSummaryTable", "cgOneFactorFit",
                                      mcadjust=mcadjust,
                                      alpha=alpha,
                                      offset=offset, display="none", ...)
-              if(mcadjust) { multcompDone("Least Squares") }
+              if(mcadjust) { multcompDone("Classical Least Squares") }
             }
             
             if(rr) {
@@ -1791,10 +1791,10 @@ setMethod("print", "cgOneFactorGrpSummaryTable",
               uv <- TRUE
               validArgModel(...)              
             }
-            if(!is.null(rrgrps) & model!="olsonly" & !aft & !uv) {
+            if(!is.null(rrgrps) && model!="olsonly" && !aft && !uv) {
               rr <- TRUE
             }
-            if(!is.null(olsgrps) & (model!="rronly") & !aft & !uv) {
+            if(!is.null(olsgrps) && (model!="rronly") && !aft && !uv) {
               ols <- TRUE
             }
 
@@ -1859,7 +1859,7 @@ setMethod("print", "cgOneFactorGrpSummaryTable",
             if(curwidth < 500) { options(width=500) }
             
             if(ols) {
-              cat("\nLeast Squares Model Fit\n")
+              cat("\nClassical Least Squares Model Fit\n")
               informConfidence()
               print(fmtdig(olsgrps, digits), quote=FALSE)
             }
@@ -2115,10 +2115,10 @@ setMethod("comparisonsGraph", "cgOneFactorComparisonsTable",
               uv <- TRUE
               validArgModel(...)              
             }
-            if(!is.null(rrcomprs) & model!="olsonly" & !aft & !uv) {
+            if(!is.null(rrcomprs) && model!="olsonly" && !aft && !uv) {
               rr <- TRUE
             }
-            if(!is.null(olscomprs) & (model!="rronly") & !aft & !uv) {
+            if(!is.null(olscomprs) && (model!="rronly") && !aft && !uv) {
               ols <- TRUE
             }
             
@@ -2126,13 +2126,15 @@ setMethod("comparisonsGraph", "cgOneFactorComparisonsTable",
 
             thetitle <- "Comparisons Graph"
 
-            if(rr & ols & is.element(model, "both") & device=="single") {
+            if(rr && ols && is.element(model, "both") && device=="single") {
               all.dfr <- rbind(olscomprs, rrcomprs)
               all.dfr$typef <- factorInSeq(c(rep("Classical",
                                                  nrow(olscomprs)),
                                              rep("Resistant & Robust",
                                                  nrow(rrcomprs))))
               thetitle <- paste(thetitle, "s", sep="")
+              numberofcomprs <- nrow(olscomprs)
+              comprnames <- row.names(olscomprs)
 
               cgDevice(cgtheme=cgtheme)
               trellispanelstg <- trellis.par.get("clip")$panel
@@ -2140,7 +2142,9 @@ setMethod("comparisonsGraph", "cgOneFactorComparisonsTable",
               on.exit(trellis.par.set("clip", list(panel=trellispanelstg)),
                       add=TRUE)
               trellisparstg2 <- trellis.par.get("layout.widths")
-              trellis.par.set("layout.widths", list(left.padding=5, ylab=5))
+              ymargin <- max(nchar(comprnames))/2
+              trellis.par.set("layout.widths", list(left.padding=ymargin,
+                                                    ylab=ymargin))
               on.exit(trellis.par.set("layout.widths", trellisparstg2),
                       add=TRUE)
               trellisparstg3 <- trellis.par.get("axis.components")
@@ -2154,8 +2158,6 @@ setMethod("comparisonsGraph", "cgOneFactorComparisonsTable",
                       add=TRUE)
 
               allx <- unlist(all.dfr[, c("estimate","lowerci","upperci")])
-              numberofcomprs <- nrow(olscomprs)
-              comprnames <- row.names(olscomprs)
               est <- all.dfr[, "estimate"]
               lower <- all.dfr[, "lowerci"]
               upper <- all.dfr[, "upperci"]
@@ -2353,7 +2355,7 @@ setMethod("comparisonsGraph", "cgOneFactorComparisonsTable",
               if(stamps) graphStampCG()
               
             }
-            else if((model=="olsonly" | (ols & !rr & model=="both")) &
+            else if((model=="olsonly" || (ols && !rr && model=="both")) &&
                     device=="single") {
               comparisonsgraph(olscomprs, difftype, analysisname,
                                endptlabel, alpha, titlestamp=FALSE,
@@ -2369,7 +2371,7 @@ setMethod("comparisonsGraph", "cgOneFactorComparisonsTable",
                                     desc=settings$type)
             }
             
-            else if((model=="rronly" | (!ols & rr & model=="both")) &
+            else if((model=="rronly" || (!ols && rr && model=="both")) &&
                     device=="single") {
               ##            else if(model=="rronly" & rr & device=="single") {
               comparisonsgraph(rrcomprs, difftype, analysisname,
@@ -2386,8 +2388,8 @@ setMethod("comparisonsGraph", "cgOneFactorComparisonsTable",
                                     desc=settings$type)
             }
 
-            else if(rr & ols &
-                    is.element(device, c("ask","multiple")) &
+            else if(rr && ols &&
+                    is.element(device, c("ask","multiple")) &&
                     is.element(model, "both")) {
               
               device <- validArgMatch(device, c("multiple", "ask"))
@@ -2417,7 +2419,7 @@ setMethod("comparisonsGraph", "cgOneFactorComparisonsTable",
                 cat(cgMessage("A new graphics device has been generated",
                               "to hold the Resistant & Robust",
                               "Comparisons Graph version.",
-                              "The Classical version is on the previous",
+                              "The Classical Least Squares version is on the previous",
                               "device.\n",
                               warning=TRUE))
               }
@@ -2435,7 +2437,7 @@ setMethod("comparisonsGraph", "cgOneFactorComparisonsTable",
                                     desc=settings$type)
             }
             
-            else if(aft & device=="single") {
+            else if(aft && device=="single") {
 
               comparisonsgraph(aftcomprs, difftype, analysisname,
                                endptlabel, alpha, titlestamp=FALSE,
@@ -2449,7 +2451,7 @@ setMethod("comparisonsGraph", "cgOneFactorComparisonsTable",
               comparisonsGraphStamp(mcadjust, alphapercent,
                                     desc=settings$type)
             }
-            else if(uv & device=="single") {
+            else if(uv && device=="single") {
               comparisonsgraph(uvcomprs, difftype, analysisname,
                                endptlabel, alpha, titlestamp=FALSE,
                                explanation=FALSE,
@@ -2520,7 +2522,7 @@ validComparisonType <- function(type, errordf) {
                    "or \"custom\"."))
   }
   
-  if(errordf=="approx" & !any(is.element(type,
+  if(errordf=="approx" && !any(is.element(type,
        c("pairwisereflect","pairwise",
          "allgroupstocontrol")))) {
     stop(cgMessage("The type argument must be one of \"pairwisereflect\",",
@@ -2608,7 +2610,7 @@ validCnames <- function(type, x, reqlength) {
 }
 
 validAddPct <- function(addpct, endptscale) {
-  if(addpct & endptscale=="log") {
+  if(addpct && endptscale=="log") {
     stop(cgMessage("The addpct argument cannot be TRUE,",
                    "and must be set to FALSE,",
                    "when the \"endptscale\" argument is",

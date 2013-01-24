@@ -61,7 +61,7 @@
   }
   \item{nmax }{
     The maximum number of subjects per group.  If more subjects are estimated
-    to be required, than the exact number required is not reported, only the
+    to be required, then the exact number required is not reported, only the
     fact that more than the maximum number would be required. This is in
     place to prevent long and likely unnecessary calculations.
   }
@@ -71,7 +71,7 @@
     \describe{
       \item{\code{"print"}}{
 	The default value, it calls a \code{print} method for the
-	created \cr\code{cgOneFactorComparisonsTable} object, which is
+	created \cr\code{cgOneFactorSamplesizeTable} object, which is
 	a formatted text output of the table(s).
       }
       \item{\code{"none"}}{
@@ -80,7 +80,7 @@
       }
       \item{\code{"show"}}{
 	Calls the default \code{\link{showDefault}} method, which
-	will just print out the \code{cgOneFactorComparisonsTable} components.
+	will just print out the \code{cgOneFactorSamplesizeTable} components.
       }
     }
   }

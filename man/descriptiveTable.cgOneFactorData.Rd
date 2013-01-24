@@ -33,7 +33,7 @@
       }
       \item{\code{"show"}}{
 	Calls the default \code{\link{showDefault}} method, which
-	will just print out the \code{descriptiveTable} components.
+	will just print out the cgOneFactorDescriptiveTable object components.
       }
     }
   }

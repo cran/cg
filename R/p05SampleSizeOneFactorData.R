@@ -1,4 +1,4 @@
-## $Id: p05SampleSizeOneFactorData.R 2959 2012-03-10 23:48:30Z bpikouni $ 
+## $Id: p05SampleSizeOneFactorData.R 3781 2013-01-11 20:07:34Z yye $ 
 ## One-Factor Unpaired Groups Case
 
 ## Sample Size Calculations for One-Factor Unpaired Groups Data
@@ -33,7 +33,7 @@ samplesize <- function(sigmaest, endptscale,
   }
   
   if(endptscale=="log") {
-    if(direction=="decreasing" & any(mmdvec >= 100)) {
+    if(direction=="decreasing" && any(mmdvec >= 100)) {
       stop(cgMessage("Percent Change Values of 100% or greater reduction",
                      "seem to have been entered.  Since this is",
                      "numerically impossible, please check and delete any such",
@@ -68,7 +68,7 @@ samplesize <- function(sigmaest, endptscale,
       ncp <- ( n * (mmdveci)^2 ) / ( 2 * sigmaest^2 ) 
       pwr <- 1 - pf(qf(1 - alpha, numdf, dendf.result), 
                     numdf, dendf.result, ncp)
-      if (pwr > power | n >= nmax) {
+      if (pwr > power || n >= nmax) {
         nfinal <- n
         break 
       }
@@ -344,12 +344,14 @@ samplesizegraph <- function(sstable,
                   numberofgrps, "groups") else ylab, line=1.8, cex=0.9, adj=0)
 
   if(any(n >= nmax)) {
-    coordinates <- cg.largest.empty(mmd.scaled, N.scaled,
-                                    width=0.30*(diff(range(
-                                      c(min(mmd.scaled),max(mmd.scaled))))),
-                                    height=0.25*(diff(range(
-                                      c(min(N.scaled),max(N.scaled))))))
-    legend(x=coordinates$x, y=coordinates$y, adj=0,
+    .R. <- TRUE
+    coordinates <- Hmisc::largest.empty(mmd.scaled, N.scaled,
+                                        width=0.30*(diff(range(
+                                          c(min(mmd.scaled),max(mmd.scaled))))),
+                                        height=0.25*(diff(range(
+                                          c(min(N.scaled),max(N.scaled))))),
+                                        method="area")
+    legend(x=coordinates$rect$x[1], y=coordinates$rect$y[1], adj=0,
            xjust=0, yjust=1, bty="n",
            legend=paste("For at least one difference\n",
              "the sample size\n",
@@ -381,7 +383,7 @@ setMethod("samplesizeTable", "cgOneFactorFit",
             ## estimation from One Factor Fit and other specifications
             ##
             ## Input arguments check
-            if(class(fit@uvfit)[1]=="gls" | class(fit@aftfit)[1]=="survreg") {
+            if(class(fit@uvfit)[1]=="gls" || class(fit@aftfit)[1]=="survreg") {
               stop(cgMessage("There is no samplesizeTable method",
                              "defined for a fitted model that allowed",
                              "unequal variances or censored observations."))
@@ -423,10 +425,10 @@ setMethod("samplesizeTable", "cgOneFactorFit",
             rrfit <- fit@rrfit
             olsfit <- fit@olsfit
 
-            if(class(rrfit)[1]=="rlm" & model!="olsonly") {
+            if(class(rrfit)[1]=="rlm" && model!="olsonly") {
               rr <- TRUE
             }
-            if(class(olsfit)[1]=="lm" & model!="rronly") {
+            if(class(olsfit)[1]=="lm" && model!="rronly") {
               ols <- TRUE
               if(!rr) model <- "olsonly"
             }
@@ -512,11 +514,11 @@ setMethod("print", "cgOneFactorSampleSizeTable",
             }
 
             ols <- rr <- FALSE  ## Initializations
-            if(!is.null(rr.sstable <- object@rr.sstable) & model!="olsonly") {
+            if(!is.null(rr.sstable <- object@rr.sstable) && model!="olsonly") {
               rr <- TRUE
               rr.sstable <- as.data.frame(rr.sstable)
             }
-            if(!is.null(ols.sstable <- object@ols.sstable) & (model!="rronly")) {
+            if(!is.null(ols.sstable <- object@ols.sstable) && (model!="rronly")) {
               ols <- TRUE
               ols.sstable <- as.data.frame(ols.sstable)
             }
@@ -598,7 +600,7 @@ setMethod("print", "cgOneFactorSampleSizeTable",
             if(curwidth < 500) { options(width=500) }
             
             if(ols) {
-              cat("\nLeast Squares Based\n")
+              cat("\nClassical Least Squares Based\n")
               informSettings(settings$sigmaest$ols)
               print(fmtdig(ols.sstable), quote=FALSE)
             }
@@ -674,10 +676,10 @@ setMethod("samplesizeGraph", "cgOneFactorSampleSizeTable",
             }
 
             ols <- rr <- FALSE  ## Initializations
-            if(!is.null(rr.sstable) & model!="olsonly") {
+            if(!is.null(rr.sstable) && model!="olsonly") {
               rr <- TRUE
             }
-            if(!is.null(ols.sstable) & model!="rronly") {
+            if(!is.null(ols.sstable) && model!="rronly") {
               ols <- TRUE
             }
 
@@ -685,7 +687,7 @@ setMethod("samplesizeGraph", "cgOneFactorSampleSizeTable",
 
             thetitle <- "Sample Size Graph"
 
-            if(rr & ols & is.element(model, "both") & device=="single") {
+            if(rr && ols && is.element(model, "both") && device=="single") {
               all.dfr <- as.data.frame(rbind(ols.sstable, rr.sstable))
               all.dfr$typef <- factorInSeq(c(rep("Classical",
                                                  nrow(ols.sstable)),
@@ -834,16 +836,18 @@ setMethod("samplesizeGraph", "cgOneFactorSampleSizeTable",
                                                digits=0, 
                                                grid=TRUE)
                                    if(any(round(N.range/ngrps, 0) >= nmax)) {
-                                     
-                                     coordinates <- cg.largest.empty(x, y,
-                                                                     width=0.30*(diff(range(
-                                                                       c(min(x),
-                                                                         max(x))))),
-                                                                     height=0.25*(diff(range(
-                                                                       c(min(y),
-                                                                         max(y))))),
-                                                                     grid=TRUE)
-                                     panel.text(x=coordinates$x, y=coordinates$y,
+
+                                     .R. <- TRUE
+                                     coordinates <-  Hmisc::largest.empty(x, y,
+                                                                          width=0.30*(diff(range(
+                                                                            c(min(x),
+                                                                              max(x))))),
+                                                                          height=0.25*(diff(range(
+                                                                            c(min(y),
+                                                                              max(y))))),
+                                                                          grid=TRUE,
+                                                                          method="area")
+                                     panel.text(x=coordinates$rect$x[1], y=coordinates$rect$y[1],
                                                 label=paste("For at least one difference\n",
                                                   "the sample size\n",
                                                   "calculations were truncated\n",
@@ -924,7 +928,7 @@ setMethod("samplesizeGraph", "cgOneFactorSampleSizeTable",
               usedgrid <- TRUE
             }
             
-            else if(((model=="olsonly" & ols) | (ols & !rr & model=="both")) &
+            else if(((model=="olsonly" && ols) || (ols && !rr && model=="both")) &&
                     device=="single") {
               samplesizegraph(ols.sstable,
                               mmdscale,
@@ -959,7 +963,7 @@ setMethod("samplesizeGraph", "cgOneFactorSampleSizeTable",
               
             }
 
-            else if(((model=="rronly" & rr) | (!ols & rr & model=="both")) &
+            else if(((model=="rronly" && rr) || (!ols && rr && model=="both")) &&
                     device=="single") {
               samplesizegraph(rr.sstable,
                               mmdscale,
@@ -993,8 +997,8 @@ setMethod("samplesizeGraph", "cgOneFactorSampleSizeTable",
               usedgrid <- FALSE
               
             }
-            else if(rr & ols &
-                    is.element(device, c("ask","multiple")) &
+            else if(rr && ols &&
+                    is.element(device, c("ask","multiple")) &&
                     is.element(model, "both")) { 
               
               device <- validArgMatch(device, c("multiple", "ask"))

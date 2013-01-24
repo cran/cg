@@ -1,4 +1,4 @@
-## $Id: p04DiagnosticsOneFactorData.R 2959 2012-03-10 23:48:30Z bpikouni $
+## $Id: p04DiagnosticsOneFactorData.R 3781 2013-01-11 20:07:34Z yye $
 ## One-Factor Unpaired Groups Case
 
 ## Diagnostics methods for One-Factor Unpaired Groups Data
@@ -31,7 +31,7 @@ variancegraph <- function(resids, fitteds,
                      "package. (The variancegraph() function cannot",
                      "handle interval censored data.)"))
     }
-    if((length(resids) != length(fitteds)) | (length(resids) != length(status))) {
+    if((length(resids) != length(fitteds)) || (length(resids) != length(status))) {
       stop(cgMessage("The resids, fitteds, and status argument values",
                      "must be have equal length."))
     }
@@ -54,7 +54,7 @@ variancegraph <- function(resids, fitteds,
   options(warn=0)
   on.exit(par(curpar), add=TRUE)
 
-  ylabchar <- if((is.character(endptname) && endptname!="" |
+  ylabchar <- if((is.character(endptname) && endptname!="" ||
                   is.expression(endptname)))  {
     catCharExpr("Absolute Residual in  ",
                 endptname)
@@ -135,7 +135,7 @@ variancegraph <- function(resids, fitteds,
            }
          })
 
-    if(trendstamp & trend) {
+    if(trendstamp && trend) {
       if(!has.censored) {
         mtext(text=paste("smoothed line with x-axis ordered by fitted group means"),
               side=3,
@@ -235,10 +235,10 @@ setMethod("varianceGraph", "cgOneFactorFit",
               validArgModel(...)
             }
             
-            if(class(rrfit)[1]=="rlm" & model!="olsonly" & !aft & !uv) {
+            if(class(rrfit)[1]=="rlm" && model!="olsonly" && !aft && !uv) {
               rr <- TRUE
             }
-            if(class(olsfit)[1]=="lm" & model!="rronly" & !aft & !uv) {
+            if(class(olsfit)[1]=="lm" && model!="rronly" && !aft && !uv) {
               ols <- TRUE
               if(!rr) model <- "olsonly"
             }
@@ -252,8 +252,8 @@ setMethod("varianceGraph", "cgOneFactorFit",
             thesmoothmsg <- paste("smoothed line with x-axis ordered by fitted group means")
 
 
-            if(rr & ols & is.element(model, c("both", "extended"))
-               & device=="single") {
+            if(rr && ols && is.element(model, c("both", "extended"))
+               && device=="single") {
               ols.tukeyresids <- sqrt(abs(resid(olsfit)))
               ols.dfr <- residualgrptrend.helper(ols.tukeyresids,
                                                  fitted(olsfit),
@@ -378,7 +378,7 @@ setMethod("varianceGraph", "cgOneFactorFit",
               invisible()
             }
             
-            else if(model=="olsonly" & ols & device=="single") {
+            else if(model=="olsonly" && ols && device=="single") {
               variancegraph(resid(olsfit), fitted(olsfit),
                             grp = olsfit$dfru$grpf, desc = "Classical",
                             analysisname=analysisname, 
@@ -389,8 +389,8 @@ setMethod("varianceGraph", "cgOneFactorFit",
 
             }
 
-            else if((model=="rronly" | model=="rrwtdonly") & rr
-                    & device=="single") {
+            else if((model=="rronly" || model=="rrwtdonly") && rr
+                    && device=="single") {
               variancegraph(sqrt(rrfit$w)*resid(rrfit), fitted(rrfit),
                             grp = olsfit$dfru$grpf,
                             desc = "Resistant & Robust Weighted",
@@ -401,7 +401,7 @@ setMethod("varianceGraph", "cgOneFactorFit",
               if(settings$stamps) graphStampCG(grid=FALSE)
             }
 
-            else if(model=="rrunwtdonly" & rr & device=="single") {
+            else if(model=="rrunwtdonly" && rr && device=="single") {
               variancegraph(resid(rrfit), fitted(rrfit),
                             grp = olsfit$dfru$grpf,
                             desc = "Resistant & Robust Unweighted",
@@ -412,8 +412,8 @@ setMethod("varianceGraph", "cgOneFactorFit",
               if(settings$stamps) graphStampCG(grid=FALSE)
             }
 
-            else if(rr & ols &
-                    is.element(device, c("ask","multiple")) &
+            else if(rr && ols &&
+                    is.element(device, c("ask","multiple")) &&
                     is.element(model, c("both", "extended"))) {
               if(device=="ask") {
                 op <- par(ask = TRUE)
@@ -459,7 +459,7 @@ setMethod("varianceGraph", "cgOneFactorFit",
               }
             }
             
-            else if(uv & device=="single") {
+            else if(uv && device=="single") {
               variancegraph(residuals(uvfit, type="pearson"), fitted(uvfit),
                             grp = uvfit$dfru$grpf,
                             desc = "Unequal Variances",
@@ -471,7 +471,7 @@ setMethod("varianceGraph", "cgOneFactorFit",
               if(settings$stamps) graphStampCG(grid=FALSE)
             }
 
-            else if(aft & device=="single") {
+            else if(aft && device=="single") {
               variancegraph(residuals(aftfit, type="response"),
                             predict(aftfit),
                             status=aftfit$dfru$status,
@@ -534,7 +534,7 @@ qqgraph <- function(resids, line=NULL, status=NULL,
   options(warn=0)
   on.exit(par(curpar), add=TRUE)
 
-  ylabchar <- if((is.character(endptname) && endptname!="" |
+  ylabchar <- if((is.character(endptname) && endptname!="" ||
                   is.expression(endptname)))  {
     catCharExpr("Residual in  ",
                 endptname)
@@ -681,10 +681,10 @@ setMethod("qqGraph", "cgOneFactorFit",
               validArgModel(...)
             }
             
-            if(class(rrfit)[1]=="rlm" & model!="olsonly" & !aft & !uv) {
+            if(class(rrfit)[1]=="rlm" && model!="olsonly" && !aft && !uv) {
               rr <- TRUE
             }
-            if(class(olsfit)[1]=="lm" & model!="rronly" & !aft & !uv) {
+            if(class(olsfit)[1]=="lm" && model!="rronly" && !aft && !uv) {
               ols <- TRUE
               if(!rr) model <- "olsonly"
             }
@@ -701,8 +701,8 @@ setMethod("qqGraph", "cgOneFactorFit",
                                 type=rep(type, length(resid))))
             }
 
-            if(rr & ols & is.element(model, c("both", "extended"))
-               & device=="single") {
+            if(rr && ols && is.element(model, c("both", "extended"))
+               && device=="single") {
               ols.dfr <-  residual.helper(residuals(olsfit), "Classical")
               rrwtd.dfr <- residual.helper(sqrt(rrfit$w)*resid(rrfit),
                                            "RR Weighted")
@@ -801,7 +801,7 @@ setMethod("qqGraph", "cgOneFactorFit",
               if(settings$stamps) graphStampCG()
             }
 
-            else if(model=="olsonly" & ols & device=="single") {
+            else if(model=="olsonly" && ols && device=="single") {
               qqgraph(resid(olsfit),
                       analysisname = analysisname,
                       desc="Classical fit",
@@ -811,8 +811,8 @@ setMethod("qqGraph", "cgOneFactorFit",
               if(settings$stamps) graphStampCG(grid=FALSE)
             }
 
-            else if((model=="rronly" | model=="rrwtdonly") & rr
-                    & device=="single") {
+            else if((model=="rronly" || model=="rrwtdonly") && rr
+                    && device=="single") {
               qqgraph(sqrt(rrfit$w)*resid(rrfit),
                       line=line,
                       desc = "Resistant & Robust fit Weighted",
@@ -822,7 +822,7 @@ setMethod("qqGraph", "cgOneFactorFit",
               if(settings$stamps) graphStampCG(grid=FALSE)
             }
 
-            else if(model=="rrunwtdonly" & rr & device=="single") {
+            else if(model=="rrunwtdonly" && rr && device=="single") {
               qqgraph(resid(rrfit),
                       line=line,
                       desc = "Resistant & Robust fit Unweighted",
@@ -832,8 +832,8 @@ setMethod("qqGraph", "cgOneFactorFit",
               if(settings$stamps) graphStampCG(grid=FALSE)
             }
 
-            else if(rr & ols &
-                    is.element(device, c("ask","multiple")) &
+            else if(rr && ols &&
+                    is.element(device, c("ask","multiple")) &&
                     is.element(model, c("both", "extended"))) {
               if(device=="ask") {
                 op <- par(ask = TRUE)
@@ -877,7 +877,7 @@ setMethod("qqGraph", "cgOneFactorFit",
               }
             }            
 
-            else if(uv & device=="single") {
+            else if(uv && device=="single") {
               qqgraph(residuals(uvfit, type="pearson"),
                       line=line,
                       desc = "Unequal Variances fit",
@@ -888,7 +888,7 @@ setMethod("qqGraph", "cgOneFactorFit",
               if(settings$stamps) graphStampCG(grid=FALSE)
             }
 
-            else if(aft & device=="single") {
+            else if(aft && device=="single") {
               qqgraph(residuals(aftfit, type="response"),
                       status=aftfit$dfru$status,
                       line=line,
@@ -1043,7 +1043,7 @@ setMethod("show", "cgOneFactorDownweightedTable",
 
 
 validCutoffWt <- function(x) {
-  if(missing(x) ||  !(x > 0 & x < 1) ) {
+  if(missing(x) ||  !(x > 0 && x < 1) ) {
     stop(cgMessage("The cutoffwt value for identifying",
                    "downweighted points",
                    "needs to be numerically specified",

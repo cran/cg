@@ -13,13 +13,13 @@ showObj(object)
 
 \arguments{
   \item{object}{
-    An object created by the \pkg{cg} package. The only class of object currently
+    An object created by the \pkg{cg} package. The class of objects currently
     available is \code{\link{cgOneFactorFit}}.
   }
 }
 \details{
   The object raw form is shown using \code{\link{showDefault}}. The name
-  \code{showObj} is designed for use when the coventional \code{show}
+  \code{showObj} is designed for use when the conventional \code{show}
   name is an alias for \code{print} in the cg package. 
 }
 \value{

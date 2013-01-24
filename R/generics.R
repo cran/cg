@@ -1,4 +1,4 @@
-## $Id: generics.R 3169 2012-05-17 18:52:51Z yye $
+## $Id: generics.R 3726 2012-12-21 03:40:32Z yye $
 
 setGeneric("fit",
            function(data, type, ...) {
@@ -10,39 +10,25 @@ setGeneric("pointGraph",
              standardGeneric("pointGraph")
            })
 
-if(F) {
-setGeneric("subjProfile",
-           function(data,...) {
-             standardGeneric("subjProfile")
+setGeneric("profileGraph",
+           function(data, ...) {
+             standardGeneric("profileGraph")
            })
 
-setGeneric("diffPlot",
+setGeneric("diffGraph",
            function(data,...) {
-             standardGeneric("diffPlot")
+             standardGeneric("diffGraph")
            })
-
-setGeneric("marginalProfile",
-           function(data,...) {
-             standardGeneric("marginalProfile")
-           })
-
-setGeneric("timeSlicePointBoxGraph",
-           function(data,...) {
-             standardGeneric("timeSlicePointBoxGraph")
-           })
-}
 
 setGeneric("descriptiveTable",
            function(data, display="print", ...) {
              standardGeneric("descriptiveTable")
            })
 
-if(F) {
-  setGeneric("correlationTable",
+setGeneric("correlationTable",
            function(data, display="print", ...) {
              standardGeneric("correlationTable")
            })
-}
 
 setGeneric("globalTest",
            function(fit, display="print", ...) {
@@ -58,9 +44,14 @@ setGeneric("comparisonsTable",
            })
 
 setGeneric("grpSummaryTable",
-
            function(fit, mcadjust=FALSE, alpha=0.05, display="print", ...) {
              standardGeneric("grpSummaryTable")
+           })
+
+
+setGeneric("varianceTable",
+           function(fit, display="print", ...) {
+             standardGeneric("varianceTable")
            })
 
 setGeneric("errorBarGraph",
@@ -114,4 +105,24 @@ setGeneric("showObj",
            function(object) {
              standardGeneric("showObj")
            })
-                                           
+
+
+##############################
+# For repeated measures
+
+
+setGeneric("subjProfile",
+           function(data,...) {
+             standardGeneric("subjProfile")
+           })
+
+setGeneric("marginalProfile",
+           function(data,...) {
+             standardGeneric("marginalProfile")
+           })
+
+setGeneric("timeSlicePointBoxGraph",
+           function(data,...) {
+             standardGeneric("timeSlicePointBoxGraph")
+           })
+

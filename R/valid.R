@@ -1,4 +1,4 @@
-## $Id: valid.R 2788 2010-09-06 01:58:42Z user $ UTC
+## $Id: valid.R 3782 2013-01-13 03:06:19Z yye $ UTC
 
 ## Functions for verifying input arguments to functions
 
@@ -8,7 +8,7 @@ validAlpha <- function(x) {
   ## statistical hypothesis testing (Type I error) and needs to
   ## follow the condition below.
   x <- as.numeric(x)
-  if(!(is.numeric(x) & (length(x)==1) & (x > 0) & (x < 1))) {
+  if(!(is.numeric(x) && (length(x)==1) && (x > 0) && (x < 1))) {
     stop(cgMessage("alpha needs to be a strictly numeric single",
                    "value that is greater than 0",
                    "and less than 1. Traditional practice uses the",
@@ -24,7 +24,7 @@ validPower <- function(x) {
   ## statistical hypothesis testing and needs to
   ## follow the condition below.
   x <- as.numeric(x)
-  if(!(is.numeric(x) & (length(x)==1) & (x > 0) & (x < 1))) {
+  if(!(is.numeric(x) && (length(x)==1) && (x > 0) && (x < 1))) {
     stop(cgMessage("Power needs to be a strictly numeric single",
                    "value that is greater than 0",
                    "and less than 1. Traditional practice uses the",
@@ -96,11 +96,11 @@ validNumeric <- function(arg, positive=FALSE, integer=FALSE) {
                      if(positive) "greater than zero" else "",
                      "numeric value"))
   }
-  if(positive & any(arg <= 0))  {
+  if(positive && any(arg <= 0))  {
       stop(cgMessage("All values of the argument ", argname, " need to be of",
                      "positive value."))
   }
-  if(integer & any(arg%%1 != 0))  {
+  if(integer && any(arg%%1 != 0))  {
       stop(cgMessage("All values of the argument ", argname, " need to be of",
                      "integer value."))
   }
@@ -287,7 +287,7 @@ validArgMatch <- function(arg, choices, argname=NULL) {
 
 validArgDigits <- function(x) {
   if(is.null(x)) return(NULL)
-  if(!(is.numeric(x) & is.element(x, 0:4))) {
+  if(!(is.numeric(x) && is.element(x, 0:4))) {
     stop(cgMessage("The digits argument needs to be",
                    "set to one of NULL, 0, 1, 2, 3,",
                    "or 4."))

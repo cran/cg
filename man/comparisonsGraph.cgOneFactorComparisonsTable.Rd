@@ -18,9 +18,8 @@
     A \code{comparisonsTable} object created by a 
     \code{\link{comparisonsTable}} method 
     from the \pkg{cg}
-    package. The only class of object currently
-    available is \cr\code{\link{cgOneFactorComparisonsTable}}, which is prepared by the\cr
-    \code{\link{comparisonsTable.cgOneFactorFit}} method.  
+    package. \cr There is currently one class of objects that is currently available:
+    \cr\code{\link{cgOneFactorComparisonsTable}}, which is prepared by the \cr\code{\link{comparisonsTable.cgOneFactorFit}} method. 
   }
   \item{cgtheme }{
     When set to the default \code{TRUE}, ensures a trellis device is active with

@@ -15,9 +15,7 @@ descriptiveTable(data, display = "print", \dots)
   \item{data }{
     A data object created and prepared (see \code{\link{prepare}})
     using the \pkg{cg}
-    package. The only class of object currently
-    valid is \code{\link{cgOneFactorData}}, which is created by the
-    \code{\link{prepareCGOneFactorData}} function.  
+    package.   
   }
   \item{display }{One of three valid values:
     
@@ -84,6 +82,9 @@ gmcsfcens.data <- prepareCGOneFactorData(gmcsfcens, format="groupcolumns",
                                          endptname="GM-CSF (pg/ml)",
                                          logscale=TRUE)
 descriptiveTable(gmcsfcens.data)
+
+
+
 }
 \concept{exploratory}
 \concept{descriptive}

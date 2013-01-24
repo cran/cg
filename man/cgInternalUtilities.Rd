@@ -59,6 +59,7 @@
 \alias{boxplotcensoreddata}
 \alias{descriptive.censoreddata}
 \alias{pairwisecompsmatrix}
+\alias{samplesize.default}
 
 \title{ cg package Internal Utilities}
 \description{
@@ -122,16 +123,15 @@ qminmin
 unpaste
 grpsummary
 samplesize
-samplesizegraph}
+samplesizegraph
+boxplotcensoreddata
+descriptive.censoreddata
+pairwisecompsmatrix}
 
 are used internally by the \pkg{cg} package. See source code for details.
 
 The \code{blockDiag} function is adapted from a Ben Bolker
 function contribution on R-help in 2002.
-
-The \code{cg.largest.empty} function is a simplification of the Hmisc package
-function {\code{largest.empty}} function in that it does not check if it
-being called under R.
 
 The \code{factorInSeq} function is exported since it may be useful for a
 user. It is a simple wrapper around \code{\link{factor}}

@@ -2,39 +2,40 @@ import("methods","graphics")
 importFrom("VGAM","vgam","cennormal1")
 import("Hmisc")
 
-export("prepare", "prepareCGOneFactorData",
+export("prepare", "prepareCGOneFactorData", 
        "comparisons", "comparisonsgraph","errorbargraph",
        "factorInSeq"	
-       )
+)
 
 exportMethods(
-              "comparisonsGraph",
-              "comparisonsTable",
-              "descriptiveTable",
-              "downweightedTable",
-              "errorBarGraph",
-              "fit",
-              "globalTest",
-              "grpSummaryTable",
-              "kmGraph",
-              "pointGraph",
-              "qqGraph",
-              "samplesizeGraph",
-              "samplesizeTable",
-			  "showObj",
-              "varianceGraph"
-              )
+    "comparisonsGraph",
+    "comparisonsTable",
+    "descriptiveTable",
+    "downweightedTable",
+    "errorBarGraph",
+    "fit",
+    "globalTest",
+    "grpSummaryTable",
+    "kmGraph",
+    "pointGraph",
+    "qqGraph",
+    "samplesizeGraph",
+    "samplesizeTable",
+    "showObj",
+    "varianceGraph"
+)
 
 exportPattern("print[.*]",
               "show[.*]",
 			  "summary[.*]",
               "boxplot[.*]",
+			  "diffGraph[.*]",
               "comparisonsGraph[.*]",
               "comparisonsTable[.*]",
               "descriptiveTable[.*]",
               "downweightedTable[.*]",
               "errorBarGraph[.*]",
-              "fit[.*]",
+			  "fit[.*]",
               "globalTest[.*]",
               "grpSummaryTable[.*]",
               "kmGraph[.*]",
@@ -43,18 +44,18 @@ exportPattern("print[.*]",
               "samplesizeGraph[.*]",
               "samplesizeTable[.*]",
 			  "showObj[.*]",
-              "varianceGraph[.*]")
+			  "varianceGraph[.*]"
+)
 
-exportClasses(
-              "olsfit","rrfit","aftfit","uvfit",
-              "numericOrNULL","dataframeMatrixOrNULL",
-              "dataframeOrNULL","characterOrNULL","characterOrExpression",
-              "cgOneFactorComparisonsTable",
-              "cgOneFactorData",
-              "cgOneFactorDescriptiveTable",
-              "cgOneFactorDownweightedTable",
-              "cgOneFactorFit",
-              "cgOneFactorGlobalTest",
-              "cgOneFactorGrpSummaryTable",
-              "cgOneFactorSampleSizeTable"
-              )
+exportClasses("olsfit","rrfit","aftfit","uvfit",
+     "numericOrNULL","dataframeMatrixOrNULL",
+     "dataframeOrNULL","characterOrNULL","characterOrExpression",
+     "cgOneFactorComparisonsTable",
+     "cgOneFactorData",
+     "cgOneFactorDescriptiveTable",
+     "cgOneFactorDownweightedTable",
+     "cgOneFactorFit",
+     "cgOneFactorGlobalTest",
+     "cgOneFactorGrpSummaryTable",
+     "cgOneFactorSampleSizeTable"
+)

@@ -1,4 +1,4 @@
-## $Id: p00ReadInOneFactorData.R 2911 2012-02-21 11:39:27Z bpikouni $
+## $Id: p00ReadInOneFactorData.R 3781 2013-01-11 20:07:34Z yye $
 ## One-Factor Unpaired Groups Case
 
 ## Read-in functionality
@@ -35,12 +35,12 @@ prepareCGOneFactorData <- function(dfr, format="listed",
   if(!is.data.frame(dfr)) {
     stop(cgMessage("The input data needs to be of class data.frame"))
   }
-  if(!is.null(zeroscore) & !is.null(addconstant)) {
+  if(!is.null(zeroscore) && !is.null(addconstant)) {
     stop(cgMessage("The zeroscore and addconstant arguments",
                    "cannot be specified at the same time.",
                    seeHelpFile("prepareCGOneFactorData")))
   }
-  if(logscale==FALSE & (!is.null(zeroscore) | !is.null(addconstant))) {
+  if(logscale==FALSE && (!is.null(zeroscore) || !is.null(addconstant))) {
     stop(cgMessage("Both the zeroscore and addconstant arguments",
                    "must be NULL when logscale=FALSE.",
                    seeHelpFile("prepareCGOneFactorData")))
@@ -129,15 +129,15 @@ prepareCGOneFactorData <- function(dfr, format="listed",
   }
 
   ## Do we need to replace 0's with a non-zero score?
-  if(logscale & !is.null(zeroscore)) {
+  if(logscale && !is.null(zeroscore)) {
 
-    if(has.censored & !is.numeric(zeroscore)) {
+    if(has.censored && !is.numeric(zeroscore)) {
         stop(cgMessage("The zeroscore argument can only",
                        "be numeric when there is censoring",
                        "in the data.",
                      seeHelpFile("prepareCGOneFactorData")))
     }
-    else if(has.censored & is.numeric(zeroscore)) {
+    else if(has.censored && is.numeric(zeroscore)) {
       endpt <- dfru$endpt
       endpt1 <- dfru$endpt1
       endpt2 <- dfru$endpt2
@@ -186,16 +186,16 @@ prepareCGOneFactorData <- function(dfr, format="listed",
   }
 
   ## Or perhaps add a constant to all values so log is defined?
-  if(logscale & !is.null(addconstant)) {
+  if(logscale && !is.null(addconstant)) {
 
-    if(has.censored & !is.numeric(addconstant)) {
+    if(has.censored && !is.numeric(addconstant)) {
       stop(cgMessage("The addconstant argument can only",
                      "be numeric when there is censoring",
                      "in the data.",
                      seeHelpFile("prepareCGOneFactorData")))
     }
 
-    else if(has.censored & is.numeric(addconstant)) {
+    else if(has.censored && is.numeric(addconstant)) {
       endpt <- dfru$endpt
       endpt1 <- dfru$endpt1
       endpt2 <- dfru$endpt2
@@ -240,7 +240,7 @@ prepareCGOneFactorData <- function(dfr, format="listed",
   }
 
   ## If logscale, are all endpoint values greater than 0?
-  if(!has.censored & logscale & any(dfru$endpt <= 0)) {
+  if(!has.censored && logscale && any(dfru$endpt <= 0)) {
     stop(cgMessage("There seems to be at least one zero or",
                    "negative value in the endpoint data prepared",
                    "for analysis, so a",
@@ -249,7 +249,7 @@ prepareCGOneFactorData <- function(dfr, format="listed",
                    seeHelpFile("prepareCGOneFactorData")))
   }
   else if(has.censored && logscale &&
-          (any(stripmiss(dfru$endpt1) <=0) | any(stripmiss(dfru$endpt2) <=0))) {
+          (any(stripmiss(dfru$endpt1) <=0) || any(stripmiss(dfru$endpt2) <=0))) {
     stop(cgMessage("There seems to be at least one zero or",
                    "negative value in the endpoint data prepared",
                    "for analysis, so a",
@@ -360,7 +360,7 @@ validCGOneFacListedDfr <- function(dfr, rightcensor, leftcensor) {
     ## remove any observations with critically missing information
     dfr <- dfr[!(is.na(dfr[,2]) | is.na(dfr[,3])), ]
     
-    if(is.null(leftcensor) & is.null(rightcensor)) {
+    if(is.null(leftcensor) && is.null(rightcensor)) {
       ## must have 0, 1, and 2 each represented
       statuscheck012 <- table(as.numeric(dfr[[3]])) 
       if(length(statuscheck012)!=3 || sum(as.numeric(names(statuscheck012)))!=3) {
@@ -379,7 +379,7 @@ validCGOneFacListedDfr <- function(dfr, rightcensor, leftcensor) {
       ## or else must be a format where there
       ## is left censoring OR right censoring,
       ## but not both
-      if(!is.null(leftcensor) & !is.null(rightcensor)) {
+      if(!is.null(leftcensor) && !is.null(rightcensor)) {
         stop(cgMessage("The leftcensor and rightcensor",
                        "arguments cannot both be specified",
                        "with this listed input data format.",
@@ -438,7 +438,7 @@ validCGOneFacListedDfr <- function(dfr, rightcensor, leftcensor) {
                              (endpt2 > endpt1) & (status==3))
       check.notcens <- (!is.na(endpt1) & !is.na(endpt2) &
                         (endpt2==endpt1) & (status==1))
-      if(!(check.rightcens | check.leftcens | check.intervalcens |
+      if(!(check.rightcens || check.leftcens || check.intervalcens ||
            check.notcens)) {
         FALSE
       }
@@ -483,7 +483,7 @@ validCensor <- function(x, direction) {
 
 
 validZeroScore <- function(zeroscore, endpt) {
-  if(is.null(zeroscore) | is.numeric(zeroscore)) { return(zeroscore) }
+  if(is.null(zeroscore) || is.numeric(zeroscore)) { return(zeroscore) }
   else if(is.character(zeroscore)) {
     if(zeroscore=="estimate") {
       nzendpt <- unique(endpt[endpt > 0])
@@ -505,7 +505,7 @@ validZeroScore <- function(zeroscore, endpt) {
 }
 
 validAddConstant <- function(addconstant, endpt, grpf) {
-  if(is.null(addconstant) | is.numeric(addconstant)) { return(addconstant) }
+  if(is.null(addconstant) || is.numeric(addconstant)) { return(addconstant) }
   else if(is.character(addconstant)) {
     if(addconstant=="simple") {
       if(min(endpt) > 0) {
@@ -526,7 +526,7 @@ validAddConstant <- function(addconstant, endpt, grpf) {
       y <- endpt ## needed for following evaluation:
       alphalength <- length(eval(formals(MASS:::logtrans.default)$alpha))
       
-      if(indx==1 | indx==alphalength) {
+      if(indx==1 || indx==alphalength) {
         ## expand alpha argument default in MASS:::logtrans
         e.alpha <- c(0.001, 0.01, 0.1,
                      0.2, 0.3, 0.4, seq(0.5, 10, seq=0.25)) - min(endpt)
@@ -534,7 +534,7 @@ validAddConstant <- function(addconstant, endpt, grpf) {
                                  alpha=e.alpha,
                                  plotit=FALSE)
         e.indx <- which.max(e.ltf$y)
-        if(indx==1 | e.indx==length(e.alpha)) {
+        if(indx==1 || e.indx==length(e.alpha)) {
           warning(cgMessage("Caution: The estimation of addconstant with the VR",
                             "method is on the boundary. This should not be trusted.",
                             "You may want to run",

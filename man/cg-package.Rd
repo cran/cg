@@ -7,20 +7,20 @@
 analysis software, and stands for "compare groups." Its genesis and
 evolution are driven by common needs to compare samples, administrations,
 conditions, etc. in medicine research & development. The current version
-provides comparisons of unpaired samples, i.e. a linear model with one
-factor of at least two levels. Good data graphs, modern statistical
+provides comparisons of both unpaired and paired samples, i.e. a linear model 
+with one factor of at least two levels, or with paired difference data. Good data graphs, modern statistical
 methods, and useful displays of results are emphasized.
 }
 \details{
 Package: cg\cr
 Type: Package\cr
-Version: 0.9-5\cr
-Date: 2012-08-13\cr
+Version: 0.9-6\cr
+Date: 2013-01-24\cr
 License: GPL (>= 2)\cr
 LazyLoad: yes\cr
 LazyData: yes\cr
 Depends: R (>= 2.14.0), Hmisc, base, utils, methods, stats, graphics,\cr
-grid, lattice, MASS, survival, multcomp, nlme
+grid, lattice, MASS, survival, multcomp, nlme\cr
 Imports: VGAM (>=0.8.6)
 }
 \author{
@@ -29,7 +29,13 @@ Bill Pikounis and John Oleynick
 Maintainer: Bill Pikounis <cg@billpikounis.net>
 
 }
+\references{
+  Pikounis, B. and Oleynick, J. (2013).  "The cg Package for Comparison of Groups",
+  \emph{Journal of Statistical Software}, Volume 52, Issue 1, 1-27, \url{http://www.jstatsoft.org/v52/i01/}.
+}
 \examples{
+#### One Factor data
+
 data(canine)
 canine.data <- prepareCGOneFactorData(canine, format="groupcolumns",
                                       analysisname="Canine",
@@ -83,7 +89,7 @@ descriptiveTable(gmcsfcens.data)
 gmcsfcens.fit <- fit(gmcsfcens.data, type="aft")
 
 }
-\keyword{package}
+\keyword{ package }
 \concept{compare groups}
 \concept{comparisons}
 \concept{point graph}
@@ -93,4 +99,3 @@ gmcsfcens.fit <- fit(gmcsfcens.data, type="aft")
 \concept{censored}
 \concept{diagnostics}
 \concept{samplesize}
-

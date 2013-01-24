@@ -17,10 +17,10 @@ samplesizeTable(fit, ngrps = 2, direction, mmdvec, power = 0.80,
   \item{fit }{
     An object created by calling a 
     \code{\link{fit}} method from the \pkg{cg} package.
-    The only class of object currently
-    available is \code{\link{cgOneFactorSampleSizeTable}}, which is prepared by the
-    \code{\link{samplesizeTable.cgOneFactorFit}} method.  
-  }
+    \cr There is currently one class of objects that are currently available:
+    \cr\code{\link{cgOneFactorFit}}, which is prepared by the 
+    \cr\code{\link{fit.cgOneFactorData}} method. 
+  }  
   \item{ngrps }{
     The number of groups that will be in the future study.
   }
@@ -108,6 +108,8 @@ One of three valid values:
   \code{\link{samplesizeTable.cgOneFactorFit}}
 }
 \examples{
+#### One Factor data
+
 data(canine)
 canine.data <- prepareCGOneFactorData(canine, format="groupcolumns",
                                       analysisname="Canine",
@@ -120,5 +122,7 @@ canine.samplesize <- samplesizeTable(canine.fit, direction="increasing",
                                      mmdvec=c(10, 25, 50, 75, 100))
 
 samplesizeGraph(canine.samplesize)
+
+
 }
 \concept{sample size}
