@@ -80,6 +80,8 @@ samplesizeGraph(sstable, Nscale = "log", mmdscale = "log",
   \code{\link{samplesizeGraph.cgOneFactorSampleSizeTable}}
 }
 \examples{
+#### One Factor data
+
 data(canine)
 canine.data <- prepareCGOneFactorData(canine, format="groupcolumns",
                                       analysisname="Canine",
@@ -92,4 +94,7 @@ canine.samplesize <- samplesizeTable(canine.fit, direction="increasing",
                                      mmdvec=c(10, 25, 50, 75, 100))
 
 samplesizeGraph(canine.samplesize)
+
+
+
 }

@@ -70,7 +70,9 @@ prepareCGOneFactorData(dfr, format = "listed", analysisname = "",
     add a numeric constant to all response values, as an
     approach to overcome the presence of zeroes when evaluation in the
     logarithmic scale \code{logscale=TRUE} is desired. The default value is
-    \code{NULL}.}
+    \code{NULL}.   positive numeric value can be specified to be added, or a "simple"
+    algorthm specified to estimate a value to add. See Details secion
+    below on the algorithm used.}
   \item{rightcensor }{\emph{Optional}, can be specified with a numeric
     value where any value equal to or greater will be regarded as
     right censored in the evaluation. The value of \code{TRUE} can be
@@ -267,8 +269,6 @@ prepareCGOneFactorData(dfr, format = "listed", analysisname = "",
       \item{\code{digits}}{Has the value of the input argument
 	\code{digits} or is set to the determined value of digits from the
 	input data. Will be an integer of 0, 1, 2, 3, or 4.}
-      \item{\code{alpha}}{Drawn from the input argument value of
-	\code{alpha}.}
       \item{\code{grpnames}}{Determined from the single factor identified of the
 	group names. The order is determined by their first occurence in the
 	input data frame \code{dfr}.}

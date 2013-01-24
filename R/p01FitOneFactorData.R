@@ -1,4 +1,4 @@
-## $Id: p01FitOneFactorData.R 2835 2011-11-28 04:07:24Z bpikouni $
+## $Id: p01FitOneFactorData.R 3781 2013-01-11 20:07:34Z yye $
 ## One-Factor Unpaired Groups Case
 
 ## Fit One-Factor Unpaired Groups Data
@@ -208,10 +208,10 @@ setMethod("print", "cgOneFactorFit",
               uv <- TRUE
               validArgModel(...)              
             }
-            if(class(rrfit)[1]=="rlm" & model!="olsonly" & !aft & !uv) {
+            if(class(rrfit)[1]=="rlm" && model!="olsonly" && !aft && !uv) {
               rr <- TRUE
             }
-            if(class(olsfit)[1]=="lm" & (model!="rronly") & !aft & !uv) {
+            if(class(olsfit)[1]=="lm" && (model!="rronly") && !aft && !uv) {
               ols <- TRUE
               if(!rr) model <- "olsonly"
             }
@@ -237,13 +237,15 @@ setMethod("print", "cgOneFactorFit",
             if(endptname!="") { cat(paste("Endpoint:", endptname, "\n")) }
 
             if(ols) {
-              cat("\nLeast Squares Model Fit\n")
+              cat("\nClassical Least Squares Model Fit\n")
               print(olsfit, ...)
             }
             
             if(rr) {
               cat("\nResistant & Robust Model Fit\n\n")
               print(rrfit, ...)
+              cat("\nEstimated Standard Deviation from rlm is",
+                  signif(summary(rrfit)$stddev, 4), "\n\n")
             }
 
             if(aft) {
@@ -303,10 +305,10 @@ setMethod("summary", "cgOneFactorFit",
               uv <- TRUE
               validArgModel(...)              
             }
-            if(class(rrfit)[1]=="rlm" & model!="olsonly" & !aft & !uv) {
+            if(class(rrfit)[1]=="rlm" && model!="olsonly" && !aft && !uv) {
               rr <- TRUE
             }
-            if(class(olsfit)[1]=="lm" & (model!="rronly") & !aft & !uv) {
+            if(class(olsfit)[1]=="lm" && (model!="rronly") && !aft && !uv) {
               ols <- TRUE
               if(!rr) model <- "olsonly"
             }
@@ -332,13 +334,15 @@ setMethod("summary", "cgOneFactorFit",
             if(endptname!="") { cat(paste("Endpoint:", endptname, "\n")) }
 
             if(ols) {
-              cat("\nLeast Squares Model Fit Summary\n")
+              cat("\nClassical Least Squares Model Fit Summary\n")
               print(summary(olsfit, ...))
             }
             
             if(rr) {
               cat("\nResistant & Robust Model Fit Summary\n")
               print(summary(rrfit, ...))
+              cat("\nEstimated Standard Deviation from rlm is",
+                  signif(summary(rrfit)$stddev, 4), "\n\n")
             }
 
             if(aft) {
@@ -358,7 +362,7 @@ setMethod("summary", "cgOneFactorFit",
 
 
 validAft <- function(type, dfru) {
-  if(type=="aft" & ncol(dfru)!=5) {
+  if(type=="aft" && ncol(dfru)!=5) {
     stop(cgMessage("An accelerated failure time (AFT) model",
                    "cannot be fit as requested (type=\"aft\")",
                    "since the data frame does not seem to have",

@@ -14,15 +14,14 @@ fit(data, type, \dots)
 \arguments{
   \item{data}{
     A data object prepared with a \code{\link{prepare}} call. This will involve a data
-    frame and additional settings. The only class of object currently
-    available is \code{\link{cgOneFactorData}}, which is prepared by the
-    \code{\link{prepareCGOneFactorData}} method.  
+    frame and additional settings. Inly one class of objects os currently
+    available: \code{\link{cgOneFactorData}}, prepared by the
+    \code{\link{prepareCGOneFactorData}} method. 
   }
   \item{type }{Type of model to fit, represented by a character string.}
   \item{\dots }{
    Additional arguments, depending on the specific method written for
-   the object. Currently, there is only one such specific method; see
-   \code{\link{fit.cgOneFactorData}}.
+   the object. 
   }
 }
 \value{
@@ -41,6 +40,7 @@ fit(data, type, \dots)
 }
 
 \examples{
+## Unpaired Samples, One Factor
 data(canine)
 canine.data <- prepareCGOneFactorData(canine, format="groupcolumns",
                                       analysisname="Canine",
@@ -58,5 +58,6 @@ gmcsfcens.data <- prepareCGOneFactorData(gmcsfcens, format="groupcolumns",
 
 gmcsfcens.fit <- fit(gmcsfcens.data, type="aft")
 
+		  
 }
 \keyword{models}

@@ -1,3 +1,13 @@
+24 January 2013: Version 0.9-6
+--------------------------------
+* Refined use of the Hmisc::largest.empty function to avoid warning of
+"Foreign function call with ‘PACKAGE’ argument in a different package"
+
+* Added CITATION file since a Journal of Statistical Software article on
+the manuscript is due to soon be published in 2013.
+
+* Changed name of this file from CHANGES to NEWS and placed it in the /inst subdirectory.
+
 13 August 2012: Version 0.9-5
 -------------------------------
 

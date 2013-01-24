@@ -13,12 +13,11 @@ downweightedTable(fit, cutoffwt, display="print", \dots)
 }
 \arguments{
   \item{fit }{
-    An object created by calling a 
-    \code{\link{fit}} method from the \pkg{cg} package. The only class
-    of object currently
-    valid is \code{\link{cgOneFactorDownweightedTable}}, which is prepared by the
-    \code{\link{downweightedTable.cgOneFactorFit}} method.  
-  }
+    A fit object created with a \code{\link{fit}} method from the \pkg{cg}
+    package. \cr There are one class of objects that is currently available:
+    \cr\code{\link{cgOneFactorFit}}, which is prepared by the 
+    \cr\code{\link{fit.cgOneFactorData}} method. 
+  }  
   \item{cutoffwt }{
     It has no default and must be specified as a numeric between 0 and 1
     exclusive. It is a threshold on which observations to identify. All
@@ -55,7 +54,7 @@ downweightedTable(fit, cutoffwt, display="print", \dots)
   See the specific methods for discussion of return values. 
 }
 \seealso{
-  \code{\link{downweightedTable.cgOneFactorFit}}, MASS::\code{\link{rlm}} 
+  \code{\link{downweightedTable.cgOneFactorFit}}, MASS::\code{\link{rlm}}
 }
 \references{
   Venables, W. N. and Ripley, B. D. (2002), 
@@ -69,6 +68,8 @@ downweightedTable(fit, cutoffwt, display="print", \dots)
   concerns, and comments. 
 }
 \examples{
+#### One Factor data
+
 data(canine)
 canine.data <- prepareCGOneFactorData(canine, format="groupcolumns",
                                       analysisname="Canine",
@@ -81,6 +82,7 @@ canine.dwtable <- downweightedTable(canine.fit, cutoff=0.95)
 
 downweightedTable(canine.fit, cutoff=0.75) ## No observation
                                            ## downweighted at least 25\%
+
 
 }
 \concept{weights}

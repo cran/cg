@@ -16,9 +16,9 @@ comparisonsTable(fit, mcadjust = FALSE, type = "pairwisereflect",
 \arguments{
   \item{fit }{
     A fit object created with a \code{\link{fit}} method from the \pkg{cg}
-    package. The only class of object currently
-    available is \code{\link{cgOneFactorFit}}, which is prepared by the
-    \code{\link{fit.cgOneFactorData}} method.  
+    package. \cr There is one class of objects that is currently available:
+    \cr\code{\link{cgOneFactorFit}}, which is prepared by the 
+    \cr\code{\link{fit.cgOneFactorData}} method. 
   }
   \item{mcadjust }{
     Do a multiple comparisons adjustment, based on the simultaneous
@@ -138,6 +138,8 @@ comparisonsTable(fit, mcadjust = FALSE, type = "pairwisereflect",
 }
 
 \examples{
+#### One Factor data
+
 data(canine)
 canine.data <- prepareCGOneFactorData(canine, format="groupcolumns",
                                       analysisname="Canine",
@@ -161,6 +163,10 @@ gmcsfcens.data <- prepareCGOneFactorData(gmcsfcens, format="groupcolumns",
 gmcsfcens.fit <- fit(gmcsfcens.data, type="aft")
 
 gmcsfcens.comps <- comparisonsTable(gmcsfcens.fit)
+
+
+
 }
+
 \concept{comparisons}
 \concept{multiplicity}

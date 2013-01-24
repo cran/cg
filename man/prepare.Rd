@@ -13,19 +13,20 @@
 prepare(type, ...)
 }
 \arguments{
-  \item{type }{Currently only accepts the value of \code{"onefactor"} or its
+  \item{type }{Currently accepts values of \code{"onefactor"} or its
     synonym \code{"unpairedgroups"} to create a
-    \code{\link{cgOneFactorData}} object.}
+    \code{\link{cgOneFactorData}} object.
+  }
   \item{... }{Depends on the specific function that is called according
-    to the \code{type} argument. Currently the
-    \code{\link{prepareCGOneFactorData}} is the sole valid call, and no
+    to the \code{type} argument. For current valid calls, no
     \dots arguments are used.
   }
 }
 \value{
-  See \code{\link{cgOneFactorData}} for the only possible valid object
-  currently returned, assuming that the \code{type} and \code{\dots}
-  arguments are correctly specified.
+  See \code{\link{cgOneFactorData}} 
+  for possible valid objects,
+  dependent on the \code{type} and \code{\dots}
+  arguments that are correctly specified.
 }
 \author{
   Bill Pikounis and John Oleynick 
@@ -54,5 +55,11 @@ gmcsfcens.data <- prepare(type="onefactor",
                           endptname="GM-CSF (pg/ml)",
                           logscale=TRUE)
 
+
+
+
 }
 \keyword{datagen}
+
+
+

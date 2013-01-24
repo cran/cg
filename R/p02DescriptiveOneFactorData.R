@@ -1,4 +1,4 @@
-## $Id: p02DescriptiveOneFactorData.R 2961 2012-03-11 05:38:50Z bpikouni $
+## $Id: p02DescriptiveOneFactorData.R 3781 2013-01-11 20:07:34Z yye $
 ## One-Factor Unpaired Groups Case
 
 ## Descriptive methods for One-Factor Unpaired Groups Data
@@ -618,7 +618,7 @@ descriptive.censoreddata <- function(dfru, logscale, digits=NULL, offset=NULL,
                     ## uncensored and left censored on lower end
                     which.obsmin <- which.min(x$endpt)
                     obsmin.status <- x$status[which.obsmin]
-                    if(length(obsmin.status)==1 & obsmin.status==0)  {  ## right censored
+                    if(length(obsmin.status)==1 && obsmin.status==0)  {  ## right censored
                       obsmin <-  NA  ## indeterminate situation
                     }
                     else {
@@ -634,7 +634,7 @@ descriptive.censoreddata <- function(dfru, logscale, digits=NULL, offset=NULL,
                     ## uncensored and right censored on upper end
                     which.obsmax <- which.max(x$endpt)
                     obsmax.status <- x$status[which.obsmax]
-                    if(length(obsmax.status)==1 & obsmax.status==2)  {  ## left censored 
+                    if(length(obsmax.status)==1 && obsmax.status==2)  {  ## left censored 
                       obsmax <-  NA  ## indeterminate situation
                     }
                     else {

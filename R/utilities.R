@@ -1,4 +1,4 @@
-## $Id: utilities.R 2961 2012-03-11 05:38:50Z bpikouni $ 
+## $Id: utilities.R 3781 2013-01-11 20:07:34Z yye $ 
 
 ## Functions & objects internal for the cg Library
 ## and definitely not intended for user-level calls
@@ -245,24 +245,24 @@ setupAxisTicks <- function(x, ratio=FALSE, percent=FALSE,
 
   ## Format tick labels
   ## Try to remove extraneous decimal places for larger numbers
-  if(ratio==FALSE & axis=="y") {
+  if(ratio==FALSE && axis=="y") {
     names(xticks) <- format(chopZeroes(round(xticks, digits)),
                             small.interval=0, justify="right")
   }
-  else if(ratio==FALSE & axis=="x") {
+  else if(ratio==FALSE && axis=="x") {
     names(xticks) <- format(chopZeroes(round(xticks, digits)),
                             small.interval=0, justify="right")
   }
-  else if(percent==TRUE & axis=="x") {
+  else if(percent==TRUE && axis=="x") {
     names(xticks) <- fmtRatioToPercent(xticks)
   }
-  else if(percent==TRUE & axis=="y") {
+  else if(percent==TRUE && axis=="y") {
     names(xticks) <- fmtRatioToPercent(xticks)
   }
-  else if(difference==TRUE & axis=="x") {
+  else if(difference==TRUE && axis=="x") {
     names(xticks) <- fmtDifference(xticks)
   }
-  else if(difference==TRUE & axis=="y") {
+  else if(difference==TRUE && axis=="y") {
     names(xticks) <- format(chopZeroes(round(xticks, digits)), justify="right")
   }
   else if(ratio==TRUE) {
@@ -736,11 +736,11 @@ rmTicks <- function(x, axis="y", logscale=TRUE, ratio=FALSE, percent=FALSE,
   else out <- x
 
   ## Ensure that zero/one no-difference tickmark is always included
-  if(difference==TRUE | percent==TRUE)  {
+  if(difference==TRUE || percent==TRUE)  {
     if(!any(out==0)) {
       out <- c(0, out)
 
-      if(ratio==TRUE & percent==FALSE) {
+      if(ratio==TRUE && percent==FALSE) {
         names(out)[1] <- "1"
       }
       else names(out)[1] <- "0"
@@ -774,7 +774,7 @@ minmaxTicks <- function(x, theaxis="y", logscale=TRUE,
   ##
   ## PURPOSE:  Add min and max to axis tick labels
   ##
-  if(!is.null(zeroscore) & !is.null(offset)) {
+  if(!is.null(zeroscore) && !is.null(offset)) {
     stop(cgMessage("The zeroscore and offset arguments",
                    "cannot be specified at the same time."))
   }
@@ -785,10 +785,10 @@ minmaxTicks <- function(x, theaxis="y", logscale=TRUE,
   if(is.null(digits)) digits <- 4
 
   if(logscale) {
-    if(percent==TRUE & theaxis=="x") {
+    if(percent==TRUE && theaxis=="x") {
       thelabels <- fmtRatioToPercent(axisrange) 
     }
-    else if(percent==TRUE & theaxis=="y") {
+    else if(percent==TRUE && theaxis=="y") {
       thelabels <- fmtRatioToPercent(axisrange)
     } 
     else {
@@ -798,12 +798,12 @@ minmaxTicks <- function(x, theaxis="y", logscale=TRUE,
     if(!is.null(zeroscore)) thelabels[1] <- "0"
   }
   else {
-    if(!is.null(offset) | !is.null(zeroscore)) {
+    if(!is.null(offset) || !is.null(zeroscore)) {
       stop(cgMessage("The offset and zeroscore arguments",
                      "must be set to NULL when",
                      "logscale=FALSE, as they are not compatible."))
     }
-    if(difference==TRUE & (theaxis=="x" | theaxis=="y")) {
+    if(difference==TRUE && (theaxis=="x" || theaxis=="y")) {
       thelabels <- fmtDifference(axisrange, digits=digits)
     }
     else {
@@ -891,12 +891,22 @@ boxplotStamp <- function() {
   ## PURPOSE: Add explanatory message to boxplot rendering
   ##
   u <- par("usr")
-  text(u[2] - 0.15 *(u[2] - u[1]),
+  
+  if(FALSE) {
+    text(u[2] - 0.15 *(u[2] - u[1]),
        u[4] + 0.15 * (u[4] - u[3]),
        labels=paste("Open circles \"o\" ",
          "inside boxes are medians;",
          "Plus signs \"+\" are means", sep="\n"),
        cex=0.6, adj=0, xpd=TRUE)
+  }
+
+  mtext(text=paste("Open circles \"o\" ",
+         "inside boxes are medians;",
+         "Plus signs \"+\" are means", sep=" "),
+        side=3,
+        cex=0.6, col="gray", line=0.1, adj=0.5,
+        xpd=NA)
   invisible()
 }
 
@@ -1075,18 +1085,19 @@ fmtRatio <- function(x) {
   ## PURPOSE: Prettify Ratios for tick labels 
   ##
   trimWhiteSpace(ifelse(abs(x) < 0.1, formatC(round(x, 3), format="f", digits=3),
-                        chopZeroes(round(x, 1))))
+                        chopZeroes(round(x, 2))))
 }
 
 #####################
 
-fmtPercent <- function(x) {
+fmtPercent <- function(x, decimalthreshold=10) {
   out <- fround(x, 0)
   for(i in seq(along=out)) {
     if(out[i]=="-100") {
       out[i] <- "< -99.9" 
     }
-    else if(out[i]=="0") {
+    ## else if(out[i]=="0") {
+    else if(abs(x[i]) < decimalthreshold) {
       out[i] <- fround(x[i], 1)
     }
   }
@@ -1473,11 +1484,12 @@ chop.matrix <- function(x) {
 
 #####################
 
-prepare <- function(type, ... ){
+prepare <- function(type, ... ) {
   ##
   ## PURPOSE: Read-in the input data frame, and create
   ## an object with it 
   ## and add metadata for cg methods.
+  ## Essentially supplies alias to specific prepare* methods
   type <- validArgMatch(type, c("onefactor","unpairedgroups"))
 
   if(is.element(type, c("onefactor","unpairedgroups"))) {
@@ -1485,10 +1497,8 @@ prepare <- function(type, ... ){
                   "onefactor"={ prepareCGOneFactorData(...) },
                   "unpairedgroups"={ prepareCGOneFactorData(...) }
                   ))
-    
   }
-  ## no other cases yet, so this is a very limited function,
-  ## as it essentially just supplies an alias to prepareCGOneFactorData
+ 
   invisible()
 
 }
@@ -1564,34 +1574,20 @@ makeContrastVec <- function(posplaces=NULL, negplaces=NULL, length,
 
 #####################
 
-cg.largest.empty <- function (x, y, width, height, numbins = 25,
-                              method = c("area", "maxdim"), xlim = pr$usr[1:2],
-                              ylim = pr$usr[3:4], pl = FALSE, 
-                              grid = FALSE, topleft=TRUE) {
-  ## Copied from Hmisc package with an added argument to get
-  ## the "topleft" coordinates of the largest.empty rectangle
-  method <- match.arg(method)
-  pr <- parGrid(grid)
-  itype <- 1 * (method == "area") + 2 * (method == "maxdim")
-  storage.mode(x) <- storage.mode(y) <- storage.mode(xlim) <-
-    storage.mode(ylim) <- storage.mode(width) <- storage.mode(height) <- "double"
-  storage.mode(numbins) <- storage.mode(itype) <- "integer"
-  
-  a <- .Fortran("largrec", x, y, length(x), xlim, ylim, width, 
-                height, numbins, itype, rx = double(2), ry = double(2), 
-                PACKAGE = "Hmisc")
-  x <- a$rx
-  if (any(x > 1e+29)) {
-    warning("no empty rectangle was large enough")
-    return(list(x = NA, y = NA))
+orderPairedGroups <- function(x, refgrp) {
+  ## PURPOSE: For the PairedDifference
+  ## methods, order the 2 group names
+  ## such that the refgrp is first and
+  ## derive the difference between then
+  if(x[1]==refgrp) {
+    return(x)
   }
-  y <- a$ry
-  if (pl) 
-    ordGridFun(grid)$polygon(x[c(1, 2, 2, 1)], y[c(1, 1, 
-                                                   2, 2)], col = 1 + itype)
-  if(topleft) { return(list(x = x[1], y = y[2])) }
-  list(x = mean(x), y = mean(y))
+  else {
+    c(x[2], x[1])
+  }
 }
+
+
 
 ###########################
 
@@ -1623,4 +1619,90 @@ unpaste <- function (str, sep = "/") {
 
 
 ######################
+
+aligncolnames <- function(x) {
+  ##
+  ## PURPOSE: better display
+  ## 	write.table output of tab-delimted values in browser textbox rendering
+  ## CONCEPT: pad each column label or variables with blank spaces 
+  ## 	to overcome unwanted tab behavior when difference between values and label 
+  ##	lengths for a variable is large enough.
+
+  ## x is a data frame of hits from an object created by running summary.htsfit()
+
+  if(any(is.na(x))) newx <- NULL
+  else {
+    varnames <-
+      matrix(names(x),byrow=T,nrow=1)
+    newx <- (rbind(varnames,as.matrix(x)))
+    numcharvarnames <- sapply(list(as.vector(as.character(varnames))),
+                              nchar)
+    maxcharvar <- sapply(data.frame(newx[-1,]),
+                         function(x) max(nchar(as.character(x)))) 
+    
+    numhardspaces <- maxcharvar - numcharvarnames
+    
+    for(i in seq(along=numhardspaces)) {
+      if(numhardspaces[i] >= 0) {
+        newx[1,i] <- paste(varnames[i],paste(rep(" ",numhardspaces[i]),
+                                             collapse="",sep=""),
+                           collapse="",sep="") }
+      else {
+        vardata <- newx[-1,i]
+        newx[-1,i] <- paste(paste(rep(" ",abs(numhardspaces[i])),
+                                  collapse="",sep=""),vardata,sep="")
+      }
+    }
+  }
+  newx
+}  
+
+#################
+
+determineLayout <- function(numpanels) {
+  ##
+  ## Current version: $Date: 2004/12/30 18:23:22 $ UTC
+  ## Started: 7 April 2004
+  ## Bill Pikounis
+  ## PURPOSE: Utility function to determine the layout of a trelllis
+  ## plot
+  ##
+  ## Assume two columns per page, and no more than 4 rows per page
+  ## so no more than 8 panels per page
+  rolscolslayout <-  switch(as.character(min(numpanels, 8)),
+                            "2"=c(2,1),
+                            "3"=c(2,2), "4"=c(2,2),
+                            "5"=c(2,3), "6"=c(2,3),
+                            "7"=c(2,4), "8"=c(2,4))
+
+  numpages <- ceiling(numpanels/8)
+  return(c(rolscolslayout, numpages))
+    
+}
+
+
+determineTimeSlices <- function(numslices, timelevels) {
+  ##
+  ## Current version: $Date: 2004/12/30 18:23:22 $ UTC
+  ## Started: 10 April 2004
+  ## Bill Pikounis
+  ## PURPOSE: Utility function to generate a subset of
+  ## timepoints for evaluations based on a fitted model
+  ##
+  ## First and last timepoints always selected
+  
+  thetimes <- sort(as.numeric(timelevels))
+  
+  theindex <- as.vector(round(quantile(2:(length(thetimes)-1),
+                                       ppoints(numslices - 2)),0))
+  
+  selected <- thetimes[c(1,theindex,length(thetimes))]
+
+  return(unique(selected))
+  
+}
+
+cleanFactorLevels <- function(x) {
+  intersect(levels(x), unique(as.character(x)))
+}
 

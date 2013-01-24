@@ -17,7 +17,7 @@
     Additional arguments, both \emph{optional}. Two are currently valid: 
     \describe{
       \item{\code{logscale}}{
-	A \code{logical} value, indicating whether or not the point graph should be
+	A \code{logical} value, indicating whether or not the boxplot graph should be
 	plotted on the logarithmic scale.
 	If \code{logscale} is not
 	specified, its value is taken from the \code{cgOneFactorData} object,
