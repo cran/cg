@@ -1,3 +1,17 @@
+10 February 2014: Version 1.0-0
+---------------------------------
+* Added paired samples methods and functions, with a base label "PairedDifference".  
+
+* Removed specific arguments in these generics: comparisonsTable, samplesizeTable, 
+and samplesizeGraph. The arguments included: mcadjust, contrastmatrix, device, and refgrp. 
+All of these have no meaning for the PairedDifference methods, so to use the same
+generics as used for the OneFactor methods, these are now callable through the dots
+arguments. 
+
+* Revised Depends and Imports configurations to align with CRAN checks.
+
+* Corrected numerous typographical errors in the help files.
+
 24 January 2013: Version 0.9-6
 --------------------------------
 * Refined use of the Hmisc::largest.empty function to avoid warning of

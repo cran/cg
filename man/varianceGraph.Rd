@@ -9,8 +9,7 @@
   from the \pkg{cg} package 
 }
 \usage{
-varianceGraph(fit, trend = NULL, cgtheme = TRUE,
- device = "single", \ldots)  
+varianceGraph(fit, trend = NULL, cgtheme = TRUE, device = "single", \ldots)  
 
 }
 \arguments{
@@ -55,17 +54,18 @@ varianceGraph(fit, trend = NULL, cgtheme = TRUE,
 }
 \details{
 The graphs plot the square root of the absolute value of the residuals against
-the fitted value.
+the fitted value. The notion of using the squared root of the absolute
+residuals is attributed to John Tukey.
 }
 \value{
   \code{varianceGraph} returns
-  an invisible \code{NULL}. The main purpose, of course, is the side
+  an invisible \code{NULL}. The main purpose is the side
   effect of graphing to the current device.
 }
 %% \references{
 %% }
 \author{
-  Bill Pikounis and John Oleynick
+  Bill Pikounis, John Oleynick, Eva Ye
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,

@@ -15,9 +15,7 @@ errorBarGraph(fit, mcadjust=FALSE, alpha = 0.05,
 \arguments{
   \item{fit }{
     A fit object created by a \code{\link{fit}} method from the \pkg{cg}
-    package. The only class of object currently
-    available is \code{\link{cgOneFactorFit}}, which is prepared by the
-    \code{\link{fit.cgOneFactorData}} method.  
+    package.   
   }
   \item{mcadjust }{
     Do a multiple comparisons adjustment, based on the simultaneous
@@ -57,15 +55,15 @@ errorBarGraph(fit, mcadjust=FALSE, alpha = 0.05,
    }
  \item{\dots }{
     Additional arguments, depending on the specific method written for
-    the object. Currently, there is only one such specific method; see
-    \code{\link{errorBarGraph.cgOneFactorFit}} for any additional
-    arguments that can be specified.
+    the object. See the method-specific documentation for additional
+    details.
   }
 }
 \details{
-  When \code{mcadjust=TRUE}, a status message of \code{"Some time may be
-  needed as the critical point from the multcomp::summary.glht function
-  call is calculated"} is displayed at the console. This computed critical point
+  When \code{mcadjust=TRUE}, a status message of
+  \code{"Some time may be needed"} \cr
+  \code{"as the critical point from the multcomp::summary.glht function call is calculated"}\cr
+    is displayed at the console. This computed critical point
   is used for all subsequent p-value and confidence interval calculations.
 }
 \value{
@@ -82,7 +80,7 @@ errorBarGraph(fit, mcadjust=FALSE, alpha = 0.05,
   \emph{Biometrical Journal}, 50, 3, 346-363.
 }
 \author{
-  Bill Pikounis and John Oleynick
+  Bill Pikounis, John Oleynick, Eva Ye
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,

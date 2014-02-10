@@ -101,7 +101,7 @@
 %%\references{
 %%}
 \author{
-  Bill Pikounis and John Oleynick
+  Bill Pikounis, John Oleynick, Eva Ye
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,

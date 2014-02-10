@@ -523,11 +523,12 @@ validAddConstant <- function(addconstant, endpt, grpf) {
       }
       ltf <- MASS::logtrans(endpt ~ grpf, plotit=FALSE)
       indx <- unique(which.max(ltf$y))
-      y <- endpt ## needed for following evaluation:
-      alphalength <- length(eval(formals(MASS:::logtrans.default)$alpha))
+      ## y <- endpt ## needed for following evaluation:
+      ## alphalength <- length(eval(formals(MASS:::logtrans.default)$alpha))
+      alphalength <- length(seq(0.5, 6, by = 0.25))  ## default of MASS::logtrans
       
       if(indx==1 || indx==alphalength) {
-        ## expand alpha argument default in MASS:::logtrans
+        ## expand alpha argument default in MASS::logtrans
         e.alpha <- c(0.001, 0.01, 0.1,
                      0.2, 0.3, 0.4, seq(0.5, 10, seq=0.25)) - min(endpt)
         e.ltf <- MASS::logtrans(endpt ~ grpf,

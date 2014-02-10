@@ -31,7 +31,7 @@
   }
   \item{endptname }{
     The endpoint name of the data summarized in the table. If NULL, it is set to 
-    the \code{endpointname} value taken from the \code{settings} slot of the
+    the \code{endptname} value taken from the \code{settings} slot of the
     \cr\code{cgOneFactorDescriptiveTable} object.
   }
   \item{\dots }{
@@ -51,7 +51,7 @@
   typically the console. 
 }
 \author{
-  Bill Pikounis and John Oleynick
+  Bill Pikounis, John Oleynick, Eva Ye
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,

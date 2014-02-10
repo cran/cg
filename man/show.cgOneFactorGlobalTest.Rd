@@ -3,7 +3,7 @@
 \alias{show.cgOneFactorGlobalTest}
 \alias{show,cgOneFactorGlobalTest-method}
 \title{
-  Show an Global Test object from the cg package
+  Show a Global Test object from the cg package
 }
 \description{
   Show a \code{cgOneFactorGlobalTest} object, which contains p-value
@@ -32,7 +32,7 @@
 }
   
 \author{
-  Bill Pikounis and John Oleynick
+  Bill Pikounis, John Oleynick, Eva Ye
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,

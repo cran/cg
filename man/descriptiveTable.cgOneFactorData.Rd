@@ -23,7 +23,7 @@
     
     \describe{
       \item{\code{"print"}}{
-	The default value, it calls a \code{print} method for the
+	The default value; It calls a \code{print} method for the
 	created \code{descriptiveTable} object, which is
 	a formatted text output of the table.
       }
@@ -132,7 +132,7 @@
   and "<" symbols for right-censoring and left-censoring, respectively.
 
   For censored data, Kaplan-Meier estimates are used for the quantiles, as 
-  proposed by Gentleman and Crowley (1991).  The survreg::\code{\link{survfit}}
+  proposed by Gentleman and Crowley (1991).  The \pkg{survreg}::\code{\link{survfit}}
   conventions are followed for interpolation of these quantiles.
   With enough censored data
   observations in a group, certain quantiles may not be estimable. If
@@ -147,7 +147,7 @@ Data", \emph{Journal of the American Statistical Association}, Volume
 }
 
 \author{
-  Bill Pikounis and John Oleynick
+  Bill Pikounis, John Oleynick, Eva Ye
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,

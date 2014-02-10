@@ -9,7 +9,7 @@
 \usage{cgLineColors}
 \format{A vector containing ten values in this order:
   \code{black blue green red orange brown yellow darkblue darkgreen
-    darkgreen}
+    darkgray}
 }
 \details{
   This is a package internal convenience, and not intended for
@@ -22,6 +22,6 @@
   concerns, and comments.
 }
 \author{
-  Bill Pikounis and John Oleynick
+  Bill Pikounis, John Oleynick, Eva Ye
 }
 \keyword{datasets}

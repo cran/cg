@@ -30,14 +30,15 @@
     \emph{Optional}, a \code{character} value to label the y-axis of the graph.  If 
     \code{NULL}, it
     defaults to 
-    either \code{"Probability of Survival"} or \code{"Cumulative Probability"},
+    either \code{"Probability of Survival"}\cr
+    or \code{"Cumulative Probability"},
     depending on the value of \code{distfcn}.
   }
   \item{title}{
     \emph{Optional}, a \code{character} to show as the title of the graph.  If
     \code{NULL},
     it defaults to 
-    either \code{"Nonparametric Survival Curve Estimates"} or
+    either \code{"Nonparametric Survival Curve Estimates"}\cr or
     \code{"Nonparametric Cumulative Distribution Function Estimates"},
     depending on the value of \code{distfcn}.
   }
@@ -84,7 +85,7 @@
   match the order of the group name factor levels. The color order is
   given in \code{\link{cgLineColors}}. The line widths are set to be
   thicker (\code{lwd=2}), and the group name label is placed near the line
-  using \code{\link{label}} methodology for the \pkg{Hmisc} package.
+  using \code{\link{label}} methodology from the \pkg{Hmisc} package.
 
   The x-axis represents response values, and y-axis represents estimated
   probabilities. Minimum and maximum values from ranges of data are
@@ -105,7 +106,7 @@
   effect of graphing to the current device.   
 }
 \author{
-  Bill Pikounis and John Oleynick
+  Bill Pikounis, John Oleynick, Eva Ye
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,

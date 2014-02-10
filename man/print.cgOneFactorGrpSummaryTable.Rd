@@ -78,7 +78,7 @@
   for details of the \code{*.grps} and other object slots.
 }
 \author{
-  Bill Pikounis and John Oleynick
+  Bill Pikounis, John Oleynick, Eva Ye
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,

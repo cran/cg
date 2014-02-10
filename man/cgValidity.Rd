@@ -61,8 +61,8 @@
   validEqualLength
   validArgMatch
   validArgDigits
-  validArgModel
-  validCGOneFacGroupColDfr
+  validArgModel}\cr
+  \code{validCGOneFacGroupColDfr
   validCGOneFacListedDfr
   validCensor
   validZeroScore
@@ -81,7 +81,7 @@
 are used internally by the \pkg{cg} package.
 }
 \author{
-  Bill Pikounis and John Oleynick
+  Bill Pikounis, John Oleynick, Eva Ye
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,

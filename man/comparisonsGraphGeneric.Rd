@@ -41,7 +41,7 @@ comparisonsGraph(compstable, cgtheme=TRUE, device="single",
        graphs is possible. In
        that case, each are portrayed as a single-paneled graph, with the
        \code{ask=TRUE} argument specified in \code{\link{par}} so that
-       the user input confirmation is needed before the graphs are
+       user input confirmation is needed before the graphs are
        drawn.
      }
    }
@@ -68,7 +68,7 @@ comparisonsGraph(compstable, cgtheme=TRUE, device="single",
   discussion of any return values.
 }
 \author{
-  Bill Pikounis and John Oleynick
+  Bill Pikounis, John Oleynick, Eva Ye
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,

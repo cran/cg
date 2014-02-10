@@ -52,17 +52,13 @@ qqGraph(fit, line = TRUE, cgtheme = TRUE, device = "single", \dots)
     details.
   }
 }
-%% \details{
-%% }
 \value{
   \code{qqGraph} returns
-  an invisible \code{NULL}. The main purpose, of course, is the side
+  an invisible \code{NULL}. The main purpose is the side
   effect of graphing to the current device.
 }
-%% \references{
-%% }
 \author{
-  Bill Pikounis
+  Bill Pikounis, John Oleynick, Eva Ye
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,
@@ -72,5 +68,17 @@ qqGraph(fit, line = TRUE, cgtheme = TRUE, device = "single", \dots)
 \seealso{
   \code{\link{qqGraph.cgOneFactorFit}}
 }
-%% \examples{
-%% }
+\examples{
+data(canine)
+canine.data <- prepareCGOneFactorData(canine, format="groupcolumns",
+                                      analysisname="Canine",
+                                      endptname="Prostate Volume",
+                                      endptunits=expression(plain(cm)^3),
+                                      digits=1, logscale=TRUE, refgrp="CC")
+canine.fit <- fit(canine.data)
+
+qqGraph(canine.fit)
+}
+
+\concept{quantile-quantile}
+\concept{residual diagnostics}

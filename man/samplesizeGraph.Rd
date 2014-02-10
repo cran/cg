@@ -9,8 +9,7 @@
   a Sample Size table created by the \pkg{cg} package.  
 }
 \usage{
-samplesizeGraph(sstable, Nscale = "log", mmdscale = "log",
- cgtheme=TRUE, device = "single", \dots)
+samplesizeGraph(sstable, Nscale = "log", mmdscale = "log", \dots)
 }
 \arguments{
   \item{sstable }{
@@ -19,7 +18,7 @@ samplesizeGraph(sstable, Nscale = "log", mmdscale = "log",
   }
   \item{Nscale }{
     A \code{character} indicating whether the y-axis, which shows the estimated
-    samples sizes, should be drawn on the log scale (\code{"log"}) or
+    sample sizes, should be drawn on the log scale (\code{"log"}) or
     the original scale (\code{"original"}).
   }
   \item{mmdscale }{
@@ -27,50 +26,19 @@ samplesizeGraph(sstable, Nscale = "log", mmdscale = "log",
     meaningful differences to be detected, should be drawn on the log scale (\code{"log"}) or
     the original scale (\code{"original"}).
   }
-  \item{cgtheme }{
-    When set to the default \code{TRUE}, ensures a trellis device is active with
-    limited color scheme. Namely \code{background},
-    \code{strip.shingle}, and \code{strip.background} are each set to \code{"white"}.
-  }
-  \item{device }{
-    Can be one of three values:
-
-   \describe{
-     \item{\code{"single"}}{The default, which will put all graph panels on the same
-       device page.}
-     \item{\code{"multiple"}}{Relevant only when more than one panel of
-       graphs is possible. In
-       that case, a new graphics device is generated each newly
-       generated
-       single-paneled graph.}
-     \item{\code{"ask"}}{Relevant only when more than one panel of
-       graphs is possible. In
-       that case, each are portrayed as a single-paneled graph, with the
-       \code{ask=TRUE} argument specified in \code{\link{par}} so that
-       the user input confirmation is needed before the graphs are
-       drawn.
-     }
-   }
- }
  \item{\dots }{
     Additional arguments, depending on the specific method written for
     the object.  See the specific methods for additional
     details.
   }
 }
-%%\details{
-%%
-%%}
 \value{
   The main purpose is the side
   effect of graphing to the current device. See the specific methods for
   discussion of any return values.
 }
-%%\references{
-%%  
-%%}
 \author{
-  Bill Pikounis and John Oleynick
+  Bill Pikounis, John Oleynick, Eva Ye
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,
@@ -95,6 +63,22 @@ canine.samplesize <- samplesizeTable(canine.fit, direction="increasing",
 
 samplesizeGraph(canine.samplesize)
 
+#### Paired Difference data
+data(anorexiaFT)
+anorexiaFT.data <- prepareCGPairedDifferenceData(anorexiaFT, format="groupcolumns",
+                                                 analysisname="Anorexia FT",
+                                                 endptname="Weight",
+                                                 endptunits="lbs",
+                                                 expunitname="Patient",
+                                                 digits=1,
+                                                 logscale=TRUE)
+anorexiaFT.fit <- fit(anorexiaFT.data)
 
+## The interest is in increased weight for the anorexia FT
+## (family treatment) group of patients
+anorexiaFT.samplesize <- samplesizeTable(anorexiaFT.fit, direction="increasing",
+                         mmdvec=c(5, 10, 15, 20)) ## print method shows table
+
+samplesizeGraph(anorexiaFT.samplesize)
 
 }

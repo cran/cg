@@ -1,4 +1,4 @@
-## $Id: generics.R 3726 2012-12-21 03:40:32Z yye $
+## $Id: generics.R 4188 2013-04-15 17:21:12Z yye $
 
 setGeneric("fit",
            function(data, type, ...) {
@@ -37,9 +37,8 @@ setGeneric("globalTest",
 
 setGeneric("comparisonsTable",
            function(fit, 
-                    mcadjust=FALSE, 
-                    type="pairwisereflect", contrastmatrix=NULL,
-                    refgrp=NULL, alpha=0.05, addpct=FALSE, display="print", ...) {
+                    type="pairwisereflect", 
+                    alpha=0.05, addpct=FALSE, display="print", ...) {
              standardGeneric("comparisonsTable")
            })
 
@@ -88,7 +87,7 @@ setGeneric("kmGraph",
            })
 
 setGeneric("samplesizeTable",
-           function(fit, ngrps=2, direction, mmdvec, power=0.80, alpha=0.05,
+           function(fit, direction, mmdvec, power=0.80, alpha=0.05,
                     nmax=1000, display="print", ...) {
              standardGeneric("samplesizeTable")
            })
@@ -96,7 +95,7 @@ setGeneric("samplesizeTable",
 
 setGeneric("samplesizeGraph",
            function(sstable, Nscale = "log", mmdscale = "log",
-                    cgtheme=TRUE, device="single", ...) {
+                    ...) {
              standardGeneric("samplesizeGraph")
            })
 
@@ -105,24 +104,5 @@ setGeneric("showObj",
            function(object) {
              standardGeneric("showObj")
            })
-
-
+                                           
 ##############################
-# For repeated measures
-
-
-setGeneric("subjProfile",
-           function(data,...) {
-             standardGeneric("subjProfile")
-           })
-
-setGeneric("marginalProfile",
-           function(data,...) {
-             standardGeneric("marginalProfile")
-           })
-
-setGeneric("timeSlicePointBoxGraph",
-           function(data,...) {
-             standardGeneric("timeSlicePointBoxGraph")
-           })
-

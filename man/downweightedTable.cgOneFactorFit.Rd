@@ -22,8 +22,8 @@
   }
   \item{cutoffwt }{
     It has no default and must be specified as a numeric between 0 and 1
-    exclusive. It is a threshold on which observations to identify. All
-    observations that exceed this specified value will be
+    exclusive. It is a threshold. All
+    observations that fall \emph{beneath} the threshold will be
     identified. For example, a \code{cutoffwt=0.90} will yield
     those observations that were downweighted by at least 10\%. 
   }
@@ -31,7 +31,7 @@
 	
     \describe{
       \item{\code{"print"}}{
-	The default value, it calls a \code{print} method for the
+	The default value; It calls a \code{print} method for the
 	created \cr\code{cgOneFactorDownweightedTable} object, which is
 	a formatted text output of the table(s).
       }
@@ -57,7 +57,7 @@
   The reported weights are in the scale of the observation, not the
   sum of squared errors representation for the likelihood. Thus they are
   derived from the square root of the \code{$w} component from
-  a MASS::\code{rlm} fit object.
+  a \pkg{MASS}::\code{rlm} fit object.
 }
 \value{
   An object of class \code{cgOneFactorDownweightedTable}, with the
@@ -92,14 +92,14 @@
 
 }
 \seealso{
-  \code{\link{cgOneFactorFit}}, MASS::\code{\link{rlm}} 
+  \code{\link{cgOneFactorFit}}, \pkg{MASS}::\code{\link{rlm}} 
 }
 \references{
   Venables, W. N. and Ripley, B. D. (2002), 
   \emph{Modern Applied Statistics with S.}  Fourth edition. Springer.
 }
 \author{
-  Bill Pikounis and John Oleynick
+  Bill Pikounis, John Oleynick, Eva Ye
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,

@@ -25,7 +25,7 @@
     
     \describe{
       \item{\code{"print"}}{
-	The default value, it calls a \code{print} method for the
+	The default value; It calls a \code{print} method for the
 	created \cr \code{globalTest.cgOneFactorFit} object, which is
 	formatted text output of the test p-values.
       }
@@ -112,7 +112,7 @@
   }
 }
 \author{
-  Bill Pikounis and John Oleynick
+  Bill Pikounis, John Oleynick, Eva Ye
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,

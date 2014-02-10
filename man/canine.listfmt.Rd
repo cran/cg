@@ -55,7 +55,7 @@ data(canine.listfmt)
 str(canine.listfmt)
 
 ## Analogous to prepareCGOneFactorData call on canine data frame format,
-##  subsequent methods will work for canine.listfmt.data:
+## subsequent methods will work for canine.listfmt.data:
 
 canine.listfmt.data <- prepareCGOneFactorData(canine.listfmt, format="listed",
                                               analysisname="Canine",

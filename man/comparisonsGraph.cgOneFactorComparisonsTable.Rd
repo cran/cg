@@ -15,11 +15,7 @@
 }
 \arguments{
   \item{compstable }{
-    A \code{comparisonsTable} object created by a 
-    \code{\link{comparisonsTable}} method 
-    from the \pkg{cg}
-    package. \cr There is currently one class of objects that is currently available:
-    \cr\code{\link{cgOneFactorComparisonsTable}}, which is prepared by the \cr\code{\link{comparisonsTable.cgOneFactorFit}} method. 
+     A \code{\link{cgOneFactorComparisonsTable}} object prepared by the \cr\code{\link{comparisonsTable.cgOneFactorFit}} method. 
   }
   \item{cgtheme }{
     When set to the default \code{TRUE}, ensures a trellis device is active with
@@ -32,18 +28,18 @@
     \describe{
       \item{\code{"single"}}{The default, which will put all graphs on the same
 	device page. For example, when resistant & robust and classical
-	least squares are present and \code{model=both} (the default),
+	least squares are present and \code{model="both"} (the default),
 	a 2 x 1 paneled graph will be created.}
       \item{\code{"multiple"}}{Relevant only when resistant & robust and classical
-	least squares are present and \code{model=both} (the default). In
+	least squares are present and \code{model="both"} (the default). In
 	that case, a new graphics device is generated to hold the resistant & robust
 	version, as a single-paneled graph. 
 	The classical least squares version is on the previous device.}
       \item{\code{"ask"}}{Relevant only when resistant & robust and classical
-	least squares are present and \code{model=both} (the default). In
+	least squares are present and \code{model="both"} (the default). In
 	that case, each are portrayed as a single-paneled graph, with the
 	\code{ask=TRUE} argument specified in \code{\link{par}} so that
-	the user input confirmation is needed before the graphs are
+	user input confirmation is needed before the graphs are
 	drawn.
       }
     }
@@ -129,7 +125,7 @@
   effect of graphing to the current device.
 }
 \author{
-  Bill Pikounis and John Oleynick
+  Bill Pikounis, John Oleynick, Eva Ye
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,

@@ -40,8 +40,8 @@ errorbargraph(estimates, centralvar, critpoint, endptscale="log",
  \item{endptscale }{Must be specified as \code{"log"} or
    \code{"original"}. If the default \code{"log"} then the y-axis will be created
    with a logarithmic spacing. The tick marks will be calculated accordingly and
-   expressed in the original scale of the estimates. In other words, the
-   \code{estimates} vector must not be already transformed.
+   expressed in the original scale of the estimates. The
+   \code{estimates} vector must already be in the logarithmic scale.
  }
  \item{analysisname }{\emph{Optional}, a character text or
     math-valid expression that will be set for
@@ -115,7 +115,7 @@ errorbargraph(estimates, centralvar, critpoint, endptscale="log",
   \emph{The American Statistician}, 34, 195-199.
 }
 \author{
-  Bill Pikounis and John Oleynick
+  Bill Pikounis, John Oleynick, Eva Ye
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,

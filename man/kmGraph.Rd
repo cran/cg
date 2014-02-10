@@ -50,7 +50,7 @@ kmGraph(data, cgtheme = TRUE, distfcn = "survival", ylab = NULL,
   match the order of the group name factor levels. The color order is
   given in \code{\link{cgLineColors}} . The line widths are set to be
   thicker (\code{lwd=2}), and the group name label is placed near the line
-  using \code{\link{label}} methodology for the \pkg{Hmisc} package.
+  using \code{\link{label}} methodology from the \pkg{Hmisc} package.
 
   The x-axis represents response values, and y-axis represents estimated
   probabilities. Minimum and maximum values from ranges of data are
@@ -62,7 +62,7 @@ kmGraph(data, cgtheme = TRUE, distfcn = "survival", ylab = NULL,
   discussion of any return values.
 }
 \author{
-  Bill Pikounis and John Oleynick
+  Bill Pikounis, John Oleynick, Eva Ye
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,

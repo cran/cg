@@ -39,7 +39,7 @@ comparisonsgraph(compstable, difftype, analysisname = "",
     math-valid expression that will used in the graph title. The default
    value is the empty \code{""}.}
  \item{endptname }{\emph{Optional}, a character text or math-valid expression
-   that that will be used as the y-axis label of the graph.
+   that that will be used as the x-axis label of the graph.
    The default
    value is the empty \code{""}.}
   \item{alpha }{Significance level, by default set to \code{0.05}. This
@@ -73,9 +73,9 @@ comparisonsgraph(compstable, difftype, analysisname = "",
  }
  \item{ticklabels }{\emph{Optional}, 
     before graphing the data, remove
-    any automatically generated tickmarks for the y-axis,
+    any automatically generated tickmarks for the x-axis,
     and use these tickmarks instead. A vector of tickmarks to be
-    placed on the y-axis. Any numeric representations will
+    placed on the x-axis. Any numeric representations will
     be coerced to character.
   }
   \item{\dots }{
@@ -100,7 +100,7 @@ comparisonsgraph(compstable, difftype, analysisname = "",
   effect of graphing to the current device.
 }
 \author{
-  Bill Pikounis and John Oleynick
+  Bill Pikounis, John Oleynick, Eva Ye
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,

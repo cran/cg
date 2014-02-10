@@ -13,21 +13,12 @@
   tested.  A cgOneFactorComparisonsTable class object is created.    
 }
 \usage{
-\S4method{comparisonsTable}{cgOneFactorFit}(fit, mcadjust=FALSE, type="pairwisereflect",
- contrastmatrix=NULL, refgrp=NULL, alpha=0.05, addpct=FALSE,
- display="print", \dots)
+\S4method{comparisonsTable}{cgOneFactorFit}(fit, type="pairwisereflect",
+ alpha=0.05, addpct=FALSE, display="print", \dots)
 }
 \arguments{
   \item{fit }{
     An object of class \code{\link{cgOneFactorFit}}.  
-  }
-  \item{mcadjust }{
-    Do a multiple comparisons adjustment, based on the simultaneous
-    inference capabilities of the \pkg{multcomp} package. See Details
-    below. The default value is \code{FALSE}.
-    If \code{mcadjust=TRUE} is specified, there will be a delay,
-    usually just for a few seconds, due to computing time of the
-    critical point in order to conduct the adjusted comparisons.
   }
   \item{type }{Can be one of four values:
 
@@ -59,19 +50,6 @@
       }
     }
   }
-  \item{contrastmatrix }{Only relevant if \code{type="custom"} is
-    specified. In that case, a numeric matrix with the number of
-    rows equal to the number of comparisons of interest. The number
-    of columns must be equal to the number of group means. Each row in
-    the matrix is assumed to represent a contrast of coefficients
-    amongst the groups that defines the comparison of interest.
-  }
-  \item{refgrp }{If left at the default value of \code{NULL}, it will
-    be set to the \code{settings$refgrp} value in the \pkg{cg} \code{fit}
-    object. When set, it is deemed the "reference", or "control" group, so that
-    pairwise comparisons of all other groups to it will be
-    constructed when \code{type="allgroupstocontrol"}.
-  }
   \item{alpha }{Significance level, by default set to \code{0.05}.
   }
   \item{addpct }{Only relevant if \code{settings$endptscale=="original"} in the 
@@ -79,11 +57,11 @@
     comparisons, as a descriptive supplement to the original scale
     differences that are formally estimated.
   }
-  \item{display}{One of three valid values:
+  \item{display }{One of three valid values:
     
     \describe{
       \item{\code{"print"}}{
-	The default value, it calls a \code{print} method for the
+	The default value; It calls a \code{print} method for the
 	created \cr\code{cgOneFactorComparisonsTable} object, which is
 	a formatted text output of the table(s).
       }
@@ -98,8 +76,29 @@
     }
   }
   \item{\dots }{
-    Additional arguments. Only one is currently valid: 
+    Additional arguments.  
     \describe{
+      \item{\code{mcadjust} }{
+	Do a multiple comparisons adjustment, based on the simultaneous
+	inference capabilities of the \pkg{multcomp} package. See Details
+	below. The default value is \code{FALSE}.
+	If \code{mcadjust=TRUE} is specified, there will be a delay,
+	usually just for a few seconds, due to computing time of the
+	critical point in order to conduct the adjusted comparisons.
+      }
+      \item{\code{contrastmatrix} }{Only relevant if \code{type="custom"} is
+	specified. In that case, a numeric matrix with the number of
+	rows equal to the number of comparisons of interest. The number
+	of columns must be equal to the number of group means. Each row in
+	the matrix is assumed to represent a contrast of coefficients
+	amongst the groups that defines the comparison of interest.
+      }
+      \item{\code{refgrp} }{If left at the default value of \code{NULL}, it will
+	be set to the \code{settings$refgrp} value in the \pkg{cg} \code{fit}
+	object. When set, it is deemed the "reference", or "control" group, so that
+	pairwise comparisons of all other groups to it will be
+	constructed when \code{type="allgroupstocontrol"}.
+      }
       \item{\code{model} }{For \code{cgOneFactorFit} \code{fit} objects that have 
 	classical least squares \code{\link{lm}} or resistant & robust
 	\code{\link{rlm}} fits, the following argument values are possible:
@@ -129,7 +128,8 @@
 }
 \details{
   When \code{mcadjust=TRUE}, a status message of \code{"Some time may be
-    needed as the critical point from the multcomp::summary.glht function
+    needed as the critical point"}\cr
+    \code{"from the multcomp::summary.glht function
     call is calculated"} is displayed at the console. This computed critical point
     is used for all subsequent p-value and confidence interval
     calculations.
@@ -193,13 +193,13 @@
     \describe{
       \item{\code{estimate}}{The difference in group means in the
 	comparison: A vs. B. If \code{settings$endptscale=="log"} in the
-	\code{fit} object, this will back-transformed to a percent
+	\code{fit} object, this will be back-transformed to a percent
 	difference scale.
       }
       \item{\code{se}}{The estimated standard error of the difference
 	\code{estimate}. If \code{settings$endptscale=="log"} in the
 	\code{fit} object, this estimate will be based on the Delta
-	method, and will particularluy begin to be a poor approximation when the
+	method, and will particularly begin to be a poor approximation when the
 	standard error in the logscale exceeds 0.50. 
       }
       \item{\code{lowerci}}{The lower 100 * (1-\code{alpha}) \% confidence limit of the
@@ -262,7 +262,7 @@
     \emph{Biometrical Journal}, 50, 3, 346-363.  
   }
   \author{
-    Bill Pikounis and John Oleynick
+    Bill Pikounis, John Oleynick, Eva Ye
   }
   \note{
     Contact \email{cg@billpikounis.net} for bug reports, questions,

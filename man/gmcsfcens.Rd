@@ -45,7 +45,7 @@
 
   Alternative formats of this data set is contained in
   \code{\link{gmcsfcens.listfmt}}. See that help file for details,
-  including how such formats would be read and \code{\link{prepare}}d by \pkg{cg}
+  including how such formats would be read and \code{\link{prepare}}d by \pkg{cg}.
 
   GM-CSF stands for Granulocyte macrophage colony stimulating factor, a
   type of cytokine that is important in the growth of white blood cells.

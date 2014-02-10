@@ -10,7 +10,7 @@
   variability in a data fit with the \pkg{cg} package. 
 }
 \usage{
-samplesizeTable(fit, ngrps = 2, direction, mmdvec, power = 0.80,
+samplesizeTable(fit, direction, mmdvec, power = 0.80,
  alpha = 0.05, nmax = 1000, display = "print", \dots)
 }
 \arguments{
@@ -21,9 +21,6 @@ samplesizeTable(fit, ngrps = 2, direction, mmdvec, power = 0.80,
     \cr\code{\link{cgOneFactorFit}}, which is prepared by the 
     \cr\code{\link{fit.cgOneFactorData}} method. 
   }  
-  \item{ngrps }{
-    The number of groups that will be in the future study.
-  }
   \item{direction }{
     A \code{character} indicating whether the sample size should be estimated
     to detect an \code{"increase"} or a \code{"decrease"}.  This only effects
@@ -32,7 +29,7 @@ samplesizeTable(fit, ngrps = 2, direction, mmdvec, power = 0.80,
     are relative differences instead of absolute differences.
     For detecting relative changes, the sample size
     required to detect a relative increase of 25\% is not the same as the sample
-    size to detect a relative decrease of 25\%.  But for detecting
+    size to detect a relative decrease of 25\%, for example.  But for detecting
     absolute changes, the sample size required
     to detect an absolute increase of 25 is the same as the sample size
     to detect an absolute decrease of 25.
@@ -70,7 +67,7 @@ One of three valid values:
     
     \describe{
       \item{\code{"print"}}{
-	The default value, it calls a \code{print} method for the
+	The default value; It calls a \code{print} method for the
 	created \code{samplesizeTable} object, which is
 	a formatted text output of the table(s).
       }
@@ -98,7 +95,7 @@ One of three valid values:
 }
 
 \author{
-  Bill Pikounis and John Oleynick
+  Bill Pikounis, John Oleynick, Eva Ye
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,

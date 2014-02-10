@@ -39,15 +39,15 @@
    \describe{
      \item{\code{"single"}}{The default, which will put all graphs on the same
        device page. For example, when resistant & robust and classical
-       least squares are present and \code{model=both} (the default),
+       least squares are present and \code{model="both"} (the default),
        a 2 x 1 paneled graph will be created.}
      \item{\code{"multiple"}}{Relevant only when resistant & robust and classical
-       least squares are present and \code{model=both} (the default). In
+       least squares are present and \code{model="both"} (the default). In
        that case, a new graphics device is generated to hold the resistant & robust
        version, as a single-paneled graph. 
        The classical least squares version is on the previous device.}
      \item{\code{"ask"}}{Relevant only when resistant & robust and classical
-       least squares are present and \code{model=both} (the default). In
+       least squares are present and \code{model="both"} (the default). In
        that case, each are portrayed as a single-paneled graph, with the
        \code{ask=TRUE} argument specified in \code{\link{par}} so that
        the user input confirmation is needed before the graphs are
@@ -111,9 +111,10 @@
   }
 }
 \details{
-  When \code{mcadjust=TRUE}, a status message of \code{"Some time may be
-  needed as the critical point from the multcomp::summary.glht function
-  call is calculated"} is displayed at the console. This computed critical point
+  When \code{mcadjust=TRUE}, a status message of
+  \code{"Some time may be needed as the critical point"}\cr
+  \code{"from the multcomp::summary.glht function call is calculated"}
+  is displayed at the console. This computed critical point
   is used for all interval calculations.
 
   The \pkg{multcomp} package provides a unified way to calculate
@@ -171,7 +172,7 @@
   \emph{Biometrical Journal}, 50, 3, 346-363.
 }
 \author{
-  Bill Pikounis and John Oleynick
+  Bill Pikounis, John Oleynick, Eva Ye
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,

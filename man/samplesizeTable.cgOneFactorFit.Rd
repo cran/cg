@@ -14,15 +14,12 @@
   A cgOneFactorSampleSizeTable class object is created. 
 }
 \usage{
-\S4method{samplesizeTable}{cgOneFactorFit}(fit, ngrps = 2, direction, mmdvec,
+\S4method{samplesizeTable}{cgOneFactorFit}(fit, direction, mmdvec,
  power = 0.80, alpha = 0.05, nmax = 1000, display = "print", \dots)
 }
 \arguments{
   \item{fit }{
     A \code{\link{cgOneFactorFit}} object from a previous one factor study.    
-  }
-  \item{ngrps }{
-    The number of groups that will be in the future one factor study. 
   }
   \item{direction }{
     A \code{character} value indicating whether the sample size should be estimated
@@ -70,7 +67,7 @@
     
     \describe{
       \item{\code{"print"}}{
-	The default value, it calls a \code{print} method for the
+	The default value; It calls a \code{print} method for the
 	created \cr\code{cgOneFactorSamplesizeTable} object, which is
 	a formatted text output of the table(s).
       }
@@ -85,8 +82,13 @@
     }
   }
   \item{\dots }{
-    Additional arguments. Only one is currently valid: 
+    Additional arguments.
+
     \describe{
+      \item{\code{ngrps} }{
+	The number of groups that will be in the future one factor
+	study. The default is \code{ngrps = 2}.
+      }
       \item{\code{model}}{  
 	A \code{character} value indicating which variability estimate
 	in
@@ -131,12 +133,12 @@
   mean.
   
   For detecting an absolute difference, the sample size is the
-  smallest group size n for which \code{1 - pf (qf (1 - alpha, numdf, dendf), numdf,
-  dendf, ncp)} exceeds \code{power}, where \code{ncp = (n * mmdvec ^ 2) / (2 *
+  smallest group size n for which\cr \code{1 - pf (qf (1 - alpha, numdf, dendf), numdf,
+  dendf, ncp)} exceeds \code{power},\cr where \code{ncp = (n * mmdvec ^ 2) / (2 *
   sigamest ^ 2)}, and \code{sigmaest} is the residual mean square error from the model in
   \code{fit}.  For detecting a relative difference, the calculations are
-  the same except \code{ncp = (n * (log (sign * mmdvec / 100 + 1) ) ^ 2) / (2
-    * sigmaest ^ 2)}, where \code{sign = -1} if \code{direction="decreasing"},
+  the same except\cr \code{ncp = (n * (log (sign * mmdvec / 100 + 1) ) ^ 2) / (2
+    * sigmaest ^ 2)}, where\cr \code{sign = -1} if \code{direction="decreasing"},
   and \code{sign = 1} if \code{direction = "increasing"}.
 }
 \value{
@@ -151,8 +153,8 @@
       The second column gives the number of subjects required for each 
       group (\code{"n"}), possibly truncated at \code{nmax}.
       The third column gives the total number of
-      subjects required (\code{"N"}), also possibly truncated at
-      \code{nmax}.}
+      subjects required (\code{"N"}), also truncated if
+      \code{nmax} is truncated.}
     \item{\code{rr.sstable}}{A matrix with the estimated sample sizes based on the
       robust model variance estimates, or else \code{NULL} if
       \code{model="olsonly"} was specified. See the \code{ols.sstable}
@@ -163,7 +165,7 @@
       \code{\link{cgOneFactorData}}, with the following additional members:
       \describe{
 	\item{\code{sigmaest}}{A list with 2 members, \code{ols}, containing the
-	  estimiated spread (sigma, standard deviation) from
+	  estimated spread (sigma, standard deviation) from
 	  the classical model of \code{fit}, 
 	  and \code{rr},
 	  containing the estimated spread (sigma, standard deviation)
@@ -183,7 +185,7 @@
   }
 }
 \author{
-  Bill Pikounis and John Oleynick
+  Bill Pikounis, John Oleynick, Eva Ye
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,

@@ -1,4 +1,4 @@
-## $Id: p05SampleSizeOneFactorData.R 3781 2013-01-11 20:07:34Z yye $ 
+## $Id: p05SampleSizeOneFactorData.R 3996 2013-02-24 02:34:36Z bpikouni $ 
 ## One-Factor Unpaired Groups Case
 
 ## Sample Size Calculations for One-Factor Unpaired Groups Data
@@ -6,7 +6,7 @@
 samplesize <- function(sigmaest, endptscale,
                        planningname="", endptname="",
                        ngrps=2, direction="increasing",
-                       mmdvec, dendf,
+                       mmdvec, dendf, ncp=NULL,
                        alpha=0.05, power=0.80,
                        nmax=1000, display="print", ...) {
   ##
@@ -27,6 +27,7 @@ samplesize <- function(sigmaest, endptscale,
   validAlpha(alpha)
   validPower(power)
   validDenDf(dendf)
+  validNcp(ncp)
   validNumeric(nmax, positive=TRUE, integer=TRUE)
   if(nmax < 2) {
     stop(cgMessage("The nmax argument needs to be an integer of 2 or greater."))
@@ -44,7 +45,7 @@ samplesize <- function(sigmaest, endptscale,
   display <- validArgMatch(display, c("print","none","show"))
   dots <- list(...)
   validDotsArgs(dots, names=c(""))
-  
+
   nsolution <- vector("numeric", length=length(mmdvec))
   numdf <- ngrps - 1
   
@@ -63,11 +64,19 @@ samplesize <- function(sigmaest, endptscale,
 
     repeat {
       dendf.result <- do.call("dendf", list(n, ngrps))
-      ## args=formals(dendf))
-      ## 
-      ncp <- ( n * (mmdveci)^2 ) / ( 2 * sigmaest^2 ) 
+      
+      if(is.null(ncp)) {
+        ## canonical case of one-factor unpaired groups
+        ncp.result <- ( n * (mmdveci)^2 ) / ( 2 * sigmaest^2 )
+      }
+      else {
+        ## take the argument for specialized ncp function
+        ## which requires this specific order of argument
+        ## specification: sigmaest, mmdveci, and n
+        ncp.result <- do.call("ncp", list(sigmaest, mmdveci, n))
+      }
       pwr <- 1 - pf(qf(1 - alpha, numdf, dendf.result), 
-                    numdf, dendf.result, ncp)
+                    numdf, dendf.result, ncp.result)
       if (pwr > power || n >= nmax) {
         nfinal <- n
         break 
@@ -155,8 +164,7 @@ samplesize <- function(sigmaest, endptscale,
     showDefault(computedss)
   }
   ## else show nothing
-  
-  return(invisible(computedss))
+  invisible(computedss)
 }
 
 samplesizegraph <- function(sstable, 
@@ -244,7 +252,7 @@ samplesizegraph <- function(sstable,
       "Simple INCREASE"
     }
   },
-                    ": Minimum Detectable",
+                    ": ", if(numberofgrps > 2) {"Minimum "} ,"Detectable",
                     " Difference", sep="")
 
   mtext(side=1, text=xlabchar, line=2)
@@ -286,7 +294,7 @@ samplesizegraph <- function(sstable,
     N.tickmarks <- makeTickMarks(Nticklabels, N.tickmarks)
   }
 
-  n.ticklabels <- paste("", round(N.tickmarks/2, 0))
+  n.ticklabels <- paste("", round(N.tickmarks/numberofgrps, 0))
   ycex <- yTicksCex(N.tickmarks, cexinit=0.8)
   
   axis(2, at=scaleVar(N.tickmarks, endptscale=Nscale),
@@ -340,8 +348,8 @@ samplesizegraph <- function(sstable,
        las=1)
 
   box()
-  mtext(side=4, text=if(is.null(ylab)) paste("Sample size per each of the",
-                  numberofgrps, "groups") else ylab, line=1.8, cex=0.9, adj=0)
+  mtext(side=4, text=if(is.null(ylabright)) paste("Sample size per each of the",
+                  numberofgrps, "groups") else ylabright, line=1.8, cex=0.9, adj=0)
 
   if(any(n >= nmax)) {
     .R. <- TRUE
@@ -376,7 +384,7 @@ setClass("cgOneFactorSampleSizeTable",
 
 setMethod("samplesizeTable", "cgOneFactorFit",
           samplesizeTable.cgOneFactorFit <- 
-          function(fit, ngrps=2, direction, mmdvec, power=0.80, alpha=0.05,
+          function(fit, direction, mmdvec, power=0.80, alpha=0.05,
                    nmax=1000, display="print", ...) {
             ##
             ## PURPOSE:  Compute sample sizes based on variance
@@ -389,12 +397,7 @@ setMethod("samplesizeTable", "cgOneFactorFit",
                              "unequal variances or censored observations."))
             }
             dots <- list(...)
-            validDotsArgs(dots, names="model")
-            validNumeric(ngrps, positive=TRUE, integer=TRUE)
-            if(ngrps < 2) {
-              stop(cgMessage("The ngrps argument needs to be an integer of 2",
-                             "or greater."))
-            }
+            validDotsArgs(dots, names=c("model","ngrps"))
             direction <- validArgMatch(direction, c("increasing", "decreasing"))
             validNumeric(mmdvec, positive=TRUE)
             validAlpha(alpha)
@@ -403,6 +406,7 @@ setMethod("samplesizeTable", "cgOneFactorFit",
             if(nmax < 2) {
               stop(cgMessage("The nmax argument needs to be an integer of 2 or greater."))
             }
+            display <- validArgMatch(display, c("print","none","show"))
             modelarg <- getDotsArgName(dots, "model")
             if(!is.na(modelarg)) {
               model <- eval(parse(text=paste("dots$", modelarg, sep="")))
@@ -411,7 +415,20 @@ setMethod("samplesizeTable", "cgOneFactorFit",
             else {
               model <- "both"
             }
+            ngrpsarg <- getDotsArgName(dots, "ngrps")
+            if(!is.na(ngrpsarg)) {
+              ngrps <- eval(parse(text=paste("dots$", ngrpsarg, sep="")))
+            }
+            else {
+              ngrps <- 2
+            }
 
+            validNumeric(ngrps, positive=TRUE, integer=TRUE)
+            if(ngrps < 2) {
+              stop(cgMessage("The ngrps argument needs to be an integer of 2",
+                             "or greater."))
+            }
+           
             ## initializations
             settings <- fit@settings
             ols <- rr <- FALSE
@@ -483,8 +500,7 @@ setMethod("samplesizeTable", "cgOneFactorFit",
               show(returnObj)
             }
             ## else display=="none"
-            
-            return(invisible(returnObj))
+            invisible(returnObj)
           }
           )
 
@@ -579,7 +595,7 @@ setMethod("print", "cgOneFactorSampleSizeTable",
                                               nmax)
               x$"N Total" <- makeCensored(x$"N Total",
                                           ngrps*nmax)
-              return(x)
+              x
             }
 
             informSettings <- function(sigmaest) {
@@ -596,7 +612,7 @@ setMethod("print", "cgOneFactorSampleSizeTable",
             }
 
             curwidth <- getOption("width")
-            on.exit(options(width=curwidth))
+            on.exit(options(width=curwidth), add=TRUE)
             if(curwidth < 500) { options(width=500) }
             
             if(ols) {
@@ -620,15 +636,16 @@ setMethod("show", "cgOneFactorSampleSizeTable",
 setMethod("samplesizeGraph", "cgOneFactorSampleSizeTable",
           samplesizeGraph.cgOneFactorSampleSizeTable <-
           function(sstable, Nscale = "log", mmdscale = "log",
-                   cgtheme=TRUE, device="single",
+                   ## cgtheme=TRUE, device="single",
                    ...) {
             ##
             ## PURPOSE: create a graph of samplesize calculations
             ##
             ## Input arguments check
             dots <- list(...)
-            validDotsArgs(dots, names=c("model", "mmdticklabels","Nticklabels"))
-            validBoolean(cgtheme)
+            validDotsArgs(dots, names=c("model",
+                                  "mmdticklabels","Nticklabels",
+                                  "cgtheme","device"))
 
             settings <- sstable@settings
             difftype <- if(settings$endptscale=="log") "percent" else "simple"
@@ -675,6 +692,26 @@ setMethod("samplesizeGraph", "cgOneFactorSampleSizeTable",
               model <- "both"
             }
 
+            cgthemearg <- getDotsArgName(dots, "cgtheme")
+            if(!is.na(cgthemearg)) {
+              cgtheme <- eval(parse(text=paste("dots$", cgthemearg, sep="")))
+              validBoolean(cgtheme)
+            }
+            else {
+              dots$cgtheme <- TRUE
+              cgtheme <- TRUE
+            }
+            
+            devicearg <- getDotsArgName(dots, "device")
+            if(!is.na(devicearg)) {
+              device <- eval(parse(text=paste("dots$", devicearg, sep="")))
+              device <- validArgMatch(device, c("single","multiple", "ask"))
+            }
+            else {
+              dots$device <- "single"
+              device <- "single"
+            }
+            
             ols <- rr <- FALSE  ## Initializations
             if(!is.null(rr.sstable) && model!="olsonly") {
               rr <- TRUE
@@ -683,7 +720,6 @@ setMethod("samplesizeGraph", "cgOneFactorSampleSizeTable",
               ols <- TRUE
             }
 
-            device <- validArgMatch(device, c("single","multiple", "ask"))
 
             thetitle <- "Sample Size Graph"
 
@@ -880,7 +916,7 @@ setMethod("samplesizeGraph", "cgOneFactorSampleSizeTable",
                                      "Simple INCREASE"
                                    }
                                  },
-                                   ": Minimum Detectable",
+                                   ": ", if(ngrps > 2) {"Minimum "} ,"Detectable",
                                    " Difference",
                                    sep=""),
                                  ylab=paste("Total Sample Size from",
@@ -893,8 +929,8 @@ setMethod("samplesizeGraph", "cgOneFactorSampleSizeTable",
                                  par.strip.text=list(cex=0.7)
                                  )                                 
               
-              on.exit(lattice:::lattice.setStatus(print.more = FALSE),
-                      add=TRUE)
+              ##on.exit(lattice:::lattice.setStatus(print.more = FALSE),
+              ##        add=TRUE)
               pushViewport(lvp)
               print(thegraph, newpage=FALSE)
               upViewport()
@@ -1039,8 +1075,17 @@ setMethod("samplesizeGraph", "cgOneFactorSampleSizeTable",
               if(stamps) graphStampCG(grid=FALSE)
 
               if(device=="multiple") {
-                if(!is.null(dots$model)) dots$model <- NULL ## since we only
-                ## want dots arguments for trellis.device in next call
+                ## since we only want dots arguments for trellis.device in
+                ## next call we need some housekeeping 
+                if(!is.null(dots$model)) dots$model <- NULL
+                if(!is.null(dots$device) &&
+                   is.character(validArgMatch(dots$device, c("single","multiple","ask")))) {
+                  dots$device<- NULL
+                }
+                if(!is.null(dots$cgtheme)) dots$cgtheme <- NULL
+                if(!is.null(dots$mmdticklabels)) dots$mmdticklabels <- NULL
+                if(!is.null(dots$Nticklabels)) dots$Nticklabels <- NULL
+                
                 do.call("cgDevice", c(list(new=TRUE), dots))
                 cat(cgMessage("A new graphics device has been generated",
                               "to hold",
@@ -1103,11 +1148,25 @@ validDenDf <- function(dendf) {
   }
   if(!identical(sort(names(formals(dendf))),
                 c("n","ngrps"))) {
-    stop(cgMessage("The dendf function needs to have.",
+    stop(cgMessage("The dendf function needs to include",
                    "the exact argument names of n and ngrps."))
   }
   return(TRUE)
 }
+
+validNcp <- function(ncp) {
+  if(is.null(ncp)) return(TRUE)
+  if(!is.function(ncp)) {
+    stop(cgMessage("The object needs to be a function."))
+  }
+  theargnames <- names(formals(ncp))
+  if(sum(theargnames %in% c("sigmaest", "mmdvec", "n")) < 3) {
+    stop(cgMessage("The ncp function needs to include",
+                   "the argument names of sigmaest, mmdvec, n."))
+  }
+  return(TRUE)
+}
+
 
 
 

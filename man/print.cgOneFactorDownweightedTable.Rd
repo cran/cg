@@ -16,7 +16,7 @@
 \arguments{
   \item{x }{
     An object of class \code{\link{cgOneFactorDownweightedTable}},
-    typically created by \code{\link{downweightedTable.cgOneFactorFit}}.
+    typically created by\cr \code{\link{downweightedTable.cgOneFactorFit}}.
   }
   \item{digits }{
     The number of decimal places to use in the output.  If \code{NULL}, then
@@ -54,7 +54,7 @@
   table emptiness is displayed instead.
 }
 \author{
-  Bill Pikounis and John Oleynick
+  Bill Pikounis, John Oleynick, Eva Ye
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,
