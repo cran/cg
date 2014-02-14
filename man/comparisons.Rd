@@ -14,7 +14,7 @@ comparisons(estimates, varcovmatrix, errordf = Inf, endptscale,
             mcadjust = FALSE, alpha = 0.05, type = "pairwisereflect",
             contrastmatrix = NULL, n, offset = NULL, cnames = "derive",
             analysisname = "", endptname = "", digits = NULL, addpct = FALSE,
-            display = "print", \dots) 
+            display = "print") 
 }
 \arguments{
   \item{estimates }{
@@ -49,8 +49,8 @@ comparisons(estimates, varcovmatrix, errordf = Inf, endptscale,
   }
   \item{endptscale }{Must be specified as \code{"log"} or
     \code{"original"}. If \code{"log"} then the \code{estimates} vector
-    is assumed to be in the log scale, and calculations will need to
-    transform to the original scale for the generated table.
+    is assumed to be in the log scale, and calculations will 
+    transform it to the original scale for the generated table.
   }
   \item{mcadjust }{
     Do a multiple comparisons adjustment, based on the simultaneous
@@ -110,15 +110,15 @@ comparisons(estimates, varcovmatrix, errordf = Inf, endptscale,
     before calculation of the \code{estimates} as means in the
     \code{"log"} scale, this could be used to
     adjust the estimates and comparisons appropriately. The default
-    \code{NULL}.
+    is \code{NULL}.
   }
   \item{cnames }{
-    If the default value of \code{derive} is used, row names are
+    If the default value of \code{"derive"} is used, row names are
     derived for the table that reflect the A vs. B type of
     comparison items in each row, using the names attrributes of the
-    \code{estimates} vector and the middle term of "vs." Otherwise,
+    \code{estimates} vector and the middle term of \code{"vs."} Otherwise,
     this can be explicitly specified and needs to be a character vector of
-    the same length as \code{estimates}
+    the same length as \code{estimates} .
   }
   \item{analysisname }{\emph{Optional}, a character text that will be
     printed along with the results table. The default
@@ -143,7 +143,7 @@ comparisons(estimates, varcovmatrix, errordf = Inf, endptscale,
     
     \describe{
       \item{\code{"print"}}{
-	The default value, it calls a \code{print} method for the
+	The default value; It calls a \code{print} method for the
 	created object, which is
 	a formatted text output of the table(s).
       }
@@ -157,9 +157,7 @@ comparisons(estimates, varcovmatrix, errordf = Inf, endptscale,
       }
     }
   }
-  \item{\dots }{
-    Additional arguments. None are currently used.
-  }
+
 }
 \section{Warning}{
   This function was created for internal use in the \pkg{cg} package as
@@ -170,7 +168,10 @@ comparisons(estimates, varcovmatrix, errordf = Inf, endptscale,
   Only two-sided Wald-type of confidence intervals are possible with
   this function. 
   
-  When \code{mcadjust=TRUE}, a status message of \code{"Some time may be needed as the critical point from the multcomp::summary.glht function call is calculated"} is displayed at the console. This computed critical point
+  When \code{mcadjust=TRUE}, a status message of
+  \code{"Some time may be needed as the critical point "}
+  \code{"from the multcomp::summary.glht function call is calculated "}
+  is displayed at the console. This computed critical point
   is used for all subsequent p-value and confidence interval
   calculations.
 
@@ -186,7 +187,7 @@ comparisons(estimates, varcovmatrix, errordf = Inf, endptscale,
   \describe{
     \item{\code{estimate}}{The difference in group estimates in the
       comparison: A vs. B. If \code{endptscale="log"},
-      this will back-transformed to a percent
+      this will be back-transformed to a percent
       difference scale.
     }
     \item{\code{se}}{The estimated standard error of the difference
@@ -250,7 +251,7 @@ comparisons(estimates, varcovmatrix, errordf = Inf, endptscale,
   \emph{Biometrical Journal}, 50, 3, 346-363.  
 }
 \author{
-  Bill Pikounis and John Oleynick
+  Bill Pikounis, John Oleynick, Eva Ye
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,

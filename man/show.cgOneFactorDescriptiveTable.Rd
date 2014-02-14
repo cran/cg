@@ -3,7 +3,7 @@
 \alias{show.cgOneFactorDescriptiveTable}
 \alias{show,cgOneFactorDescriptiveTable-method}
 \title{
-  Show an One Factor Descriptive Table object from the cg package
+  Show a One Factor Descriptive Table object from the cg package
 }
 \description{
   Show a \code{cgOneFactorDescriptiveTable} object, which contains a table of 
@@ -31,7 +31,7 @@
   typically the console.
 }
 \author{
-  Bill Pikounis and John Oleynick
+  Bill Pikounis, John Oleynick, Eva Ye
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,

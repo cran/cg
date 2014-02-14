@@ -1,4 +1,5 @@
-## $Id: p03FormalOneFactorData.R 3781 2013-01-11 20:07:34Z yye $
+## $Id: p03FormalOneFactorData.R 3996 2013-02-24 02:34:36Z bpikouni $
+
 ## One-Factor Unpaired Groups Case
 
 ## Formal Analysis methods for One-Factor Unpaired Groups Data
@@ -122,7 +123,7 @@ setMethod("globalTest", "cgOneFactorFit",
               showDefault(x)
             }
             ## else show nothing
-            return(invisible(x))
+            invisible(x)
           })
 
 
@@ -230,7 +231,7 @@ comparisons <- function(estimates,
                         analysisname="", endptname="",
                         digits=NULL,
                         addpct=FALSE,
-                        display="print", ...) {
+                        display="print") {
   ## 
   ## PURPOSE: Function for computing comparisons results
   ## and placing in a listed form.
@@ -450,10 +451,10 @@ comparisons <- function(estimates,
                                   c("meanA","seA",
                                     "meanB","seB"))] <- c("geomeanA","seA",
                                                           "geomeanB","seB") }
-       { names(mcp)[is.element(names(mcp), c("meanA","seA",
-                                             "meanB","seB"))] <-
-                                               c("geomeanA","seA",
-                                                 "geomeanB","seB") }
+      { names(mcp)[is.element(names(mcp), c("meanA","seA",
+                                            "meanB","seB"))] <-
+                                              c("geomeanA","seA",
+                                                "geomeanB","seB") }
     }
     else { ## Simple Differences
       pctdiff <- mcp$pctdiff
@@ -480,8 +481,7 @@ comparisons <- function(estimates,
     showDefault(mcp)
   }
   ## else show nothing
-
-  return(invisible(mcp))
+  invisible(mcp)
 
 }
 
@@ -501,10 +501,10 @@ setClass("cgOneFactorComparisonsTable",
 setMethod("comparisonsTable", "cgOneFactorFit",
           comparisonsTable.cgOneFactorFit <-
           function(fit,  
-                   mcadjust=FALSE, 
+                   ## mcadjust=FALSE, 
                    type="pairwisereflect",
-                   contrastmatrix=NULL,
-                   refgrp=NULL,
+                   ## contrastmatrix=NULL,
+                   ## refgrp=NULL,
                    alpha=0.05, addpct=FALSE,
                    display="print", ...) {
             ##
@@ -513,15 +513,39 @@ setMethod("comparisonsTable", "cgOneFactorFit",
             ##
             ## Input arguments check
             dots <- list(...)
-            validDotsArgs(dots, names="model")
+            validDotsArgs(dots, names=c("mcadjust", "contrastmatrix", "refgrp","model"))
             type <- validArgMatch(type, c("pairwisereflect","pairwise",
                                           "allgroupstocontrol", "custom"))
             validAlpha(alpha)
-            validBoolean(mcadjust)
             validBoolean(addpct)
 
             display <- validArgMatch(display, c("print","none","show"))
 
+            mcadjustarg <- getDotsArgName(dots, "mcadjustarg")
+            if(!is.na(mcadjustarg)) {
+              mcadjust <- eval(parse(text=paste("dots$", mcadjustarg, sep="")))
+              validBoolean(mcadjust)
+            }
+            else {
+              mcadjust <- FALSE
+            }
+            
+            contrastmatrixarg <- getDotsArgName(dots, "contrastmatrix")
+            if(is.na(contrastmatrixarg)) {
+              contrastmatrix <- 1
+              contrastmatrix <- as.null(contrastmatrix)			
+            }
+            
+            refgrparg <- getDotsArgName(dots, "refgrp")
+            settings <- fit@settings
+            if(!is.na(refgrparg)) {
+              refgrp <- eval(parse(text=paste("dots$", refgrparg, sep="")))
+              if(!is.null(refgrp)) { 
+                refgrp <- validArgMatch(refgrp, settings$grpnames) 
+              }
+            }
+            else refgrp <- settings$refgrp
+            
             modelarg <- getDotsArgName(dots, "model")
             if(!is.na(modelarg)) {
               model <- eval(parse(text=paste("dots$", modelarg, sep="")))
@@ -530,12 +554,12 @@ setMethod("comparisonsTable", "cgOneFactorFit",
             else {
               model <- "both"
             }
-
+            
             ## initializations
             aft <- ols <- rr <- uv <- FALSE
             aft.comprs <- ols.comprs <- rr.comprs <- uv.comprs <- NULL
             ##
-            settings <- fit@settings
+            ## settings <- fit@settings
             endptscale <- settings$endptscale
             rrfit <- fit@rrfit
             olsfit <- fit@olsfit
@@ -543,9 +567,6 @@ setMethod("comparisonsTable", "cgOneFactorFit",
             uvfit <- fit@uvfit
             grpnames <- settings$grpnames
             offset <- settings$addconstant
-
-            if(!is.null(refgrp)) { refgrp <- validArgMatch(refgrp, grpnames) }
-            else refgrp <- settings$refgrp
             
             validAddPct(addpct, endptscale)
 
@@ -588,8 +609,7 @@ setMethod("comparisonsTable", "cgOneFactorFit",
                                         alpha=alpha,
                                         type=type,
                                         contrastmatrix=contrastmatrix,
-                                        offset=offset, addpct=addpct, display="none",
-                                        ...)
+                                        offset=offset, addpct=addpct, display="none")
               if(mcadjust) { multcompDone("Classical Least Squares") }
             }
             
@@ -608,7 +628,7 @@ setMethod("comparisonsTable", "cgOneFactorFit",
                                        type=type,
                                        contrastmatrix=contrastmatrix,
                                        offset=offset, 
-                                       addpct=addpct, display="none", ...)
+                                       addpct=addpct, display="none")
               if(mcadjust) { multcompDone("Resistant & Robust") }
             }              
             
@@ -626,7 +646,7 @@ setMethod("comparisonsTable", "cgOneFactorFit",
                                         alpha=alpha,
                                         type=type,
                                         contrastmatrix=contrastmatrix,
-                                        offset=offset, display="none", ...)
+                                        offset=offset, display="none")
               if(mcadjust) { multcompDone("Accelerated Failure Time") }
             }
 
@@ -645,7 +665,7 @@ setMethod("comparisonsTable", "cgOneFactorFit",
                                        n=with(uvfit$dfru,
                                          sapply(split(endpt, grpf),
                                                 length)[grpnamesindex]),
-                                       offset=offset, display="none", ...)
+                                       offset=offset, display="none")
             }
 
             ## slightly different from the original fit object settings slot
@@ -679,8 +699,7 @@ setMethod("comparisonsTable", "cgOneFactorFit",
               show(returnObj)
             }
             ## else display=="none"
-            
-            return(invisible(returnObj))
+            invisible(returnObj)
           }
           )
 
@@ -757,7 +776,8 @@ pairwisecompsmatrix <- function(comps, grpnames) {
   grpnameheaders <- list(therownames, thecolnames)
   dimnames(mcp.out) <- grpnameheaders
   
-  return(mcp.out)
+                                        # return
+  mcp.out
 
 }
 
@@ -817,6 +837,10 @@ setMethod("print", "cgOneFactorComparisonsTable",
             else {
               digits <- validArgDigits(digits)
             }
+            curscipen <- getOption("scipen")
+            on.exit(options(scipen=curscipen), add=TRUE)
+            options(scipen=9)
+
             if(is.null(title)) {
               title <- paste("Comparisons Table of", settings$analysisname) 
             }
@@ -1596,7 +1620,7 @@ grpsummary <- function(estimates,
   }
 
   ## else show nothing
-  return(invisible(thetable))
+  invisible(thetable)
 }
 
 setClass("cgOneFactorGrpSummaryTable",
@@ -1749,7 +1773,7 @@ setMethod("grpSummaryTable", "cgOneFactorFit",
               show(returnObj)
             }
             ## else display=="none"
-            return(invisible(returnObj))
+            invisible(returnObj)
           })
 
 
@@ -1808,6 +1832,10 @@ setMethod("print", "cgOneFactorGrpSummaryTable",
             else {
               digits <- validArgDigits(digits)
             }
+            curscipen <- getOption("scipen")
+            on.exit(options(scipen=curscipen), add=TRUE)
+            options(scipen=9)
+            
             if(is.null(title)) {
               title <- paste("Group Summary Table of", settings$analysisname) 
             }

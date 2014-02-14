@@ -3,7 +3,7 @@
 \alias{showObj.cgOneFactorFit}
 \alias{showObj,cgOneFactorFit-method}
 \title{
-  Show an Fitted Model object from the cg package
+  Show a Fitted Model object from the cg package
 }
 \description{
   Show the raw form of a \code{cgOneFactorFit} object, which contains model fit
@@ -34,7 +34,7 @@
 }
   
 \author{
-  Bill Pikounis and John Oleynick
+  Bill Pikounis, John Oleynick, Eva Ye
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,

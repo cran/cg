@@ -14,14 +14,12 @@ downweightedTable(fit, cutoffwt, display="print", \dots)
 \arguments{
   \item{fit }{
     A fit object created with a \code{\link{fit}} method from the \pkg{cg}
-    package. \cr There are one class of objects that is currently available:
-    \cr\code{\link{cgOneFactorFit}}, which is prepared by the 
-    \cr\code{\link{fit.cgOneFactorData}} method. 
+    package.  
   }  
   \item{cutoffwt }{
     It has no default and must be specified as a numeric between 0 and 1
-    exclusive. It is a threshold on which observations to identify. All
-    observations that exceed this specified value will be
+    exclusive. It is a threshold. All
+    observations that fall \emph{beneath} the threshold will be
     identified. For example, a \code{cutoffwt=0.90} will yield
     those observations that were downweighted by at least 10\%. 
   }
@@ -29,7 +27,7 @@ downweightedTable(fit, cutoffwt, display="print", \dots)
 	
     \describe{
       \item{\code{"print"}}{
-	The default value, it calls a \code{print} method for the
+	The default value; It calls a \code{print} method for the
 	created \code{downweightedTable} object, which is
 	a formatted text output of the table(s).
       }
@@ -54,14 +52,14 @@ downweightedTable(fit, cutoffwt, display="print", \dots)
   See the specific methods for discussion of return values. 
 }
 \seealso{
-  \code{\link{downweightedTable.cgOneFactorFit}}, MASS::\code{\link{rlm}}
+  \code{\link{downweightedTable.cgOneFactorFit}}, \pkg{MASS}::\code{\link{rlm}}
 }
 \references{
   Venables, W. N. and Ripley, B. D. (2002), 
   \emph{Modern Applied Statistics with S.}  Fourth edition. Springer.
 }
 \author{
-  Bill Pikounis and John Oleynick
+  Bill Pikounis, John Oleynick, Eva Ye
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,
@@ -83,6 +81,20 @@ canine.dwtable <- downweightedTable(canine.fit, cutoff=0.95)
 downweightedTable(canine.fit, cutoff=0.75) ## No observation
                                            ## downweighted at least 25\%
 
+## Paired Difference data
+
+anorexiaFT.data <- prepareCGPairedDifferenceData(anorexiaFT, format="groupcolumns",
+                                                 analysisname="Anorexia FT",
+                                                 endptname="Weight",
+                                                 endptunits="lbs",
+                                                 expunitname="Patient",
+                                                 digits=1,
+                                                 logscale=TRUE)
+anorexiaFT.fit <- fit(anorexiaFT.data)
+
+downweightedTable(anorexiaFT.fit, cutoffwt=0.25) ## No observation
+
+downweightedTable(anorexiaFT.fit, cutoffwt=0.75) ## downweighted at least 25\%
 
 }
 \concept{weights}

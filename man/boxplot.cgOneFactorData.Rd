@@ -51,14 +51,14 @@
 \details{
   For uncensored data, the boxplot for each group produced is a standard boxplot,
   similar to that produced by 
-  graphics::\code{\link{boxplot.default}},
+  \pkg{graphics}::\code{\link{boxplot.default}},
   but with the median shown as a "+" and the mean shown as a "o".  A
   warning is added to the plot if any of the groups or all of the groups
   have 5 or fewer observations (in which case a plot from
   \code{\link{pointGraph.cgOneFactorData}} might be more suitable).
 
   For censored data, Kaplan-Meier estimates are used for the quantiles, as 
-  proposed by Gentleman and Crowley (1991). The survival::\code{\link{survfit}}
+  proposed by Gentleman and Crowley (1991). The \pkg{survival}::\code{\link{survfit}}
   conventions are followed for interpolation of these quantiles.
   Extreme values that are censored
   are drawn as open arrow heads rather than open circles.
@@ -114,7 +114,7 @@
   \emph{Journal of the American Statistical Association}, Volume 86, 678-683.
 }
 \author{
-  Bill Pikounis and John Oleynick
+  Bill Pikounis, John Oleynick, Eva Ye
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,

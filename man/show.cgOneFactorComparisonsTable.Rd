@@ -3,7 +3,7 @@
 \alias{show.cgOneFactorComparisonsTable}
 \alias{show,cgOneFactorComparisonsTable-method}
 \title{
-  Show an One Factor Comparisons Table object from the cg package
+  Show a One Factor Comparisons Table object from the cg package
 }
 \description{
   Show a \code{cgOneFactorComparisonsTable} object, which contains
@@ -31,7 +31,7 @@
   typically the console.
 }  
 \author{
-  Bill Pikounis and John Oleynick
+  Bill Pikounis, John Oleynick, Eva Ye
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,

@@ -35,7 +35,7 @@ prepareCGOneFactorData(dfr, format = "listed", analysisname = "",
 	group is a unique level of the one factor, so the levels of the factor
 	make up the column headers. The values in the data frame are for
 	the response. If the groups have unequal sample sizes, the empty
-	cells within the data.frame can have \code{NA}'s or be left
+	cells within the data frame can have \code{NA}'s or be left
 	blank. Censored values can be represented; see the Details Input
 	Data Frame section below. Otherwise, any character data will be coerced to
 	numeric data with possibly undesirable results.
@@ -163,8 +163,8 @@ prepareCGOneFactorData(dfr, format = "listed", analysisname = "",
 	  \code{2}=left censored. If \code{rightcensor=NULL} and
 	  \code{leftcensor=NULL} are left as defaults in the call, and
 	  values of 0, 1, and 2 are all represented, then the
-	  processing will create a suitable data frame in \code{dfru} for
-	  modeling that the canonical \code{survreg} function understands.
+	  processing will create a suitable data frame \code{dfru} for
+	  modeling that the canonical \code{\link{survreg}} function understands.
 
 	  However, if 0 and 1 are the only specified values
 	  in the third censoring status column, then one of
@@ -190,7 +190,7 @@ prepareCGOneFactorData(dfr, format = "listed", analysisname = "",
 	  right-censored (0) and left-censored (2) cases.
 	  For status=3, the two values differ to
 	  define the interval boundaries. The 
-	  processing will create a suitable data frame in \code{dfru} for
+	  processing will create a suitable data frame \code{dfru} for
 	  modeling that the canonical \code{survreg} and \code{survfit}
 	  functions from the \pkg{survival} package understand.
 	}
@@ -283,13 +283,13 @@ prepareCGOneFactorData(dfr, format = "listed", analysisname = "",
   Drug," \emph{Biometrics}, Volume 41, 295-301.
 
   Chambers, J.M, and Hastie, T.R. (1992), 
-  \emph{Statistical Modeling in S.}  Chapman&Hall/CRC.
+  \emph{Statistical Modeling in S.}  Chapman & Hall/CRC.
 
   Venables, W. N., and Ripley, B. D. (2002), 
   \emph{Modern Applied Statistics with S.}  Fourth edition. Springer.
 }
 \author{
-  Bill Pikounis and John Oleynick 
+  Bill Pikounis, John Oleynick, Eva Ye 
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,

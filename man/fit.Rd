@@ -14,9 +14,7 @@ fit(data, type, \dots)
 \arguments{
   \item{data}{
     A data object prepared with a \code{\link{prepare}} call. This will involve a data
-    frame and additional settings. Inly one class of objects os currently
-    available: \code{\link{cgOneFactorData}}, prepared by the
-    \code{\link{prepareCGOneFactorData}} method. 
+    frame and additional settings. 
   }
   \item{type }{Type of model to fit, represented by a character string.}
   \item{\dots }{
@@ -29,7 +27,7 @@ fit(data, type, \dots)
   See the specific methods for discussion of return values.
 } 
 \author{
-  Bill Pikounis and John Oleynick
+  Bill Pikounis, John Oleynick, Eva Ye
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,
@@ -57,6 +55,17 @@ gmcsfcens.data <- prepareCGOneFactorData(gmcsfcens, format="groupcolumns",
                                          logscale=TRUE)
 
 gmcsfcens.fit <- fit(gmcsfcens.data, type="aft")
+
+## Paired Difference
+
+data(anorexiaFT)
+anorexiaFT.data <- prepareCGPairedDifferenceData(anorexiaFT, format="groupcolumns",
+                                                 analysisname="Anorexia FT",
+                                                 endptname="Weight",
+                                                 endptunits="lbs",
+                                                 expunitname="Patient",
+                                                 digits=1, logscale=TRUE)
+anorexiaFT.fit <- fit(data=anorexiaFT.data, type="rr")	
 
 		  
 }

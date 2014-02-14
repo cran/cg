@@ -3,28 +3,27 @@
 \alias{cg}
 \docType{package}
 \title{ Comparison of groups }
-\description{ cg is comprehensive data
-analysis software, and stands for "compare groups." Its genesis and
-evolution are driven by common needs to compare samples, administrations,
-conditions, etc. in medicine research & development. The current version
-provides comparisons of both unpaired and paired samples, i.e. a linear model 
-with one factor of at least two levels, or with paired difference data. Good data graphs, modern statistical
-methods, and useful displays of results are emphasized.
+\description{ cg is comprehensive data analysis software, and stands for
+ "compare groups." Its genesis and evolution are driven by common needs
+ to compare administrations, conditions, etc. in medicine research &
+development. The current version provides comparisons of unpaired
+samples, i.e. a linear model with one factor of at least two levels. It
+also provides comparisons of two paired samples. Good data graphs,
+modern statistical methods, and useful displays of results are emphasized.
 }
 \details{
 Package: cg\cr
 Type: Package\cr
-Version: 0.9-6\cr
-Date: 2013-01-24\cr
+Version: 1.0-0\cr
+Date: 2014-02-10\cr
 License: GPL (>= 2)\cr
 LazyLoad: yes\cr
 LazyData: yes\cr
-Depends: R (>= 2.14.0), Hmisc, base, utils, methods, stats, graphics,\cr
-grid, lattice, MASS, survival, multcomp, nlme\cr
-Imports: VGAM (>=0.8.6)
+Depends: R (>= 3.0.2), Hmisc (>= 3.14-0)
+Imports: VGAM (> 0.9-3), methods, grid, MASS, lattice, survival, multcomp, nlme
 }
 \author{
-Bill Pikounis and John Oleynick
+Bill Pikounis, John Oleynick, Eva Ye
 
 Maintainer: Bill Pikounis <cg@billpikounis.net>
 
@@ -83,10 +82,37 @@ gmcsfcens.data <- prepareCGOneFactorData(gmcsfcens, format="groupcolumns",
                                          endptname="GM-CSF (pg/ml)",
                                          logscale=TRUE)
 pointGraph(gmcsfcens.data)
+
 boxplot(gmcsfcens.data)
+
 descriptiveTable(gmcsfcens.data)
 
 gmcsfcens.fit <- fit(gmcsfcens.data, type="aft")
+
+## Paired Samples
+
+data(anorexiaFT)
+
+anorexiaFT.data <- prepareCGPairedDifferenceData(anorexiaFT, format="groupcolumns",
+                                                 analysisname="Anorexia FT",
+                                                 endptname="Weight",
+                                                 endptunits="lbs",
+                                                 expunitname="Patient",
+                                                 digits=1,
+                                                 logscale=TRUE)
+
+## Exploratory methods
+descriptiveTable(anorexiaFT.data)
+
+profileGraph(anorexiaFT.data)
+
+diffGraph(anorexiaFT.data)
+
+## Fits and Comparisons
+anorexiaFT.fit <- fit(anorexiaFT.data)
+
+comparisonsTable(anorexiaFT.fit)
+
 
 }
 \keyword{ package }

@@ -1,4 +1,4 @@
-## $Id: utilities.R 3781 2013-01-11 20:07:34Z yye $ 
+## $Id: utilities.R 3987 2013-02-23 15:05:11Z bpikouni $ 
 
 ## Functions & objects internal for the cg Library
 ## and definitely not intended for user-level calls
@@ -1410,16 +1410,16 @@ residualgrptrend.helper <- function(tukeyresids, fitteds, tukeyresids2=NULL,
       forvgam.dfr <- data.frame(x=fitteds, y=tukeyresids)
       extra <- list(leftcensored = (status==2),
                     rightcensored = (status==0))
-      thefit <- try(VGAM::vgam(y ~ s(x, 4), VGAM::cennormal1(zero=2),
+      thefit <- try(VGAM::vgam(y ~ s(x, 4), VGAM::cennormal(zero=2),
                                data=forvgam.dfr, trace=FALSE,
                                extra=extra))
       if(inherits(thefit, "try-error")) {
-        thefit <- try(VGAM:::vgam(y ~ s(x, 3), VGAM::cennormal1(zero=2),
+        thefit <- try(VGAM::vgam(y ~ s(x, 3), VGAM::cennormal(zero=2),
                                   data=forvgam.dfr, trace=FALSE,
                                   extra=extra))
       }
       if(inherits(thefit, "try-error")) {
-        thefit <- try(VGAM:::vgam(y ~ s(x, 2), VGAM::cennormal1(zero=2),
+        thefit <- try(VGAM::vgam(y ~ s(x, 2), VGAM::cennormal(zero=2),
                                   data=forvgam.dfr, trace=FALSE,
                                   extra=extra))
       }
@@ -1490,12 +1490,19 @@ prepare <- function(type, ... ) {
   ## an object with it 
   ## and add metadata for cg methods.
   ## Essentially supplies alias to specific prepare* methods
-  type <- validArgMatch(type, c("onefactor","unpairedgroups"))
+  type <- validArgMatch(type, c("onefactor","unpairedgroups",
+                                "pairedgroups","paireddifference"))
 
   if(is.element(type, c("onefactor","unpairedgroups"))) {
     return(switch(type,
                   "onefactor"={ prepareCGOneFactorData(...) },
                   "unpairedgroups"={ prepareCGOneFactorData(...) }
+                  ))
+  }
+  else if(is.element(type, c("paireddifference","pairedgroups"))) {
+    return(switch(type,
+                  "paireddifference"={ prepareCGPairedDifferenceData(...) },
+                  "pairedgroups"={ prepareCGPairedDifferenceData(...) }
                   ))
   }
  
@@ -1612,97 +1619,3 @@ qminmin <- function(y, x, q) {
 }
 
 ######################
-
-unpaste <- function (str, sep = "/") {
-  as.list (strsplit (str, sep) [[1]])
-}
-
-
-######################
-
-aligncolnames <- function(x) {
-  ##
-  ## PURPOSE: better display
-  ## 	write.table output of tab-delimted values in browser textbox rendering
-  ## CONCEPT: pad each column label or variables with blank spaces 
-  ## 	to overcome unwanted tab behavior when difference between values and label 
-  ##	lengths for a variable is large enough.
-
-  ## x is a data frame of hits from an object created by running summary.htsfit()
-
-  if(any(is.na(x))) newx <- NULL
-  else {
-    varnames <-
-      matrix(names(x),byrow=T,nrow=1)
-    newx <- (rbind(varnames,as.matrix(x)))
-    numcharvarnames <- sapply(list(as.vector(as.character(varnames))),
-                              nchar)
-    maxcharvar <- sapply(data.frame(newx[-1,]),
-                         function(x) max(nchar(as.character(x)))) 
-    
-    numhardspaces <- maxcharvar - numcharvarnames
-    
-    for(i in seq(along=numhardspaces)) {
-      if(numhardspaces[i] >= 0) {
-        newx[1,i] <- paste(varnames[i],paste(rep(" ",numhardspaces[i]),
-                                             collapse="",sep=""),
-                           collapse="",sep="") }
-      else {
-        vardata <- newx[-1,i]
-        newx[-1,i] <- paste(paste(rep(" ",abs(numhardspaces[i])),
-                                  collapse="",sep=""),vardata,sep="")
-      }
-    }
-  }
-  newx
-}  
-
-#################
-
-determineLayout <- function(numpanels) {
-  ##
-  ## Current version: $Date: 2004/12/30 18:23:22 $ UTC
-  ## Started: 7 April 2004
-  ## Bill Pikounis
-  ## PURPOSE: Utility function to determine the layout of a trelllis
-  ## plot
-  ##
-  ## Assume two columns per page, and no more than 4 rows per page
-  ## so no more than 8 panels per page
-  rolscolslayout <-  switch(as.character(min(numpanels, 8)),
-                            "2"=c(2,1),
-                            "3"=c(2,2), "4"=c(2,2),
-                            "5"=c(2,3), "6"=c(2,3),
-                            "7"=c(2,4), "8"=c(2,4))
-
-  numpages <- ceiling(numpanels/8)
-  return(c(rolscolslayout, numpages))
-    
-}
-
-
-determineTimeSlices <- function(numslices, timelevels) {
-  ##
-  ## Current version: $Date: 2004/12/30 18:23:22 $ UTC
-  ## Started: 10 April 2004
-  ## Bill Pikounis
-  ## PURPOSE: Utility function to generate a subset of
-  ## timepoints for evaluations based on a fitted model
-  ##
-  ## First and last timepoints always selected
-  
-  thetimes <- sort(as.numeric(timelevels))
-  
-  theindex <- as.vector(round(quantile(2:(length(thetimes)-1),
-                                       ppoints(numslices - 2)),0))
-  
-  selected <- thetimes[c(1,theindex,length(thetimes))]
-
-  return(unique(selected))
-  
-}
-
-cleanFactorLevels <- function(x) {
-  intersect(levels(x), unique(as.character(x)))
-}
-

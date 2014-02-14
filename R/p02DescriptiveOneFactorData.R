@@ -1,4 +1,4 @@
-## $Id: p02DescriptiveOneFactorData.R 3781 2013-01-11 20:07:34Z yye $
+## $Id: p02DescriptiveOneFactorData.R 3996 2013-02-24 02:34:36Z bpikouni $
 ## One-Factor Unpaired Groups Case
 
 ## Descriptive methods for One-Factor Unpaired Groups Data
@@ -816,7 +816,7 @@ setMethod("descriptiveTable", "cgOneFactorData",
             }
             ## else display=="none"
             
-            return(invisible(returnObj))  
+            invisible(returnObj)
           }
 
           )
@@ -842,6 +842,9 @@ setMethod("print", "cgOneFactorDescriptiveTable",
             else {
               digits <- validArgDigits(digits)
             }
+            curscipen <- getOption("scipen")
+            on.exit(options(scipen=curscipen), add=TRUE)
+            options(scipen=9)
             
             if(is.null(title)) {
               title <- paste("Descriptive Table of", settings$analysisname) 
@@ -877,7 +880,7 @@ setMethod("print", "cgOneFactorDescriptiveTable",
             row.names(out) <- row.names(contents)
             
             curwidth <- getOption("width")
-            on.exit(options(width=curwidth))
+            on.exit(options(width=curwidth), add=TRUE)
             if(curwidth < 500) { options(width=500)}
             print(out, quote=FALSE)
             invisible()

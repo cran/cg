@@ -1,4 +1,4 @@
-## $Id: p04DiagnosticsOneFactorData.R 3781 2013-01-11 20:07:34Z yye $
+## $Id: p04DiagnosticsOneFactorData.R 3996 2013-02-24 02:34:36Z bpikouni $
 ## One-Factor Unpaired Groups Case
 
 ## Diagnostics methods for One-Factor Unpaired Groups Data
@@ -827,7 +827,7 @@ setMethod("qqGraph", "cgOneFactorFit",
                       line=line,
                       desc = "Resistant & Robust fit Unweighted",
                       analysisname = analysisname, 
-                      endptname = endptlabel,
+                      endptname=catCharExpr(" Fit of ", endptlabel),
                       titlestamp = TRUE)
               if(settings$stamps) graphStampCG(grid=FALSE)
             }
@@ -962,7 +962,7 @@ setMethod("downweightedTable", "cgOneFactorFit",
             }
             ## else display=="none"
 
-            return(invisible(returnObj))
+            invisible(returnObj)
           }
           )
 
@@ -989,6 +989,10 @@ setMethod("print", "cgOneFactorDownweightedTable",
             else {
               digits <- validArgDigits(digits)
             }
+            curscipen <- getOption("scipen")
+            on.exit(options(scipen=curscipen), add=TRUE)
+            options(scipen=9)
+            
             if(is.null(title)) {
               title <- paste("Downweighted Observations Table from ",
                              "Resistant & Robust Fit\n",
@@ -1017,7 +1021,7 @@ setMethod("print", "cgOneFactorDownweightedTable",
               table$"pct down-weighted" <- fmtPercent(table$"pct down-weighted")
               
               curwidth <- getOption("width")
-              on.exit(options(width=curwidth))
+              on.exit(options(width=curwidth), add=TRUE)
               if(curwidth < 500) { options(width=500) }
 
               cat(paste("\nWeights less than ", cutoffwt,

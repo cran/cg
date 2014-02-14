@@ -3,7 +3,7 @@
 \alias{show.cgOneFactorDownweightedTable}
 \alias{show,cgOneFactorDownweightedTable-method}
 \title{
-  Show an One Factor Downweighted Table object from the cg package
+  Show a One Factor Downweighted Table object from the cg package
 }
 \description{
   Show a \code{cgOneFactorDownweightedTable} object, which contains
@@ -31,7 +31,7 @@
   typically the console.
 }  
 \author{
-  Bill Pikounis and John Oleynick
+  Bill Pikounis, John Oleynick, Eva Ye
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,

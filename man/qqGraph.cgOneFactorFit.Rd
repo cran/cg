@@ -97,7 +97,7 @@
 }
 \value{
   \code{qqGraph.cgOneFactorFit} returns
-  an invisible \code{NULL}. The main purpose, of course, is the side
+  an invisible \code{NULL}. The main purpose is the side
   effect of graphing to the current device.
 }
 \references{
@@ -106,7 +106,7 @@ Data", \emph{Journal of the American Statistical Association}, Volume
 86, 678-683.
 }
 \author{
-  Bill Pikounis and John Oleynick
+  Bill Pikounis, John Oleynick, Eva Ye
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,
@@ -123,13 +123,13 @@ Data", \emph{Journal of the American Statistical Association}, Volume
   indeed it can even be estimated with 25th and 75th percentiles in the
   presence of the the censored data residuals. These percentiles are
   estimated via the Kaplan-Meier method as proposed by Gentleman and Crowley
-  (1991), with the \code{survival::survfit} function.
+  (1991), with the \pkg{survival}::\code{survfit} function.
 
   The heading for the graph is taken from the \code{cgOneFactorData} object,
   which \code{\link{prepareCGOneFactorData}} sets from its \code{analysisname} 
   argument.
 
-  The label for the Y-axis is taken from the \code{cgOneFactorData} object,
+  The label for the Y-axis of residuals is derived from the \code{cgOneFactorData} object,
   which \code{\link{prepareCGOneFactorData}} sets from its \code{endptname} 
   argument.
 

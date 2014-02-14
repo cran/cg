@@ -22,7 +22,7 @@ globalTest(fit, display="print", \dots)
     
     \describe{
       \item{\code{"print"}}{
-	The default value, it calls a \code{print} method for the
+	The default value; It calls a \code{print} method for the
 	created \code{globalTest} object, which is
 	formatted text output of the test p-values.
       }
@@ -47,7 +47,7 @@ globalTest(fit, display="print", \dots)
   See the specific methods for discussion of return values. 
 }
 \author{
-  Bill Pikounis and John Oleynick
+  Bill Pikounis, John Oleynick, Eva Ye
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,

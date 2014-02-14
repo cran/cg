@@ -1,8 +1,17 @@
-import("methods","graphics")
-importFrom("VGAM","vgam","cennormal1")
+importFrom("VGAM","vgam","cennormal")
+
+import("methods")
+import("grid")
+import("MASS")
+import("lattice")
+import("multcomp")
+import("nlme")
+import("survival")
 import("Hmisc")
 
-export("prepare", "prepareCGOneFactorData", 
+
+export("prepare", "prepareCGOneFactorData",
+	   "prepareCGPairedDifferenceData",
        "comparisons", "comparisonsgraph","errorbargraph",
        "factorInSeq"	
 )
@@ -10,7 +19,9 @@ export("prepare", "prepareCGOneFactorData",
 exportMethods(
     "comparisonsGraph",
     "comparisonsTable",
+	"correlationTable",
     "descriptiveTable",
+	"diffGraph",
     "downweightedTable",
     "errorBarGraph",
     "fit",
@@ -18,11 +29,13 @@ exportMethods(
     "grpSummaryTable",
     "kmGraph",
     "pointGraph",
+	"profileGraph",
     "qqGraph",
     "samplesizeGraph",
     "samplesizeTable",
     "showObj",
-    "varianceGraph"
+    "varianceGraph",
+	"varianceTable"
 )
 
 exportPattern("print[.*]",
@@ -32,7 +45,9 @@ exportPattern("print[.*]",
 			  "diffGraph[.*]",
               "comparisonsGraph[.*]",
               "comparisonsTable[.*]",
+			  "correlationTable[.*]",
               "descriptiveTable[.*]",
+              "diffGraph[.*]",
               "downweightedTable[.*]",
               "errorBarGraph[.*]",
 			  "fit[.*]",
@@ -40,11 +55,13 @@ exportPattern("print[.*]",
               "grpSummaryTable[.*]",
               "kmGraph[.*]",
               "pointGraph[.*]",
+			  "profileGraph[.*]",
               "qqGraph[.*]",
               "samplesizeGraph[.*]",
               "samplesizeTable[.*]",
 			  "showObj[.*]",
-			  "varianceGraph[.*]"
+			  "varianceGraph[.*]",
+			  "varianceTable[.*]"			  
 )
 
 exportClasses("olsfit","rrfit","aftfit","uvfit",
@@ -57,5 +74,14 @@ exportClasses("olsfit","rrfit","aftfit","uvfit",
      "cgOneFactorFit",
      "cgOneFactorGlobalTest",
      "cgOneFactorGrpSummaryTable",
-     "cgOneFactorSampleSizeTable"
+     "cgOneFactorSampleSizeTable",
+     "cgOneFactorSampleSizeTable" ,
+     "cgPairedDifferenceComparisonsTable",
+     "cgPairedDifferenceCorrelationTable",
+     "cgPairedDifferenceData",
+     "cgPairedDifferenceDescriptiveTable",
+     "cgPairedDifferenceDownweightedTable" ,
+     "cgPairedDifferenceFit",
+     "cgPairedDifferenceSampleSizeTable",
+     "cgPairedDifferenceVarianceTable"	 
 )

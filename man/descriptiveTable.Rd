@@ -21,7 +21,7 @@ descriptiveTable(data, display = "print", \dots)
     
     \describe{
       \item{\code{"print"}}{
-	The default value, it calls a \code{print} method for the
+	The default value; It calls a \code{print} method for the
 	created \code{descriptiveTable} object, which is
 	a formatted text output of the table.
       }
@@ -43,10 +43,8 @@ descriptiveTable(data, display = "print", \dots)
 	standard errors should be included in the summary.
 	If \code{logscale} is not
 	specified (default), its value is taken from the
-	\code{\link{cgOneFactorData}}
-	object,
-	which \code{\link{prepareCGOneFactorData}} sets from its
-	\code{logscale} argument.
+	\code{\link{data}}
+	object.
       }
     }
   }
@@ -59,7 +57,7 @@ descriptiveTable(data, display = "print", \dots)
   \code{\link{descriptiveTable.cgOneFactorData}}
 }
 \author{
-  Bill Pikounis and John Oleynick
+  Bill Pikounis, John Oleynick, Eva Ye
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,
@@ -83,7 +81,17 @@ gmcsfcens.data <- prepareCGOneFactorData(gmcsfcens, format="groupcolumns",
                                          logscale=TRUE)
 descriptiveTable(gmcsfcens.data)
 
+## Paired Difference Data
 
+data(anorexiaFT)
+anorexiaFT.data <- prepareCGPairedDifferenceData(anorexiaFT, format="groupcolumns",
+                                                 analysisname="Anorexia FT",
+                                                 endptname="Weight",
+                                                 endptunits="lbs",
+                                                 expunitname="Patient",
+                                                 digits=1, logscale=TRUE)
+
+descriptiveTable(anorexiaFT.data)
 
 }
 \concept{exploratory}

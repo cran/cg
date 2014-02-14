@@ -22,7 +22,7 @@
     data,  a trend will be added with the \code{\link{lowess}} smoother.
     If any censored data residuals are present,
     then at least 7 groups are needed in the fit
-    for a trend line to be added with the VGAM::\code{vgam} smoothing
+    for a trend line to be added with the \pkg{VGAM}::\code{vgam} smoothing
     spline.
     Otherwise, group means are estimated
     and connected. The values of \code{FALSE} and \code{TRUE} override
@@ -103,7 +103,9 @@
 \details{
   The graph plots the square root of the absolute value of the residuals against
   the fitted value. The square root spacing on the y-axis has tick marks
-  in the fitted scale.
+  in the fitted scale.  The notion of using the squared root of the absolute residuals is
+  attributed to John Tukey.
+
 
   The values are automatically jittered to minimize overlapping points.
   For censored data, left-censored values are shown as a shallow "V",
@@ -112,7 +114,7 @@
 
   For the \code{trend} argument, an added trend line when censored data residuals
   are present needs to be interpreted cautiously. When there are 7 or more
-  groups, a cubic smoothing spline based on \code{VGAM::}\code{\link{vgam}}
+  groups, a cubic smoothing spline based on \pkg{VGAM}::\code{\link{vgam}}
   is fit; otherwise, the group means of the residuals are estimated with
   an accelerated failure time model and then just connected. If "too many"
   censored data values are present, the line may be withheld and
@@ -138,9 +140,6 @@
     
   If group labels along the x-axis seem to overlap in the standard
   horizontal form, they will be rotated 45 degrees.
-
-  The notion of using the squared root of the absolute residuals is
-  attributed to John Tukey.
 }
 \value{
   \code{varianceGraph.cgOneFactorFit} returns
@@ -150,7 +149,7 @@
 %% \references{
 %% }
 \author{
-  Bill Pikounis and John Oleynick
+  Bill Pikounis, John Oleynick, Eva Ye
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,

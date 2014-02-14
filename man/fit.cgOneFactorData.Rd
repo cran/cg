@@ -99,7 +99,7 @@
     \item{\code{olsfit}}{The contents of a \code{\link{lm}} fit to the
       data. This is always populated with an \code{\link{lm}} object
       no matter the choice of the
-      \code{type} argument, even though it is certainly misappropriate in
+      \code{type} argument, even though it is certainly inappropriate in
       the \code{type="aft"} case.
     }
     \item{\code{rrfit}}{The contents of a \code{\link{rlm}} fit to the
@@ -133,7 +133,7 @@
     }
 }
 \references{
-  Huber, P.J (1967),
+  Huber, P. J. (1967),
   "The Behavior of Maximum Likelihood Estimates Under
   Nonstandard Conditions",
   \emph{Proceedings of the Fifth Berkeley Symposium on Mathematical
@@ -143,7 +143,7 @@
   \emph{Modern Applied Statistics with S.}  Fourth edition. Springer.
 }
 \author{
-  Bill Pikounis and John Oleynick
+  Bill Pikounis, John Oleynick, Eva Ye
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,

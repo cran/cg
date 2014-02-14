@@ -33,7 +33,7 @@
 	
     \describe{
       \item{\code{"print"}}{
-	The default value, it calls a \code{print} method for the
+	The default value; It calls a \code{print} method for the
 	created \cr\code{cgOneFactorGrpSummaryTable} object, which is
 	a formatted text output of the table(s).
       }
@@ -109,6 +109,8 @@
     \item{\code{uv.grps}}{The table of group estimates based on the
       \code{uvfit} component of the \code{\link{cgOneFactorFit}}
       object if a valid unequal variances fit object is present.
+      If \code{uvfit} is a simple character value of
+      \code{"No fit was selected."}, then the value is \code{NULL}.
       See below for the data frame structure
       of the table.
     }
@@ -128,7 +130,7 @@
 
   \describe{
     \item{\code{estimate}}{The estimated group mean. If \code{settings$endptscale=="log"} in the
-      \code{fit} object, this will back-transformed to a geometric mean.
+      \code{fit} object, this will be back-transformed to a geometric mean.
     }
     \item{\code{se}}{The estimated standard error of the group mean
       \code{estimate}. If \code{settings$endptscale=="log"} in the
@@ -154,11 +156,13 @@
   
 }
 \details{
-  When \code{mcadjust=TRUE}, a status message of \code{"Some time may be
-  needed as the critical point from the multcomp::summary.glht function
-  call is calculated"} is displayed at the console. This computed critical point
-  is used for all subsequent confidence interval  calculations.
-
+  When \code{mcadjust=TRUE}, a status message of
+  \code{"Some time may be needed as the critical point"}\cr
+  \code{"from the multcomp::summary.glht function call is calculated"}
+  is displayed at the console. This computed critical point
+  is used for all subsequent p-value and confidence interval
+  calculations.
+  
   The \pkg{multcomp} package provides a unified way to calculate
   critical points based on the comparisons of interest in a
   "family". Thus a user does not need to worry about choosing amongst
@@ -173,7 +177,7 @@
   \emph{Biometrical Journal}, 50, 3, 346-363.  
 }
 \author{
-  Bill Pikounis and John Oleynick
+  Bill Pikounis, John Oleynick, Eva Ye
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,

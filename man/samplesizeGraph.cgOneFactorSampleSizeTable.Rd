@@ -10,12 +10,11 @@
   object. 
 }
 \usage{
-\S4method{samplesizeGraph}{cgOneFactorSampleSizeTable}(sstable, Nscale="log", mmdscale = "log",
- cgtheme = TRUE, device = "single", \dots)
+\S4method{samplesizeGraph}{cgOneFactorSampleSizeTable}(sstable, Nscale="log", mmdscale = "log", \dots)
 }
 \arguments{
   \item{sstable }{
-   A sample size object of class \code{\link{cgOneFactorSampleSizeTable}}. 
+    A sample size object of class \code{\link{cgOneFactorSampleSizeTable}}. 
   }
   \item{Nscale }{
     A \code{character} indicating whether the Y-axis, which shows the estimated
@@ -27,37 +26,37 @@
     meaningful differences to be detected, should be drawn on the log scale (\code{"log"}) or
     the original scale (\code{"original"}).
   }
-  \item{cgtheme }{
-    When set to the default \code{TRUE}, ensures a trellis device is active with
-    limited color scheme. Namely \code{background},
-    \code{strip.shingle}, and \code{strip.background} are each set to \code{"white"}.
-  }
-  \item{device }{Can be one of three values:
-    
-    \describe{
-      \item{\code{"single"}}{The default, which will put all graphs on the same
-	device page. For example, when resistant & robust and classical
-	least squares sample size estimates are present and \code{model="both"} (the default),
-	a 2 x 1 paneled graph will be created.}
-      \item{\code{"multiple"}}{Relevant only when resistant & robust and classical
-	least squares sample size estimates are present and \code{model="both"}. In
-	those cases, a new graphics device is generated to hold the resistant & robust
-	version, as a single-paneled graph, 
-	and the classical least squares version is on the previous device.}
-      \item{\code{"ask"}}{Relevant only when resistant & robust and classical
-	least squares samples size estimates are present and
-	\code{model="both"}
-	(the default). In
-	that case, each are portrayed as a single-paneled graph, with the
-	\code{ask=TRUE} argument specified in \code{\link{par}} so that
-	the user input confirmation is needed before the graphs are
-	drawn.
-      }
-    }
-  }
   \item{\dots }{
-    Additional arguments. Two are currently valid: 
+    Additional arguments: 
     \describe{
+      \item{\code{cgtheme} }{
+	When set to the default \code{TRUE}, ensures a trellis device is active with
+	limited color scheme. Namely \code{background},
+	\code{strip.shingle}, and \code{strip.background} are each set to \code{"white"}.
+      }
+      \item{\code{device} }{Can be one of three values:
+	
+	\describe{
+	  \item{\code{"single"}}{The default, which will put all graphs on the same
+	    device page. For example, when resistant & robust and classical
+	    least squares sample size estimates are present and \code{model="both"} (the default),
+	    a 2 x 1 paneled graph will be created.}
+	  \item{\code{"multiple"}}{Relevant only when resistant & robust and classical
+	    least squares sample size estimates are present and \code{model="both"}. In
+	    those cases, a new graphics device is generated to hold the resistant & robust
+	    version, as a single-paneled graph, 
+	    and the classical least squares version is on the previous device.}
+	  \item{\code{"ask"}}{Relevant only when resistant & robust and classical
+	    least squares samples size estimates are present and
+	    \code{model="both"}
+	    (the default). In
+	    that case, each are portrayed as a single-paneled graph, with the
+	    \code{ask=TRUE} argument specified in \code{\link{par}} so that
+	    the user input confirmation is needed before the graphs are
+	    drawn.
+	  }
+	}
+      }
       \item{\code{model} }{For
 	\code{cgOneFactorOneSampleSizeTable}
 	objects that have 
@@ -86,7 +85,7 @@
 	  \item{\code{mod}}{Can be either of these two values,
 	    \describe{
 	      \item{\code{"replace"}}{Before graphing the data, remove
-		any automatically generated tickmarks for the x-axis,
+		any automatically generated tickmarks for the y-axis,
 		and create the tickmarks specified in the
 		\code{marks} component below.
 	      }
@@ -138,6 +137,10 @@
   possible. Since the algorithm is empirical, the \code{ticklabels}
   argument is available for further refinement or complete replacement
   of tickmarks.
+  
+  The method essentially portrays in a graph the same information shown by the
+  print method of the
+  \code{\link{cgOneFactorSampleSizeTable}} object.
 }
 \value{
   \code{samplesizeGraph.cgOneFactorSampleSizeTable} returns
@@ -145,7 +148,7 @@
   effect of graphing to the current device.
 }
 \author{
-  Bill Pikounis and John Oleynick
+  Bill Pikounis, John Oleynick, Eva Ye
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,
@@ -165,7 +168,7 @@ canine.data <- prepareCGOneFactorData(canine, format="groupcolumns",
 canine.fit <- fit(canine.data)
 
 canine.samplesize <- samplesizeTable(canine.fit, direction="increasing", 
-                                     mmdvec=c(10, 25, 50, 75, 100))
+                                     mmdvec=c(10, 25, 50, 75, 100)) ## print method shows table
 
 samplesizeGraph(canine.samplesize)
 

@@ -13,8 +13,7 @@ showObj(object)
 
 \arguments{
   \item{object}{
-    An object created by the \pkg{cg} package. The class of objects currently
-    available is \code{\link{cgOneFactorFit}}.
+    An object created by the \pkg{cg} package. 
   }
 }
 \details{
@@ -28,14 +27,14 @@ showObj(object)
 }
   
 \author{
-  Bill Pikounis and John Oleynick
+  Bill Pikounis, John Oleynick, Eva Ye
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,
   concerns, and comments. 
 }
 \seealso{
-\code{\link{cgOneFactorFit}}, \code{\link{showDefault}}
+\code{\link{cgOneFactorFit}}, \code{\link{cgPairedDifferenceFit}}, \code{\link{showDefault}}
 }
 \examples{
 data(canine)

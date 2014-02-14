@@ -62,7 +62,7 @@
   }
 }
 \details{The \code{gmcsfcens.listfmt*} data sets that comes with the \pkg{cg} package
-  are in \code{listed} format.
+  are in a "listed" format, detailed below.
 
   The 6 groups are regarded as levels of one factor in the
   \code{\link{prepareCGOneFactorData}}, \code{\link{fit}}, and other methods in

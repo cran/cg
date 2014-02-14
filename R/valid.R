@@ -87,6 +87,11 @@ validNumeric <- function(arg, positive=FALSE, integer=FALSE) {
   ##
   ## PURPOSE: Simple check that a numeric value was specified
   ##
+  if(missing(arg)) {
+      stop(cgMessage("The argument ",
+                     deparse(substitute(arg)),
+                     " is missing and need to be specified."))
+  }
   argname <- deparse(substitute(arg))
   validBoolean(positive)
   validBoolean(integer)

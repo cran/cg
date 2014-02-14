@@ -33,7 +33,7 @@ grpSummaryTable(fit, mcadjust = FALSE, alpha = 0.05, display = "print",  \dots)
     
     \describe{
       \item{\code{"print"}}{
-	The default value, it calls a \code{print} method for the
+	The default value; It calls a \code{print} method for the
 	created \cr\code{cgOneFactorGrpSummaryTable} object, which is
 	a formatted text output of the table(s).
       }
@@ -55,7 +55,10 @@ grpSummaryTable(fit, mcadjust = FALSE, alpha = 0.05, display = "print",  \dots)
   }
 }
 \details{
-  When \code{mcadjust=TRUE}, a status message of \code{"Some time may be needed as the critical point from the multcomp::summary.glht function call is calculated"} is displayed at the console. This computed critical point
+  When \code{mcadjust=TRUE}, a status message of
+  \code{"Some time may be needed as the critical point"}\cr
+  \code{"from the multcomp::summary.glht function call is calculated"}
+  is displayed at the console. This computed critical point
   is used for all subsequent p-value and confidence interval
   calculations.
 }
@@ -72,7 +75,7 @@ grpSummaryTable(fit, mcadjust = FALSE, alpha = 0.05, display = "print",  \dots)
   \emph{Biometrical Journal}, 50, 3, 346-363.  
 }
 \author{
-  Bill Pikounis and John Oleynick
+  Bill Pikounis, John Oleynick, Eva Ye
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,
@@ -91,7 +94,7 @@ canine.data <- prepareCGOneFactorData(canine, format="groupcolumns",
                                       digits=1, logscale=TRUE, refgrp="CC")
 canine.fit <- fit(canine.data)
 
-canine.grpsumm0 <- grpSummaryTable(canine.fit)
+canine.grpsumm <- grpSummaryTable(canine.fit)
 
 
 data(gmcsfcens)
@@ -102,7 +105,7 @@ gmcsfcens.data <- prepareCGOneFactorData(gmcsfcens, format="groupcolumns",
 
 gmcsfcens.fit <- fit(gmcsfcens.data, type="aft")
 
-gmcsfcens.grpsumm0 <- grpSummaryTable(gmcsfcens.fit)
+gmcsfcens.grpsumm <- grpSummaryTable(gmcsfcens.fit)
 
 }
 \concept{group summary}
