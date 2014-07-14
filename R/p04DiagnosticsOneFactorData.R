@@ -1,4 +1,4 @@
-## $Id: p04DiagnosticsOneFactorData.R 3996 2013-02-24 02:34:36Z bpikouni $
+## $Id: p04DiagnosticsOneFactorData.R 4891 2014-02-21 17:49:45Z bpikouni $
 ## One-Factor Unpaired Groups Case
 
 ## Diagnostics methods for One-Factor Unpaired Groups Data

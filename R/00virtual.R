@@ -32,3 +32,5 @@ setClassUnion("characterOrNULL", c("character", "NULL"))
 
 setClass("characterOrExpression")
 setClassUnion("characterOrExpression", c("character", "expression"))
+
+

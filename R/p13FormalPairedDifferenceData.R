@@ -588,8 +588,9 @@ setMethod("comparisonsGraph", "cgPairedDifferenceComparisonsTable",
                                                 tck=0.20, outside=TRUE, rot=0)
                                      panel.points(x, compys, pch=16, col="black")
                                      lsegments(xlower, compys, xupper, compys)
-                                     ycoord <- par()$usr[3:4]
-                                     smidge <- 0.015 * (ycoord[2] - ycoord[1])
+                                     ##ycoord <- par()$usr[3:4]
+                                     ##smidge <- 0.015 * (ycoord[2] - ycoord[1])
+                                     smidge <- 0.015 * max(compys)
                                      lsegments(xlower, compys - smidge,
                                                xlower, compys + smidge)
                                      lsegments(xupper, compys - smidge,
@@ -661,6 +662,7 @@ setMethod("comparisonsGraph", "cgPairedDifferenceComparisonsTable",
                                        setupAxisTicks(c(xlower, x, xupper),
                                                       difference=TRUE,
                                                       axis="x",
+                                                      logscale=FALSE,
                                                       grid=TRUE,
                                                       xcex=0.6)
                                      if(!is.null(ticklabels)) {
@@ -676,8 +678,9 @@ setMethod("comparisonsGraph", "cgPairedDifferenceComparisonsTable",
                                                 tck=0.20, outside=TRUE, rot=0)
                                      panel.points(x, compys, pch=16, col="black")
                                      lsegments(xlower, compys, xupper, compys)
-                                     ycoord <- par()$usr[3:4]
-                                     smidge <- 0.015 * (ycoord[2] - ycoord[1])
+                                     ##ycoord <- par()$usr[3:4]
+                                     ##smidge <- 0.015 * (ycoord[2] - ycoord[1])
+                                     smidge <- 0.015 * max(compys)
                                      lsegments(xlower, compys - smidge,
                                                xlower, compys + smidge)
                                      lsegments(xupper, compys - smidge,

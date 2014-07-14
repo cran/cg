@@ -140,7 +140,7 @@ with the order of its levels determined by first occurrence of each level in its
 }
 
 \author{
-  Bill Pikounis, John Oleynick, Eva Ye
+  Bill Pikounis [aut, cre, cph], John Oleynick [aut], Eva Ye [ctb]
 }
 
 \note{

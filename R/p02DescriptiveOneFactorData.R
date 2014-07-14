@@ -1,4 +1,4 @@
-## $Id: p02DescriptiveOneFactorData.R 3996 2013-02-24 02:34:36Z bpikouni $
+## $Id: p02DescriptiveOneFactorData.R 4891 2014-02-21 17:49:45Z bpikouni $
 ## One-Factor Unpaired Groups Case
 
 ## Descriptive methods for One-Factor Unpaired Groups Data

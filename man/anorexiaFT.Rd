@@ -28,10 +28,6 @@
   experimental unit. Each observation in a row that spans the two group
   columns are paired individual response or outcome values.
 
-  The 3 groups are regarded as levels of one factor in the
-  \code{\link{prepareCGPairedDifferenceData}}, \code{\link{fit}}, and other methods in
-  the \pkg{cg} package.
-
   The purpose of the study was to evaluate effects of
   multiple treatments on weight as a marker for anorexia, and to
   compare their relative effectiveness. 

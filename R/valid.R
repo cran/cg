@@ -1,4 +1,4 @@
-## $Id: valid.R 3782 2013-01-13 03:06:19Z yye $ UTC
+## $Id: valid.R 4894 2014-02-21 17:51:10Z bpikouni $ UTC
 
 ## Functions for verifying input arguments to functions
 
@@ -33,23 +33,6 @@ validPower <- function(x) {
   }
   else return(TRUE)
 }
-
-
-validDataFormat <- function(x) {
-  ##
-  ## PURPOSE: One of the following specifications needs to be made
-  ## allowing for partial matching
-  ##
-  x <- try(match.arg(x, c("listed","groupcolumns")))
-  
-  if(class(x)=="try-error") {
-    stop(cgMessage("The argument dataformat needs to be",
-                   "set to either \"listed\" or \"groupcolumns\"."
-                   ))
-  }
-  else return(x)
-}
-
 
 validBoolean <- function(arg) {
   ##

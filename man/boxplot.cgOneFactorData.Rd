@@ -114,7 +114,7 @@
   \emph{Journal of the American Statistical Association}, Volume 86, 678-683.
 }
 \author{
-  Bill Pikounis, John Oleynick, Eva Ye
+  Bill Pikounis [aut, cre, cph], John Oleynick [aut], Eva Ye [ctb]
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,

@@ -68,7 +68,7 @@ comparisonsGraph(compstable, cgtheme=TRUE, device="single",
   discussion of any return values.
 }
 \author{
-  Bill Pikounis, John Oleynick, Eva Ye
+  Bill Pikounis [aut, cre, cph], John Oleynick [aut], Eva Ye [ctb]
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,

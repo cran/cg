@@ -1,4 +1,4 @@
-## $Id: p03FormalOneFactorData.R 3996 2013-02-24 02:34:36Z bpikouni $
+## $Id: p03FormalOneFactorData.R 4891 2014-02-21 17:49:45Z bpikouni $
 
 ## One-Factor Unpaired Groups Case
 
@@ -2227,8 +2227,10 @@ setMethod("comparisonsGraph", "cgOneFactorComparisonsTable",
                                                 tck=0.20, outside=TRUE, rot=0)
                                      panel.points(x, compys, pch=16, col="black")
                                      lsegments(xlower, compys, xupper, compys)
-                                     ycoord <- par()$usr[3:4]
-                                     smidge <- 0.015 * (ycoord[2] - ycoord[1])
+                                     ##ycoord <- par()$usr[3:4]
+                                     ##smidge <- 0.015 * (ycoord[2] - ycoord[1])
+                                     smidge <- 0.015 * max(compys)
+
                                      lsegments(xlower, compys - smidge,
                                                xlower, compys + smidge)
                                      lsegments(xupper, compys - smidge,
@@ -2300,6 +2302,7 @@ setMethod("comparisonsGraph", "cgOneFactorComparisonsTable",
                                        setupAxisTicks(c(xlower, x, xupper),
                                                       difference=TRUE,
                                                       axis="x",
+                                                      logscale=FALSE,
                                                       grid=TRUE,
                                                       xcex=0.6)
                                      if(!is.null(ticklabels)) {
@@ -2315,12 +2318,14 @@ setMethod("comparisonsGraph", "cgOneFactorComparisonsTable",
                                                 tck=0.20, outside=TRUE, rot=0)
                                      panel.points(x, compys, pch=16, col="black")
                                      lsegments(xlower, compys, xupper, compys)
-                                     ycoord <- par()$usr[3:4]
-                                     smidge <- 0.015 * (ycoord[2] - ycoord[1])
+
+                                     ## ycoord <- par()$usr[3:4]
+                                     ## smidge <- 0.015 * (ycoord[2] - ycoord[1])
+                                     smidge <- 0.015 * max(compys)
                                      lsegments(xlower, compys - smidge,
                                                xlower, compys + smidge)
                                      lsegments(xupper, compys - smidge,
-                                               xupper, compys + smidge)
+                                               xupper, compys + smidge)                                     
                                      ## zero reference line
                                      panel.abline(v=0, lty=3)
                                      

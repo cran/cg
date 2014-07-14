@@ -1,4 +1,4 @@
-## $Id: p00ReadInOneFactorData.R 3781 2013-01-11 20:07:34Z yye $
+## $Id: p00ReadInOneFactorData.R 4891 2014-02-21 17:49:45Z bpikouni $
 ## One-Factor Unpaired Groups Case
 
 ## Read-in functionality
@@ -25,7 +25,7 @@ prepareCGOneFactorData <- function(dfr, format="listed",
   ## "univariate style" if needed for the usual S modeling conventions.
   ##
   ## Input argument handling
-  dataformat <- validDataFormat(format)  ## also handles partial matching
+  dataformat <- validArgMatch(format, c("listed","groupcolumns"))
   validBoolean(logscale)
   validCensor(rightcensor, direction="right")
   validCensor(leftcensor, direction="left")

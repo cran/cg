@@ -1,4 +1,4 @@
-## $Id: utilities.R 3987 2013-02-23 15:05:11Z bpikouni $ 
+## $Id: utilities.R 4895 2014-02-21 18:01:54Z bpikouni $ 
 
 ## Functions & objects internal for the cg Library
 ## and definitely not intended for user-level calls

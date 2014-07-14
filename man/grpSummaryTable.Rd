@@ -75,7 +75,7 @@ grpSummaryTable(fit, mcadjust = FALSE, alpha = 0.05, display = "print",  \dots)
   \emph{Biometrical Journal}, 50, 3, 346-363.  
 }
 \author{
-  Bill Pikounis, John Oleynick, Eva Ye
+  Bill Pikounis [aut, cre, cph], John Oleynick [aut], Eva Ye [ctb]
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,

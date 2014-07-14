@@ -1,4 +1,4 @@
-## $Id: generics.R 4188 2013-04-15 17:21:12Z yye $
+## $Id: generics.R 4896 2014-02-21 18:07:14Z bpikouni $
 
 setGeneric("fit",
            function(data, type, ...) {
@@ -106,3 +106,18 @@ setGeneric("showObj",
            })
                                            
 ##############################
+
+if(FALSE) {
+
+setGeneric("marginalProfile",
+           function(data,...) {
+             standardGeneric("marginalProfile")
+           })
+
+setGeneric("assessSplineFit",
+           function(fit, ...) {
+             standardGeneric("assessSplineFit")
+           })
+
+}
+		   

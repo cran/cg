@@ -23,7 +23,7 @@ prepareCGPairedDifferenceData <- function(dfr, format="listed",
   ## "univariate style" if needed for the usual S modeling conventions.
   ##
   ## Input argument handling
-  dataformat <- validDataFormat(format)  ## also handles partial matching
+  dataformat <-  validArgMatch(format, c("listed","groupcolumns"))
   validBoolean(logscale)
   validBoolean(stamps)
   validCharacter(expunitname)
@@ -273,14 +273,13 @@ validCGPairedDiffGroupColDfr <- function(dfr) {
                    "not allowed.",
                    seeHelpFile("prepareCGPairedDiffData")))
   }
-  
-  ## Are there duplicate names?
-  else if(length(unique(names(dfr))) < numcols) {
-    stop(cgMessage("The input data seems to have group names that",
-                   "are not distinct",
+  ## Detect if the experimental unit identifier has duplicate values
+  else if(numcols==3 && (length(unique(as.character(dfr[,1]))) !=  nrow(dfr))) {
+    stop(cgMessage("The first column experimental unit identifier",
+                   "needs to have all unique values.",
                    seeHelpFile("prepareCGPairedDiffData")))
   }
-
+  
   else return(TRUE)
 }
 
@@ -292,9 +291,9 @@ validCGPairedDiffListedDfr <- function(dfr) {
   if(numcols != 3) {
     stop(cgMessage("The listed input data format needs to be 3",
                    "columns.", 
-                   "The first column needs to be the experimental unit identifier",
-                   "the second column needs to be the group identifier",
-                   "and the third is the endpoint.",
+                   "The first column needs to be the experimental unit identifier,",
+                   "the second column needs to be the group identifier,",
+                   "and the third is the endpoints.",
                    seeHelpFile("prepareCGPairedDiffData")))
   }
   

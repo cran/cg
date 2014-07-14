@@ -223,7 +223,7 @@ prepareCGPairedDifferenceData(dfr, format = "listed", analysisname = "",
   \emph{Statistical Modeling in S.}  Chapman&Hall/CRC.
 }
 \author{
-  Bill Pikounis, John Oleynick, Eva Ye 
+  Bill Pikounis [aut, cre, cph], John Oleynick [aut], Eva Ye [ctb] 
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,

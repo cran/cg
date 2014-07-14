@@ -22,6 +22,6 @@
   concerns, and comments.
 }
 \author{
-  Bill Pikounis, John Oleynick, Eva Ye
+  Bill Pikounis [aut, cre, cph], John Oleynick [aut], Eva Ye [ctb]
 }
 \keyword{datasets}

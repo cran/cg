@@ -14,8 +14,8 @@ modern statistical methods, and useful displays of results are emphasized.
 \details{
 Package: cg\cr
 Type: Package\cr
-Version: 1.0-0\cr
-Date: 2014-02-10\cr
+Version: 1.0-1\cr
+Date: 2014-07-13\cr
 License: GPL (>= 2)\cr
 LazyLoad: yes\cr
 LazyData: yes\cr
@@ -23,7 +23,7 @@ Depends: R (>= 3.0.2), Hmisc (>= 3.14-0)
 Imports: VGAM (> 0.9-3), methods, grid, MASS, lattice, survival, multcomp, nlme
 }
 \author{
-Bill Pikounis, John Oleynick, Eva Ye
+Bill Pikounis [aut, cre, cph], John Oleynick [aut], Eva Ye [ctb]
 
 Maintainer: Bill Pikounis <cg@billpikounis.net>
 
