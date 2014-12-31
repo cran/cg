@@ -359,7 +359,7 @@ samplesizegraph <- function(sstable,
                                         height=0.25*(diff(range(
                                           c(min(N.scaled),max(N.scaled))))),
                                         method="area")
-    legend(x=coordinates$rect$x[1], y=coordinates$rect$y[1], adj=0,
+    legend(x=coordinates$rect$x[4], y=coordinates$rect$y[4], adj=0,
            xjust=0, yjust=1, bty="n",
            legend=paste("For at least one difference\n",
              "the sample size\n",
@@ -883,7 +883,7 @@ setMethod("samplesizeGraph", "cgOneFactorSampleSizeTable",
                                                                               max(y))))),
                                                                           grid=TRUE,
                                                                           method="area")
-                                     panel.text(x=coordinates$rect$x[1], y=coordinates$rect$y[1],
+                                     panel.text(x=coordinates$rect$x[4], y=coordinates$rect$y[4],
                                                 label=paste("For at least one difference\n",
                                                   "the sample size\n",
                                                   "calculations were truncated\n",

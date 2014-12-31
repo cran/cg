@@ -545,7 +545,7 @@ setMethod("samplesizeGraph", "cgPairedDifferenceSampleSizeTable",
                                                     height=0.25*(diff(range(
                                                       c(min(n.scaled),max(n.scaled))))),
                                                     method="area")
-                legend(x=coordinates$rect$x[1], y=coordinates$rect$y[1], adj=0,
+                legend(x=coordinates$rect$x[4], y=coordinates$rect$y[4], adj=0,
                        xjust=0, yjust=1, bty="n",
                        legend=paste("For at least one difference\n",
                          "the sample size\n",

@@ -1,4 +1,4 @@
-## $Id: p00ReadInOneFactorData.R 4891 2014-02-21 17:49:45Z bpikouni $
+## $Id: p00ReadInOneFactorData.R 5596 2014-07-16 22:17:15Z bpikouni $
 ## One-Factor Unpaired Groups Case
 
 ## Read-in functionality

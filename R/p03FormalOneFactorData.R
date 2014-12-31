@@ -1,4 +1,4 @@
-## $Id: p03FormalOneFactorData.R 4891 2014-02-21 17:49:45Z bpikouni $
+## $Id: p03FormalOneFactorData.R 5596 2014-07-16 22:17:15Z bpikouni $
 
 ## One-Factor Unpaired Groups Case
 
@@ -256,6 +256,8 @@ comparisons <- function(estimates,
 
   if(is.null(contrastmatrix)) {
     L <- contrastMatrix(list(grpnames), type=type)
+    ## if type="allgroupstocontrol", then the first grpname is set to be
+    ## the reference group level.
   }
   else if(type=="custom") {
     L <- contrastmatrix
@@ -542,6 +544,11 @@ setMethod("comparisonsTable", "cgOneFactorFit",
               refgrp <- eval(parse(text=paste("dots$", refgrparg, sep="")))
               if(!is.null(refgrp)) { 
                 refgrp <- validArgMatch(refgrp, settings$grpnames) 
+              }
+              if(type!="allgroupstocontrol") {
+                stop(cgMessage("If the refgrp= argument is specified",
+                   "then the type= argument needs to be set to",
+                   "\"allgroupstocontrol\"."))
               }
             }
             else refgrp <- settings$refgrp
@@ -2205,6 +2212,7 @@ setMethod("comparisonsGraph", "cgOneFactorComparisonsTable",
                                                   upper) 
                                    | typef,
                                    data=all.dfr,
+                                   digits=digits,
                                    panel = function(x, y, ...) {
                                      xlower <- attr(x, "other")[, 1]
                                      xupper <- attr(x, "other")[, 2]
@@ -2213,7 +2221,8 @@ setMethod("comparisonsGraph", "cgOneFactorComparisonsTable",
                                        setupAxisTicks(exp(c(xlower, x, xupper)),
                                                       ratio=TRUE, percent=TRUE,
                                                       axis="x",
-                                                      grid=TRUE, xcex=xcex)
+                                                      grid=TRUE, xcex=xcex,
+                                                      digits=digits)
                                      if(!is.null(ticklabels)) {
                                        xratioticks <-
                                          makeTickMarks(ticklabels,
@@ -2294,6 +2303,7 @@ setMethod("comparisonsGraph", "cgOneFactorComparisonsTable",
                                                   upper) 
                                    | typef,
                                    data=all.dfr,
+                                   digits=digits,
                                    panel = function(x, y, ...) {
                                      xlower <- attr(x, "other")[, 1]
                                      xupper <- attr(x, "other")[, 2]
@@ -2304,7 +2314,8 @@ setMethod("comparisonsGraph", "cgOneFactorComparisonsTable",
                                                       axis="x",
                                                       logscale=FALSE,
                                                       grid=TRUE,
-                                                      xcex=0.6)
+                                                      xcex=0.6,
+                                                      digits=digits)
                                      if(!is.null(ticklabels)) {
                                        xdiffticks <-
                                          makeTickMarks(ticklabels,
@@ -2356,8 +2367,10 @@ setMethod("comparisonsGraph", "cgOneFactorComparisonsTable",
                                      xrange <- range(c(xlower, xupper))
                                      panel.text(y=rep(0.5, 2), x=xrange,
                                                 labels=paste(
-                                                  c(fmtDifference(min(xrange)),
-                                                    fmtDifference(max(xrange))), "\n"),
+                                                  c(fmtDifference(min(xrange),
+                                                                  digits=digits),
+                                                    fmtDifference(max(xrange),
+                                                                  digits=digits)), "\n"),
                                                 col="blue", adj=0, cex=0.6)
                                    },
                                    layout=c(2,1), aspect=1, pch=16,
@@ -2391,7 +2404,7 @@ setMethod("comparisonsGraph", "cgOneFactorComparisonsTable",
             else if((model=="olsonly" || (ols && !rr && model=="both")) &&
                     device=="single") {
               comparisonsgraph(olscomprs, difftype, analysisname,
-                               endptlabel, alpha, titlestamp=FALSE,
+                               endptlabel, alpha, digits, titlestamp=FALSE,
                                explanation=FALSE,
                                wraplength=wraplength,
                                cex.comps=cex.comps,
@@ -2408,7 +2421,7 @@ setMethod("comparisonsGraph", "cgOneFactorComparisonsTable",
                     device=="single") {
               ##            else if(model=="rronly" & rr & device=="single") {
               comparisonsgraph(rrcomprs, difftype, analysisname,
-                               endptlabel, alpha, titlestamp=FALSE,
+                               endptlabel, alpha, digits, titlestamp=FALSE,
                                explanation=FALSE,
                                wraplength=wraplength,
                                cex.comps=cex.comps,
@@ -2432,7 +2445,7 @@ setMethod("comparisonsGraph", "cgOneFactorComparisonsTable",
               }
               
               comparisonsgraph(olscomprs, difftype, analysisname,
-                               endptlabel, alpha, titlestamp=FALSE,
+                               endptlabel, alpha, digits, titlestamp=FALSE,
                                explanation=FALSE,
                                wraplength=wraplength,
                                cex.comps=cex.comps,
@@ -2457,7 +2470,7 @@ setMethod("comparisonsGraph", "cgOneFactorComparisonsTable",
                               warning=TRUE))
               }
               comparisonsgraph(rrcomprs, difftype, analysisname,
-                               endptlabel, alpha, titlestamp=FALSE,
+                               endptlabel, alpha, digits, titlestamp=FALSE,
                                explanation=FALSE,
                                wraplength=wraplength,
                                cex.comps=cex.comps,
@@ -2473,7 +2486,7 @@ setMethod("comparisonsGraph", "cgOneFactorComparisonsTable",
             else if(aft && device=="single") {
 
               comparisonsgraph(aftcomprs, difftype, analysisname,
-                               endptlabel, alpha, titlestamp=FALSE,
+                               endptlabel, alpha, digits, titlestamp=FALSE,
                                wraplength=wraplength,
                                cex.comps=cex.comps,
                                explanation=FALSE, ticklabels=ticklabels)
@@ -2486,7 +2499,7 @@ setMethod("comparisonsGraph", "cgOneFactorComparisonsTable",
             }
             else if(uv && device=="single") {
               comparisonsgraph(uvcomprs, difftype, analysisname,
-                               endptlabel, alpha, titlestamp=FALSE,
+                               endptlabel, alpha, digits, titlestamp=FALSE,
                                explanation=FALSE,
                                wraplength=wraplength,
                                cex.comps=cex.comps,

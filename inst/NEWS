@@ -1,9 +1,23 @@
+31 December 2014: Version 1.0-2
+===========================
+* Fixed missing requirements of digits argument in the comparisonsGraph method for OneFactor and PairedDifference
+objects. The main error appeared when graphing the min and max digits range of "differences". 
+This discovery happened when data was fit and analyzed in its original scale. 
+The default logarithmic scale case was unaffected since the min and max "percent/ratio difference" numbers does not 
+need the missing digits= argument. 
+
+* Fixed an oversight to check that if the refgrp= argument is used in a comparisonsTable call for a OneFactorFit
+object, then the type= argument needs to be also set to "allgroupstocontrol."  Thanks again to Vince Pileggi for
+reporting these bugs.
+
+* Corrected placement of warning message in samplesizeGraph() calls when the calculated sample sizes are greater than a specified threshold (default 1000). This placement is based on the largest.empty() function in Frank Harrell's Hmisc package. 
+
 13 July 2014: Version 1.0-1
 ===========================
 
 * Fixed a graph render error where logscale=FALSE was not specified in setting up x-axis ticks
   for the comparisonsGraph() method for cgOneFactorComparisonsTable objects when the endpoint is
-  analyzed in the original (not transformed) scale. Thanks to Vince Pile for reporting the error.
+  analyzed in the original (not transformed) scale. Thanks to Vince Pileggi for reporting the error.
 
 * Revised Authors fields in documentation to reflect creator, contributor roles, etc. with the recent syntax
   enhancements.

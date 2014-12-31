@@ -42,7 +42,9 @@
       \item{\code{"allgroupstocontrol"}}{Takes the value of
 	\code{settings$refgrp} in the \pkg{cg} \code{fit}
 	object, deems it the "control" group, and constructs
-	pairwise comparisons of all other groups to it.
+	pairwise comparisons of all other groups to it. This setting is
+	required when the \code{refgrp} argument is specified in the
+	call (see {\dots } section below.)
       }
       \item{\code{"custom"}}{Indicates the a custom matrix of
 	comparisons will be constructed, and that matrix needs to be
@@ -97,7 +99,10 @@
 	be set to the \code{settings$refgrp} value in the \pkg{cg} \code{fit}
 	object. When set, it is deemed the "reference", or "control" group, so that
 	pairwise comparisons of all other groups to it will be
-	constructed when \code{type="allgroupstocontrol"}.
+	constructed when \code{type="allgroupstocontrol"}. Please note the
+	\code{type="allgroupstocontrol"} setting is
+	REQUIRED when the \code{refgrp} argument is specified in the
+	call with a valid non-\code{NULL} value.
       }
       \item{\code{model} }{For \code{cgOneFactorFit} \code{fit} objects that have 
 	classical least squares \code{\link{lm}} or resistant & robust

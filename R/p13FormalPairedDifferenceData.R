@@ -566,6 +566,7 @@ setMethod("comparisonsGraph", "cgPairedDifferenceComparisonsTable",
                                                   upper) 
                                    | typef,
                                    data=all.dfr,
+                                   digits=digits,
                                    panel = function(x, y, ...) {
                                      xlower <- attr(x, "other")[, 1]
                                      xupper <- attr(x, "other")[, 2]
@@ -574,7 +575,8 @@ setMethod("comparisonsGraph", "cgPairedDifferenceComparisonsTable",
                                        setupAxisTicks(exp(c(xlower, x, xupper)),
                                                       ratio=TRUE, percent=TRUE,
                                                       axis="x",
-                                                      grid=TRUE, xcex=xcex)
+                                                      grid=TRUE, xcex=xcex,
+                                                      digits=digits)
                                      if(!is.null(ticklabels)) {
                                        xratioticks <-
                                          makeTickMarks(ticklabels,
@@ -654,6 +656,7 @@ setMethod("comparisonsGraph", "cgPairedDifferenceComparisonsTable",
                                                   upper) 
                                    | typef,
                                    data=all.dfr,
+                                   digits=digits,
                                    panel = function(x, y, ...) {
                                      xlower <- attr(x, "other")[, 1]
                                      xupper <- attr(x, "other")[, 2]
@@ -664,7 +667,8 @@ setMethod("comparisonsGraph", "cgPairedDifferenceComparisonsTable",
                                                       axis="x",
                                                       logscale=FALSE,
                                                       grid=TRUE,
-                                                      xcex=0.6)
+                                                      xcex=0.6,
+                                                      digits=digits)
                                      if(!is.null(ticklabels)) {
                                        xdiffticks <-
                                          makeTickMarks(ticklabels,
@@ -715,8 +719,10 @@ setMethod("comparisonsGraph", "cgPairedDifferenceComparisonsTable",
                                      xrange <- range(c(xlower, xupper))
                                      panel.text(y=rep(0.5, 2), x=xrange,
                                                 labels=paste(
-                                                  c(fmtDifference(min(xrange)),
-                                                    fmtDifference(max(xrange))), "\n"),
+                                                  c(fmtDifference(min(xrange),
+                                                                  digits=digits),
+                                                    fmtDifference(max(xrange),
+                                                                  digits=digits)), "\n"),
                                                 col="blue", adj=0, cex=0.6)
                                    },
                                    layout=c(2,1), aspect=1, pch=16,

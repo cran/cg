@@ -1,4 +1,4 @@
-## $Id: valid.R 4894 2014-02-21 17:51:10Z bpikouni $ UTC
+## $Id: valid.R 5596 2014-07-16 22:17:15Z bpikouni $ UTC
 
 ## Functions for verifying input arguments to functions
 

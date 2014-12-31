@@ -14,8 +14,8 @@ modern statistical methods, and useful displays of results are emphasized.
 \details{
 Package: cg\cr
 Type: Package\cr
-Version: 1.0-1\cr
-Date: 2014-07-13\cr
+Version: 1.0-2\cr
+Date: 2014-12-31\cr
 License: GPL (>= 2)\cr
 LazyLoad: yes\cr
 LazyData: yes\cr
