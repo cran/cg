@@ -1,4 +1,4 @@
-## $Id: p03FormalOneFactorData.R 5596 2014-07-16 22:17:15Z bpikouni $
+## $Id: p03FormalOneFactorData.R 6053 2015-02-22 20:23:45Z bpikouni $
 
 ## One-Factor Unpaired Groups Case
 

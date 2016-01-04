@@ -167,6 +167,7 @@ prepareCGPairedDifferenceData(dfr, format = "listed", analysisname = "",
       to all response values. The approach taken is
       from the "white" book on S (Chambers and Hastie, 1992),
       page 68. The range (\code{max - min}) of the response values is
+
       multiplied by \code{0.0001} to derive the number to add to all the
       response values.
       
@@ -188,7 +189,8 @@ prepareCGPairedDifferenceData(dfr, format = "listed", analysisname = "",
       \item{\code{analysisname}}{Drawn from the input argument value of
 	\code{analysisname}.}
       \item{\code{endptname}}{Drawn from the input argument value of
-	\code{endptname}.}
+	\code{endptname}, and set to \code{"Endpoint"} if input was left
+	at the default \code{""}.}
       \item{\code{endptunits}}{Drawn from the input argument value of
 	\code{endptunits}.}
       \item{\code{endptscale}}{Has the value of \code{"log"} if
@@ -208,7 +210,7 @@ prepareCGPairedDifferenceData(dfr, format = "listed", analysisname = "",
 	group names. The order is determined by the first occurence in the
 	input data frame header in \code{dfr} and the \code{refgrp} specification.}
       \item{\code{expunitname}}{Drawn from the input argument value of
-	\code{expunitname}.}
+	\code{expunitname} and processing of the data frame.}
       \item{\code{refgrp}}{Drawn from the input argument of \code{refgrp}.}
       \item{\code{stamps}}{Drawn from the input argument of \code{stamps}.}
     }
@@ -241,5 +243,4 @@ anorexiaFT.data <- prepareCGPairedDifferenceData(anorexiaFT, format="groupcolumn
                                                  expunitname="Patient",
                                                  digits=1, logscale=TRUE)
 }
-
 \keyword{datagen}

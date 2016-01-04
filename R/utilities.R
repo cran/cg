@@ -1,4 +1,4 @@
-## $Id: utilities.R 4895 2014-02-21 18:01:54Z bpikouni $ 
+## $Id: utilities.R 6053 2015-02-22 20:23:45Z bpikouni $ 
 
 ## Functions & objects internal for the cg Library
 ## and definitely not intended for user-level calls
@@ -1491,21 +1491,22 @@ prepare <- function(type, ... ) {
   ## and add metadata for cg methods.
   ## Essentially supplies alias to specific prepare* methods
   type <- validArgMatch(type, c("onefactor","unpairedgroups",
-                                "pairedgroups","paireddifference"))
+                                "pairedgroups","paireddifference",
+                                "repmes","repeatedmeasures"))
 
   if(is.element(type, c("onefactor","unpairedgroups"))) {
     return(switch(type,
                   "onefactor"={ prepareCGOneFactorData(...) },
                   "unpairedgroups"={ prepareCGOneFactorData(...) }
-                  ))
+    ))
   }
   else if(is.element(type, c("paireddifference","pairedgroups"))) {
     return(switch(type,
                   "paireddifference"={ prepareCGPairedDifferenceData(...) },
                   "pairedgroups"={ prepareCGPairedDifferenceData(...) }
-                  ))
+    ))
   }
- 
+   
   invisible()
 
 }

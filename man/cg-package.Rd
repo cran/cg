@@ -2,10 +2,10 @@
 \alias{cg-package}
 \alias{cg}
 \docType{package}
-\title{ Comparison of groups }
+\title{ Compare Groups, Analytically and Graphically }
 \description{ cg is comprehensive data analysis software, and stands for
- "compare groups." Its genesis and evolution are driven by common needs
- to compare administrations, conditions, etc. in medicine research &
+"compare groups." Its genesis and evolution are driven by common needs
+to compare administrations, conditions, etc. in medicine research and
 development. The current version provides comparisons of unpaired
 samples, i.e. a linear model with one factor of at least two levels. It
 also provides comparisons of two paired samples. Good data graphs,
@@ -14,13 +14,13 @@ modern statistical methods, and useful displays of results are emphasized.
 \details{
 Package: cg\cr
 Type: Package\cr
-Version: 1.0-2\cr
-Date: 2014-12-31\cr
+Version: 1.0-3\cr
+Date: 2016-01-05\cr
 License: GPL (>= 2)\cr
 LazyLoad: yes\cr
 LazyData: yes\cr
-Depends: R (>= 3.0.2), Hmisc (>= 3.14-0)
-Imports: VGAM (> 0.9-3), methods, grid, MASS, lattice, survival, multcomp, nlme
+Depends: R (>= 3.2.3), Hmisc (>= 3.17-1)
+Imports: VGAM (>= 1.0-0), methods, grDevices, graphics, stats, utils, grid, MASS, lattice, survival, multcomp, nlme, rms
 }
 \author{
 Bill Pikounis [aut, cre, cph], John Oleynick [aut], Eva Ye [ctb]

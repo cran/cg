@@ -1,5 +1,16 @@
 importFrom("VGAM","vgam","cennormal")
 
+importFrom("graphics", "abline", "axis", "box", "bxp", "grid",
+           "legend", "lines", "mtext", "par", "plot", "points",
+           "segments", "strwidth", "text", "title")
+importFrom("stats", "anova", "confint", "cor.test", "fitted",
+           "formula", "lm", "lowess", "median", "pchisq", "pf",
+           "ppoints", "predict", "pt", "qf", "qnorm", "qqline",
+           "qqnorm", "qt", "quantile", "resid", "residuals", "sd",
+           "spline", "summary.lm", "update", "vcov")
+importFrom("utils", "flush.console")
+
+
 import("methods")
 import("grid")
 import("MASS")
@@ -8,6 +19,7 @@ import("multcomp")
 import("nlme")
 import("survival")
 import("Hmisc")
+import("rms")
 
 
 export("prepare", "prepareCGOneFactorData",
@@ -38,10 +50,28 @@ exportMethods(
 	"varianceTable"
 )
 
+S3method(boxplot,cgOneFactorData)
+S3method(print,cgOneFactorComparisonsTable) 
+S3method(print,cgOneFactorDescriptiveTable) 
+S3method(print,cgOneFactorDownweightedTable)
+S3method(print,cgOneFactorFit)
+S3method(print,cgOneFactorGlobalTest)
+S3method(print,cgOneFactorGrpSummaryTable)
+S3method(print,cgOneFactorSampleSizeTable)
+S3method(print,cgPairedDifferenceComparisonsTable)
+S3method(print,cgPairedDifferenceCorrelationTable)
+S3method(print,cgPairedDifferenceDescriptiveTable)
+S3method(print,cgPairedDifferenceDownweightedTable) 
+S3method(print,cgPairedDifferenceFit)
+S3method(print,cgPairedDifferenceSampleSizeTable)
+S3method(print,cgPairedDifferenceVarianceTable)
+S3method(summary,cgOneFactorFit)
+S3method(summary,cgPairedDifferenceFit)
+
 exportPattern("print[.*]",
-              "show[.*]",
-			  "summary[.*]",
               "boxplot[.*]",
+			  "summary[.*]",
+              "show[.*]",
 			  "diffGraph[.*]",
               "comparisonsGraph[.*]",
               "comparisonsTable[.*]",

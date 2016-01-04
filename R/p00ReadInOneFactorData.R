@@ -1,4 +1,4 @@
-## $Id: p00ReadInOneFactorData.R 5596 2014-07-16 22:17:15Z bpikouni $
+## $Id: p00ReadInOneFactorData.R 6053 2015-02-22 20:23:45Z bpikouni $
 ## One-Factor Unpaired Groups Case
 
 ## Read-in functionality
@@ -498,8 +498,7 @@ validZeroScore <- function(zeroscore, endpt) {
                    "to be \"estimate\".",
                    "Otherwise, it needs to be NULL or evaluate",
                    "to a positive numeric value that is smaller than",
-                   "the rest of the endpoint values."),
-         seeHelpFile("prepareCGOneFactorData"))
+                   "the rest of the endpoint values."))
   }
   invisible(NULL)
 }

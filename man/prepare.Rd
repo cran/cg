@@ -15,10 +15,14 @@ prepare(type, ...)
 \arguments{
   \item{type }{Values and synonyms to create a
      \pkg{cg} data object. For one factor / unpaired samples, either
-     "onefactor" or "unpairedgroups" can be specified. For paired
+     "onefactor" or "unpairedgroups" can be specified. 
+     
+     For paired
      samples, either "paireddifference" or "pairedgroups" can be
-     used. Partial matching also allows shortened forms such as
-     "unpaired" or "paireddiff".
+     used. 
+     
+     Partial matching also allows shortened forms such as
+     "unpaired" or "paireddiff". %% or "repm".
   }
   \item{... }{Depends on the specific function that is called according
     to the \code{type} argument. For current valid calls, no
@@ -27,7 +31,7 @@ prepare(type, ...)
 }
 \value{
   See \code{\link{cgOneFactorData}} and
-  \code{\link{cgPairedDifferenceData}}
+  \code{\link{cgPairedDifferenceData}} 
   for possible valid objects that are created,
   dependent on the \code{type} and \code{\dots}
   arguments that are correctly specified.
@@ -40,7 +44,9 @@ prepare(type, ...)
   concerns, and comments. 
 }
 \seealso{
-  \code{\link{prepareCGOneFactorData}}, \code{\link{prepareCGPairedDifferenceData}}
+  \code{\link{prepareCGOneFactorData}}, 
+  \code{\link{prepareCGPairedDifferenceData}}%, 
+  %\code{\link{prepareCGRepeatedMeasuresData}}
 }
 \examples{
 data(canine)

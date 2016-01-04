@@ -1,3 +1,8 @@
+04 January 2016: Version 1.0-3
+===========================
+* Addressed notes arising in building process, in order to follow CRAN and R-core and R-extensions guidelines and standards for packages, 
+such as export and import directives in the NAMESPACE file and Title in the DESCRIPTION file. 
+
 31 December 2014: Version 1.0-2
 ===========================
 * Fixed missing requirements of digits argument in the comparisonsGraph method for OneFactor and PairedDifference
