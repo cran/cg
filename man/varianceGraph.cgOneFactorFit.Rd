@@ -10,11 +10,11 @@
 }
 \usage{
 \S4method{varianceGraph}{cgOneFactorFit}(fit, trend = NULL, cgtheme = TRUE,
- device = "single", \dots)  
+ device = "single", \dots)
 }
 \arguments{
   \item{fit }{
-    A fit object of class \code{\link{cgOneFactorFit}}. 
+    A fit object of class \code{\link{cgOneFactorFit}}.
   }
   \item{trend }{
     Add a trend line. When set to the default \code{NULL}, the addition
@@ -41,10 +41,10 @@
 	least squares are present and \code{model="both"} (the default),
 	a 2 x 1 paneled graph will be created.}
       \item{\code{"multiple"}}{Relevant only when resistant & robust and classical
-	least squares are present and \code{model="both"} (the default) or 
+	least squares are present and \code{model="both"} (the default) or
 	\code{model="extended"}. In
 	those cases, a new graphics device is generated to hold the resistant & robust
-	version, as a single-paneled graph, 
+	version, as a single-paneled graph,
 	and the classical least squares version is on the previous device.
 	If \code{model="extended"}, then
 	a second new graphics device is generated to hold the unweighted
@@ -61,14 +61,14 @@
 
   }
   \item{\dots }{
-    Additional arguments. Two are currently valid: 
+    Additional arguments. Two are currently valid:
     \describe{
-      \item{\code{model} }{For \code{cgOneFactorFit} \code{fit} objects that have 
+      \item{\code{model} }{For \code{cgOneFactorFit} \code{fit} objects that have
 	classical least squares \code{lm()} or resistant & robust
 	\code{rlm()} fits, the following argument values are possible:
-	
+
 	\describe{
-	  \item{\code{"both"}}{Graphs of the residuals from both the ordinary 
+	  \item{\code{"both"}}{Graphs of the residuals from both the ordinary
 	    classical least squares and resistant & robust fits are
 	    plotted. This is the default when both fits are present in
 	    the \code{cgOneFactorFit} object specified in the \code{fit}
@@ -76,21 +76,21 @@
 	    this value is not relevant.
 	  }
 	  \item{\code{"olsonly"}}{Only a graph of the residuals from
-	    the ordinary 
+	    the ordinary
 	    classical least squares \code{olsfit} fit is performed.
 	  }
-	  \item{\code{"rronly"} or \code{"rrwtdonly"}}{Only a graph of the 
-	    weighted residuals from 
+	  \item{\code{"rronly"} or \code{"rrwtdonly"}}{Only a graph of the
+	    weighted residuals from
 	    the resistant and
 	    robust \code{rrfit} fit is plotted.
 	  }
-	  \item{\code{"rrunwtdonly"}}{Only a graph of the unweighted 
-	    residuals from 
+	  \item{\code{"rrunwtdonly"}}{Only a graph of the unweighted
+	    residuals from
 	    the resistant and
 	    robust \code{rrfit} fit is plotted.
 	  }
 	}
-	
+
 	For other possible \code{cgOneFactorFit} fit slots such as
 	accelerated failure time or unequal variance models, the \code{model}
 	argument is not relevant, and the appropriate graph will
@@ -114,7 +114,7 @@
 
   For the \code{trend} argument, an added trend line when censored data residuals
   are present needs to be interpreted cautiously. When there are 7 or more
-  groups, a cubic smoothing spline based on \pkg{VGAM}::\code{\link{vgam}}
+  groups, a cubic smoothing spline based on \pkg{VGAM}::\code{\link[VGAM]{vgam}}
   is fit; otherwise, the group means of the residuals are estimated with
   an accelerated failure time model and then just connected. If "too many"
   censored data values are present, the line may be withheld and
@@ -122,22 +122,22 @@
   example, may appear nonsensical.
 
   The heading for the graph is taken from the \code{\link{cgOneFactorData}} object,
-  which \code{\link{prepareCGOneFactorData}} sets from its \code{analysisname} 
+  which \code{\link{prepareCGOneFactorData}} sets from its \code{analysisname}
   argument.
 
   The label for the Y-axis is taken from the \code{\link{cgOneFactorData}} object,
-  which \code{\link{prepareCGOneFactorData}} sets from its \code{endptname} 
+  which \code{\link{prepareCGOneFactorData}} sets from its \code{endptname}
   argument.
 
   The number of decimal places printed in the ticks on the Y-axis is taken
   from the \code{\link{cgOneFactorData}} object,
-  which \code{\link{prepareCGOneFactorData}} sets from its \code{digits} 
+  which \code{\link{prepareCGOneFactorData}} sets from its \code{digits}
   argument.
 
   The minimum and maximum values from the range of the absolute valued residuals are
   respectively labeled in the bottom and top left corners of the graph
   region.
-    
+
   If group labels along the x-axis seem to overlap in the standard
   horizontal form, they will be rotated 45 degrees.
 }
@@ -153,7 +153,7 @@
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,
-  concerns, and comments. 
+  concerns, and comments.
 }
 
 %% \seealso{

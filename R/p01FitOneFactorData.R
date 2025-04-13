@@ -1,4 +1,3 @@
-## $Id: p01FitOneFactorData.R 3781 2013-01-11 20:07:34Z yye $
 ## One-Factor Unpaired Groups Case
 
 ## Fit One-Factor Unpaired Groups Data
@@ -11,7 +10,7 @@ setClass("cgOneFactorFit",
                         settings="list"))
 
 setMethod("fit", "cgOneFactorData",
-          fit.cgOneFactorData <- 
+          fit.cgOneFactorData <-
           function(data, type="rr", ...) {
             ##
             ## PURPOSE: Fit data that has a one-factor unpaired groups
@@ -21,11 +20,11 @@ setMethod("fit", "cgOneFactorData",
             ## an accelerated failure time model with lognormal or normal
             ## distribution on censored observations, or an unequal group
             ## variances structure.
-            ## 
+            ##
             ## Input arguments handling
             dots <- list(...)
             validDotsArgs(dots, names=c("maxIter","sandaft"))
-            
+
             ## initializations ('ols' is always TRUE so not specified)
             rr <- aft <- uv <- FALSE
             aftfit <- rrfit <- uvfit <- "No fit was requested."
@@ -35,17 +34,17 @@ setMethod("fit", "cgOneFactorData",
 
             type <- validFitType(type)
 
-            maxIter <- if(is.null(dots$maxIter)) 100 else dots$maxIter 
+            maxIter <- if(is.null(dots$maxIter)) 100 else dots$maxIter
             validNumeric(maxIter, positive=TRUE, integer=TRUE)
 
             if(type=="rr") { rr <- TRUE }
             else if(type=="aft") { aft <- TRUE }
             else if(type=="uv") { uv <- TRUE }
             ## End input arguments handling
-            
+
             dfru <- data@dfru
             settings <- data@settings
-            
+
             endptscale <- settings$endptscale
             grpnames <- settings$grpnames
 
@@ -53,7 +52,7 @@ setMethod("fit", "cgOneFactorData",
             on.exit(oldop, add=TRUE)
 
             validAft(type, dfru)
-            
+
             ## Ordinary Least Squares is *always* fit
             olsfit <- if(endptscale=="log") {
               lm(log(endpt) ~ -1 + grpf, data=dfru)
@@ -74,7 +73,7 @@ setMethod("fit", "cgOneFactorData",
                   try(rlm(endpt ~ -1 + grpf, data=dfru, method="MM",
                           maxit=maxIter, ...))
                 }
-              if(class(rrfit)[1]!="try-error") {
+              if(!inherits(rrfit,"try-error")) {
                 ## that is, the number of iterations
                 ## did not exceed specified limit maxIter
                 ## and thus convergence occurred
@@ -116,14 +115,14 @@ setMethod("fit", "cgOneFactorData",
               aftfit <-  try(survreg(thesurvobject ~ -1 + grpf,
                                      data=dfru, dist="gaussian", maxiter=maxIter))
 
-              
-              if(class(aftfit)[1]!="try-error") {
+
+              if(!inherits(aftfit,"try-error")) {
                 ## that is, the number of iterations
                 ## did not exceed specified limit maxIter
                 ## and thus convergence occurred
                 aftfit$dfru <- dfru
                 aftfit$Surv <- thesurvobject
-                aftfit$maxIter <- maxIter 
+                aftfit$maxIter <- maxIter
                 names(aftfit$coef) <- grpnames
                 aftfit$sandaft <- sandaft
                 if(sandaft) {
@@ -191,7 +190,7 @@ setMethod("print", "cgOneFactorFit",
             else {
               model <- "both"
             }
-            
+
             olsfit <- x@olsfit
             rrfit <- x@rrfit
             aftfit <- x@aftfit
@@ -206,7 +205,7 @@ setMethod("print", "cgOneFactorFit",
             }
             else if(class(uvfit)[1]=="gls") {
               uv <- TRUE
-              validArgModel(...)              
+              validArgModel(...)
             }
             if(class(rrfit)[1]=="rlm" && model!="olsonly" && !aft && !uv) {
               rr <- TRUE
@@ -217,12 +216,12 @@ setMethod("print", "cgOneFactorFit",
             }
 
           if(is.null(title)) {
-              title <- paste("Fitted Models of", settings$analysisname) 
+              title <- paste("Fitted Models of", settings$analysisname)
             }
             else {
               validCharacter(title)
             }
-            
+
             if(is.null(endptname)) {
               endptname <- settings$endptname
               if(!is.character(endptname)) {
@@ -240,7 +239,7 @@ setMethod("print", "cgOneFactorFit",
               cat("\nClassical Least Squares Model Fit\n")
               print(olsfit, ...)
             }
-            
+
             if(rr) {
               cat("\nResistant & Robust Model Fit\n\n")
               print(rrfit, ...)
@@ -258,7 +257,7 @@ setMethod("print", "cgOneFactorFit",
               print(uvfit, ...)
             }
 
-            invisible()  
+            invisible()
           }
           )
 
@@ -288,7 +287,7 @@ setMethod("summary", "cgOneFactorFit",
             else {
               model <- "both"
             }
-            
+
             olsfit <- object@olsfit
             rrfit <- object@rrfit
             aftfit <- object@aftfit
@@ -303,7 +302,7 @@ setMethod("summary", "cgOneFactorFit",
             }
             else if(class(uvfit)[1]=="gls") {
               uv <- TRUE
-              validArgModel(...)              
+              validArgModel(...)
             }
             if(class(rrfit)[1]=="rlm" && model!="olsonly" && !aft && !uv) {
               rr <- TRUE
@@ -314,12 +313,12 @@ setMethod("summary", "cgOneFactorFit",
             }
 
             if(is.null(title)) {
-              title <- paste("Fitted Model Summaries of", settings$analysisname) 
+              title <- paste("Fitted Model Summaries of", settings$analysisname)
             }
             else {
               validCharacter(title)
             }
-            
+
             if(is.null(endptname)) {
               endptname <- settings$endptname
               if(!is.character(endptname)) {
@@ -337,7 +336,7 @@ setMethod("summary", "cgOneFactorFit",
               cat("\nClassical Least Squares Model Fit Summary\n")
               print(summary(olsfit, ...))
             }
-            
+
             if(rr) {
               cat("\nResistant & Robust Model Fit Summary\n")
               print(summary(rrfit, ...))
@@ -355,7 +354,7 @@ setMethod("summary", "cgOneFactorFit",
               print(summary(uvfit, ...))
             }
 
-            invisible()  
+            invisible()
 
           }
           )
@@ -374,7 +373,7 @@ validAft <- function(type, dfru) {
 
 validFitType <- function(type) {
   x <- try(match.arg(type, c("ols","rr","aft","uv")))
-  if(class(x)=="try-error") {
+  if(inherits(x, "try-error")) {
     stop(cgMessage("The type argument needs to evaluate to one",
                    "of: \"ols\", \"rr\", \"aft\", \"uv\".",
                    seeHelpFile("CGOneFactorFit")))

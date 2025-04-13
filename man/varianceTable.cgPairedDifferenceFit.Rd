@@ -8,7 +8,7 @@
   Compute Variances from a cgPairedDifferenceFit object
 }
 \description{
-  Create a table of variance component estimates of the data in a 
+  Create a table of variance component estimates of the data in a
   \code{\link{cgPairedDifferenceFit}} object.
 }
 \usage{
@@ -16,11 +16,11 @@
 }
 \arguments{
   \item{fit}{
-    A \code{cgPairedDifferenceFit} object, typically created by 
+    A \code{cgPairedDifferenceFit} object, typically created by
     \code{\link{fit.cgPairedDifferenceData}}.
   }
 \item{display }{One of three valid values:
-    
+
     \describe{
       \item{\code{"print"}}{
 	The default value; It calls a \code{print} method for the
@@ -38,14 +38,14 @@
     }
   }
   \item{\dots }{
-    Additional arguments. Currently none are valid. 
+    Additional arguments. Currently none are valid.
   }
 }
 \details{
   The returned table contains variance component estimates for the
   classical least squares fit. There is no analogous decomposition of
   variance component estimates calculated for the resistant & robust
-  fit. 
+  fit.
 }
 \value{
   Creates an object of class  \code{cgPairedDifferenceVarianceTable}, with the
@@ -83,7 +83,7 @@
   first column of the table is the variance components estimates, and
   the third column is the square root of the variance components,
   labeled \code{Spread(StdDev)}. In the second column is the \code{Percent}
-  calculation of the two variance components relative to the total sum variance. 
+  calculation of the two variance components relative to the total sum variance.
 
   The data frame structure of the efficiency table
   from the classical least squares fit is
@@ -110,7 +110,7 @@
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,
-  concerns, and comments. 
+  concerns, and comments.
 }
 
 \examples{

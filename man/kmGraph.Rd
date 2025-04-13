@@ -5,9 +5,9 @@
   Graph Distribution Functions of Groups
 }
 \description{
-  Create non-parametric survival or cumulative distribution graphs 
+  Create non-parametric survival or cumulative distribution graphs
   based on a data object in the \pkg{cg}
-  package.  
+  package.
 }
 \usage{
 kmGraph(data, cgtheme = TRUE, distfcn = "survival", ylab = NULL,
@@ -18,7 +18,7 @@ kmGraph(data, cgtheme = TRUE, distfcn = "survival", ylab = NULL,
     A data object created using the \pkg{cg}
     package. The only class of object currently
     available is \code{\link{cgOneFactorData}}, which is created by the
-    \code{\link{prepareCGOneFactorData}} function.  
+    \code{\link{prepareCGOneFactorData}} function.
   }
   \item{cgtheme }{
     When set to the default \code{TRUE}, ensures a trellis device is active with
@@ -50,7 +50,7 @@ kmGraph(data, cgtheme = TRUE, distfcn = "survival", ylab = NULL,
   match the order of the group name factor levels. The color order is
   given in \code{\link{cgLineColors}} . The line widths are set to be
   thicker (\code{lwd=2}), and the group name label is placed near the line
-  using \code{\link{label}} methodology from the \pkg{Hmisc} package.
+  using \code{\link[Hmisc]{label}} methodology from the \pkg{Hmisc} package.
 
   The x-axis represents response values, and y-axis represents estimated
   probabilities. Minimum and maximum values from ranges of data are
@@ -66,11 +66,11 @@ kmGraph(data, cgtheme = TRUE, distfcn = "survival", ylab = NULL,
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,
-  concerns, and comments. 
+  concerns, and comments.
 }
 \seealso{
 	  \code{\link{kmGraph.cgOneFactorData}}
-}	
+}
 \examples{
 data(canine)
 canine.data <- prepareCGOneFactorData(canine, format="groupcolumns",
@@ -96,4 +96,4 @@ kmGraph(gmcsfcens.data, distfcn="cumulative", logscale=FALSE)
 \concept{survival curve}
 \concept{Kaplan-Meier}
 \concept{empirical distribution function}
-  
+

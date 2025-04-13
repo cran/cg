@@ -1,15 +1,14 @@
 citHeader("To cite cg in publications use:")
 
-citEntry(entry = "Article",
+bibentry(bibtype = "Article",
   title        = "The {cg} Package for Comparison of Groups",
-  author       = personList(as.person("Bill Pikounis"),
-                   as.person("John Oleynick")),
+  author       = c("Bill Pikounis", "John Oleynick"),
   journal      = "Journal of Statistical Software",
   year         = "2013",
   volume       = "52",
   number       = "1",
   pages        = "1--27",
-  url          = "http://www.jstatsoft.org/v52/i01/",
+  url          = "https://www.jstatsoft.org/v52/i01/",
 
   textVersion  =
   paste("Bill Pikounis, John Oleynick (2013).",

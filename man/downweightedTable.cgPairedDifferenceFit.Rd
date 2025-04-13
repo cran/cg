@@ -11,7 +11,7 @@
 \description{
   Create a table of downweighted observations based on a rrfit object
   within a cgPairedDifferenceFit object. A cgPairedDifferenceDownweightedTable
-  class object is created.  
+  class object is created.
 }
 \usage{
 \S4method{downweightedTable}{cgPairedDifferenceFit}(fit, cutoffwt, display = "print",\dots)
@@ -26,10 +26,10 @@
     exclusive. It is a threshold. All
     observations that fall \emph{beneath} the threshold will be
     identified. For example, a \code{cutoffwt=0.90} will yield
-    those observations that were downweighted by at least 10\%. 
+    those observations that were downweighted by at least 10\%.
  }
   \item{display}{One of three valid values:
-	
+
     \describe{
       \item{\code{"print"}}{
 	The default value; It calls a \code{print} method for the
@@ -51,7 +51,7 @@
   }
 }
 \details{
-  If no observations meet the cutoff criteria, a text message of the 
+  If no observations meet the cutoff criteria, a text message of the
   \code{cgPairedDifferenceDownweightedTable} content emptiness is output
   instead.
 
@@ -75,36 +75,36 @@
 	  the resistant / robust fit.}
 	\item{\code{pct down-weighted}}{An expression of the weight in
 	  terms of percent reduction from the maximum of 1.}
-	\item{\code{Simple Diff}}{The difference of observed response value between 
+	\item{\code{Simple Diff}}{The difference of observed response value between
           the two groups.}
-	\item{\code{Ratio Diff}}{The percent difference of observed response value 
+	\item{\code{Ratio Diff}}{The percent difference of observed response value
           between the two groups. NOTE this only occurs when
 	  \code{logscale=TRUE} from the
 	\code{\link{cgPairedDifferenceFit}} object \code{settings} in the \code{fit} argument.}
-	\item{\code{Pct Diff}}{The percent difference of observed response value 
+	\item{\code{Pct Diff}}{The percent difference of observed response value
           between the two groups. NOTE this only occurs when
 	  \code{logscale=TRUE} from the
 	\code{\link{cgPairedDifferenceFit}} object \code{settings} in the \code{fit} argument.}
       }
-	  
+
       If no observations meet the cutoff criteria,
-      the \code{contents} slot is set to \code{NULL}. 
-	  
+      the \code{contents} slot is set to \code{NULL}.
+
     }
     \item{\code{messages}}{A message when the \code{contents} slot is set to \code{NULL}.
     }
     \item{\code{settings}}{A list of settings carried from the
-      \code{\link{cgPairedDifferenceFit}} object. These are used for the 
+      \code{\link{cgPairedDifferenceFit}} object. These are used for the
         \cr\code{\link{print.cgPairedDifferenceDownweightedTable}} method,
       invoked for example when \code{display="print"}.
     }
   }
 }
 \seealso{
-  \code{\link{cgPairedDifferenceFit}}, \pkg{MASS}::\code{\link{rlm}} 
+  \code{\link{cgPairedDifferenceFit}}, \pkg{MASS}::\code{\link[MASS]{rlm}}
 }
 \references{
-  Venables, W. N. and Ripley, B. D. (2002), 
+  Venables, W. N. and Ripley, B. D. (2002),
   \emph{Modern Applied Statistics with S.}  Fourth edition. Springer.
 }
 \author{
@@ -112,7 +112,7 @@
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,
-  concerns, and comments. 
+  concerns, and comments.
 }
 \examples{
 data(anorexiaFT)
@@ -128,5 +128,5 @@ anorexiaFT.fit <- fit(anorexiaFT.data)
 downweightedTable(anorexiaFT.fit, cutoffwt=0.25) ## No observation
 
 downweightedTable(anorexiaFT.fit, cutoffwt=0.75) ## downweighted at least 25\%
-                                           
+
 }

@@ -5,7 +5,7 @@
 
 setClass("cgPairedDifferenceFit",
          representation(olsfit="olsfit",
-                        rrfit="rrfit",                 
+                        rrfit="rrfit",
                         settings="list"))
 
 setMethod("fit", "cgPairedDifferenceData",
@@ -18,20 +18,20 @@ setMethod("fit", "cgPairedDifferenceData",
             ## Input arguments handling
             dots <- list(...)
             validDotsArgs(dots, names=c("maxIter"))
-            
+
             ## Initializations ('ols' is always TRUE so not specified)
             rr <- FALSE
             rrfit <- "No fit was requested."
 
             if(missing(type)) type <- "rr"  ## due to fit generic definition
-            
-            if(class(try(match.arg(type, c("ols","rr"))))=="try-error") {
+
+            if(inherits(try(match.arg(type, c("ols","rr"))),"try-error")) {
               stop(cgMessage("The type argument needs to evaluate to one",
                              "of: \"ols\", \"rr\".",
                              seeHelpFile("CGPairedDifferenceFit")))
             }
-            
-            maxIter <- if(is.null(dots$maxIter)) 100 else dots$maxIter 
+
+            maxIter <- if(is.null(dots$maxIter)) 100 else dots$maxIter
             validNumeric(maxIter, positive=TRUE, integer=TRUE)
 
             if(type=="rr") { rr <- TRUE }
@@ -41,8 +41,8 @@ setMethod("fit", "cgPairedDifferenceData",
 
             dfr.gcfmt <- data@dfr.gcfmt
             dfru<- data@dfru
-            
-            settings <- data@settings  
+
+            settings <- data@settings
             endptscale <- settings$endptscale
             grpnames <- settings$grpnames
 
@@ -56,7 +56,7 @@ setMethod("fit", "cgPairedDifferenceData",
                           else {
                             diffendpt
                           })
-                          
+
             ## Ordinary Least Squares is *always* fit
             olsfit <- lm(endpt ~ 1)
             olsfit$dfr.gcfmt <- dfr.gcfmt
@@ -94,14 +94,14 @@ setMethod("fit", "cgPairedDifferenceData",
               lme(endpt ~ -1 + grpf, data=dfru,
                  random=list(expunitf=pdCompSymm(~ -1 + grpf)), method="REML")
             }
-                        
-            if(rr) {  
+
+            if(rr) {
               rrfit <- try(rlm(endpt  ~ 1, method="MM", maxit=maxIter))
               if(class(rrfit)[1]!="try-error") {
                 ## that is, convergence occurred
                 rrfit$dfr.gcfmt <- dfr.gcfmt
                 rrfit$dfru <- dfru
-              
+
                 rrfit$onefactorfit <- if(endptscale=="log") {
                   try(rlm(log(endpt) ~ -1 + grpf, data=dfru,
                           method="MM", maxit=maxIter))
@@ -124,13 +124,13 @@ setMethod("fit", "cgPairedDifferenceData",
                       data=data.frame(dfru, w=rep(rrfit$w, 2)),
                       random=list(expunitf=pdSymm(~ -1 + w)), method="REML")
                 }
-                
+
                 ## workaround so return object instance below will
                 ## accept rrfit in the slot. Has something to do with
                 ## setClassUnion("rrfit", c("character", "rlm", "lm")) idiom I use.
                 ## see https://stat.ethz.ch/pipermail/r-devel/2008-April/049278.html
                 class(rrfit) <- "rlm"
-                
+
               }
               else {
                 warning(cgMessage("The Resistant & Robust (rr) fit did not",
@@ -141,7 +141,7 @@ setMethod("fit", "cgPairedDifferenceData",
                 rrfit <- "The fit did not converge in the specified number of iterations."
               }
             }
-            
+
             returnObj <- new("cgPairedDifferenceFit",
                              olsfit=olsfit,
                              rrfit=rrfit,
@@ -171,7 +171,7 @@ setMethod("print", "cgPairedDifferenceFit",
             else {
               model <- "both"
             }
-            
+
             olsfit <- x@olsfit
             rrfit <- x@rrfit
 
@@ -187,12 +187,12 @@ setMethod("print", "cgPairedDifferenceFit",
             }
 
             if(is.null(title)) {
-              title <- paste("Fitted Models of", settings$analysisname) 
+              title <- paste("Fitted Models of", settings$analysisname)
             }
             else {
               validCharacter(title)
             }
-            
+
             if(is.null(endptname)) {
               endptname <- settings$endptname
               if(!is.character(endptname)) {
@@ -217,15 +217,15 @@ setMethod("print", "cgPairedDifferenceFit",
               cat("\nClassical Least Squares Model Fit\n")
               print(olsfit, ...)
             }
-            
+
             if(rr) {
               cat("\nResistant & Robust Model Fit\n\n")
               print(rrfit, ...)
               cat("\nEstimated Standard Deviation from rlm is",
-                  signif(summary(rrfit)$stddev, 4), "\n\n")              
+                  signif(summary(rrfit)$stddev, 4), "\n\n")
             }
 
-            invisible()  
+            invisible()
           }
           )
 
@@ -253,7 +253,7 @@ setMethod("summary", "cgPairedDifferenceFit",
             else {
               model <- "both"
             }
-            
+
             olsfit <- object@olsfit
             rrfit <- object@rrfit
 
@@ -269,12 +269,12 @@ setMethod("summary", "cgPairedDifferenceFit",
             }
 
             if(is.null(title)) {
-              title <- paste("Fitted Model Summaries of", settings$analysisname) 
+              title <- paste("Fitted Model Summaries of", settings$analysisname)
             }
             else {
               validCharacter(title)
             }
-            
+
             if(is.null(endptname)) {
               endptname <- settings$endptname
               if(!is.character(endptname)) {
@@ -295,12 +295,12 @@ setMethod("summary", "cgPairedDifferenceFit",
                         "Difference in",
                         if(settings$endptscale=="log") "log",
                         endptname, "\n")) }
-            
+
             if(ols) {
               cat("\nClassical Least Squares Model Fit Summary\n")
               print(summary(olsfit, ...))
             }
-            
+
             if(rr) {
               cat("\nResistant & Robust Model Fit Summary\n")
               print(summary(rrfit, ...))
@@ -308,7 +308,7 @@ setMethod("summary", "cgPairedDifferenceFit",
                   signif(summary(rrfit)$stddev, 4), "\n\n")
             }
 
-            invisible()  
+            invisible()
 
           }
           )

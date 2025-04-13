@@ -1,5 +1,3 @@
-## $Id: p03FormalOneFactorData.R 6053 2015-02-22 20:23:45Z bpikouni $
-
 ## One-Factor Unpaired Groups Case
 
 ## Formal Analysis methods for One-Factor Unpaired Groups Data
@@ -13,7 +11,7 @@ setClass("cgOneFactorGlobalTest",
                    settings=list()))
 
 setMethod("globalTest", "cgOneFactorFit",
-          globalTest.cgOneFactorFit <- 
+          globalTest.cgOneFactorFit <-
           function(fit, display="print", ...) {
             ##
             ## PURPOSE: Derive global F-test p-values
@@ -21,7 +19,7 @@ setMethod("globalTest", "cgOneFactorFit",
             ## Input arguments check
             dots <- list(...)
             validDotsArgs(dots, names="model")
-            
+
             ## initializations
             aft <- ols <- rr <- uv <- FALSE
             rr.gpval <- ols.gpval <- aft.gpval <- uv.gpval <- NULL
@@ -70,12 +68,12 @@ setMethod("globalTest", "cgOneFactorFit",
             if(ols) {
               ## calculations mimic print.summary.lm code snippet
               olsfit <- lm(upform, data=dfru)
-              ols.gpval <- with(summary(olsfit), pf(fstatistic[1], 
+              ols.gpval <- with(summary(olsfit), pf(fstatistic[1],
                                                     fstatistic[2],
                                                     fstatistic[3], lower.tail
                                                     = FALSE))
             }
-            
+
             if(rr) {
               ## if only 2 groups, we rely on the comparisonstable method for computing
               ## the pvalue
@@ -98,7 +96,7 @@ setMethod("globalTest", "cgOneFactorFit",
             }
             else if(aft) {
               upform <- update(formula(aftfit), . ~ grpf)
-              aftfit <- survreg(upform, data = dfru, 
+              aftfit <- survreg(upform, data = dfru,
                                 dist = "gaussian", maxiter = aftfit$maxIter)
               ## calculations mimic print.survreg code snippet
               chisq <- 2 * diff(aftfit$loglik)
@@ -113,7 +111,7 @@ setMethod("globalTest", "cgOneFactorFit",
             }
 
             x <- new("cgOneFactorGlobalTest",
-                     ols.gpval=ols.gpval, rr.gpval=rr.gpval, 
+                     ols.gpval=ols.gpval, rr.gpval=rr.gpval,
                      aft.gpval=aft.gpval, uv.gpval=uv.gpval,
                      settings=settings)
             if(display=="print") {
@@ -134,7 +132,7 @@ setMethod("print", "cgOneFactorGlobalTest",
             ## PURPOSE: Semi-formatted print version of Global test p-value
             ## Three digits are used, and anything smaller than or equal to
             ## 0.0005 gets "< 0.001"
-            ## 
+            ##
             ## NOTE: Had to use x as an argument because of the system defined
             ## generic. I would have preferred to use object; hence the first
             ## statement below.
@@ -165,7 +163,7 @@ setMethod("print", "cgOneFactorGlobalTest",
             }
             else if(!is.null(uvgrps)) {
               uv <- TRUE
-              validArgModel(...)              
+              validArgModel(...)
             }
             if(!is.null(rrgrps) && model!="olsonly" && !aft && !uv) {
               rr <- TRUE
@@ -176,14 +174,14 @@ setMethod("print", "cgOneFactorGlobalTest",
 
             settings <- object@settings
             alpha <- settings$alpha
-            
+
             if(is.null(title)) {
-              title <- paste("Global Test P-value of", settings$analysisname) 
+              title <- paste("Global Test P-value of", settings$analysisname)
             }
             else {
               validCharacter(title)
             }
-            
+
             if(is.null(endptname)) {
               endptname <- settings$endptname
               if(!is.character(endptname)) {
@@ -200,7 +198,7 @@ setMethod("print", "cgOneFactorGlobalTest",
             if(ols) {
               cat("\nClassical Least Squares Model Fit:", fmtPvalue(olsgrps), "\n")
             }
-            
+
             if(rr) {
               cat("\nResistant & Robust Model Fit:", fmtPvalue(rrgrps), "\n")
             }
@@ -214,7 +212,7 @@ setMethod("print", "cgOneFactorGlobalTest",
             }
 
             invisible()
-            
+
           })
 
 setMethod("show", "cgOneFactorGlobalTest",
@@ -224,7 +222,7 @@ setMethod("show", "cgOneFactorGlobalTest",
 comparisons <- function(estimates,
                         varcovmatrix, errordf=Inf,
                         endptscale, mcadjust=FALSE,
-                        alpha=0.05, 
+                        alpha=0.05,
                         type="pairwisereflect",
                         contrastmatrix=NULL, n,
                         offset=NULL, cnames="derive",
@@ -232,7 +230,7 @@ comparisons <- function(estimates,
                         digits=NULL,
                         addpct=FALSE,
                         display="print") {
-  ## 
+  ##
   ## PURPOSE: Function for computing comparisons results
   ## and placing in a listed form.
   ##
@@ -250,7 +248,7 @@ comparisons <- function(estimates,
   validAddPct(addpct, endptscale)
 
   display <- validArgMatch(display, c("print","none","show"))
-  
+
   ngrps <- length(estimates)
   grpnames <- names(estimates)
 
@@ -274,9 +272,9 @@ comparisons <- function(estimates,
     glhtobj <- list(object=NULL, linfct=L, coef=estimates,
                     vcov=varcovmatrix,
                     type="user-defined", alternative="two.sided",
-                    df=errordf, 
+                    df=errordf,
                     rhs=rep(0, nrow(L)))
-    
+
     class(glhtobj) <- "glht"
     mcpci.fit <- confint(glhtobj, level=1-alpha)
     mcptest.fit <- summary(glhtobj)
@@ -286,7 +284,7 @@ comparisons <- function(estimates,
     lowerci <- mcpci.fit$confint[,"lwr"]
     upperci <- mcpci.fit$confint[,"upr"]
     pval <-  mcptest.fit$test$pvalues
-    
+
   }
   else if(!mcadjust) {
     estdiff <- L %*% estimates
@@ -305,13 +303,13 @@ comparisons <- function(estimates,
                                         sepair[2]^4/(npair[2] - 1)))
                        }, thestnderrs=thestnderrs, n=n)
     }
-    
+
     tcrit <- qt(1 - alpha/2, errordf)
     lowerci <- estdiff - tcrit * sediff
     upperci <- estdiff + tcrit * sediff
     pval <- 2 * (1 - pt(abs(estdiff/sediff), errordf))
   }
-  
+
   mcp <- data.frame(estimate=estdiff, se=sediff,
                     lowerci=lowerci, upperci=upperci,
                     pval=pval)
@@ -321,7 +319,7 @@ comparisons <- function(estimates,
   ## And we need to specially handle the asymmetry of percent change,
   ## since decreases cannot be greater than 100%
   ## also note that if offset is a valid number,
-  ## some calculations will be replaced. 
+  ## some calculations will be replaced.
   if(endptscale=="log") {
     ## Focus only on the percent differences for now
     logscalest <- mcp[,1]
@@ -337,7 +335,7 @@ comparisons <- function(estimates,
       mB <- exp(mcp$meanB) - offset
       mAmBratio <- mA/mB
       correctionFactor <- (mA * (mB + offset))/(mB * (mA + offset))
-      
+
       mcp[, 1] <- 100 * ( mAmBratio - 1 ) # Point Estimate
       mcp[, 2] <- 100 * ( mAmBratio * mcp[, 2] ) # Std Err
       mcp[, 3:4] <- 100 * ( correctionFactor*exp(mcp[, 3:4]) - 1) # Confidence Limits
@@ -349,16 +347,16 @@ comparisons <- function(estimates,
     complist <- strsplit(row.names(L), split=" vs. ", fixed=TRUE)
     compA <- sapply(complist, function(x) x[1])
     compB <- sapply(complist, function(x) x[2])
-    
+
     compAlist <- as.list(compA)
     compBlist <- as.list(compB)
-    
+
     compAindx <- unlist(sapply(compAlist,
                                function(x) which(grpnames==x)))
     compBindx <- unlist(sapply(compBlist,
                                function(x) which(grpnames==x)))
     sevec <- sqrt(diag(varcovmatrix))
-    
+
     mcp$meanA <- estimates[compAindx]
     mcp$seA <- sevec[compAindx]
     mcp$meanB <- estimates[compBindx]
@@ -379,7 +377,7 @@ comparisons <- function(estimates,
                          indx <- (x > 0)
                          coef.ests <- x[indx]
                          coef.ests <- ifelse(coef.ests%%1!=0,
-                                             signif(coef.ests, 3), coef.ests) 
+                                             signif(coef.ests, 3), coef.ests)
                          label <- paste(paste(coef.ests, names.ests[indx], sep="*"),
                                         collapse="+")
                          if(length(coef.ests) > 1) {
@@ -392,7 +390,7 @@ comparisons <- function(estimates,
                          indx <- (x > 0)
                          coef.ests <- x[indx]
                          coef.ests <- ifelse(coef.ests%%1!=0,
-                                             signif(coef.ests, 3), coef.ests) 
+                                             signif(coef.ests, 3), coef.ests)
                          label <- paste(paste(coef.ests, names.ests[indx], sep="*"),
                                         collapse="+")
                          if(length(coef.ests) > 1) {
@@ -414,11 +412,11 @@ comparisons <- function(estimates,
       mcp$meanA <- exp(mcp$meanA) - offset
       mcp$meanB <- exp(mcp$meanB) - offset
     }
-    
+
     mcp$seA <- mcp$meanA * mcp$seA
     mcp$seB <- mcp$meanB * mcp$seB
   }
-  
+
   if(cnames[1]!="derive") { row.names(mcp) <- cnames }
 
   if(endptscale=="original" && addpct==TRUE) {
@@ -476,7 +474,7 @@ comparisons <- function(estimates,
     curwidth <- getOption("width")
     on.exit(options(width=curwidth), add=TRUE)
     if(curwidth < 500) { options(width=500) }
-    
+
     print(fmt.mcp, quote=FALSE)
   }
   else if (display=="show"){
@@ -494,16 +492,16 @@ setClass("cgOneFactorComparisonsTable",
                         aft.comprs="dataframeMatrixOrNULL",
                         uv.comprs="dataframeMatrixOrNULL",
                         settings="list"),
-         prototype(ols.comprs=NULL, 
-                   rr.comprs=NULL, 
-                   aft.comprs=NULL, 
-                   uv.comprs=NULL, 
+         prototype(ols.comprs=NULL,
+                   rr.comprs=NULL,
+                   aft.comprs=NULL,
+                   uv.comprs=NULL,
                    settings=list()))
 
 setMethod("comparisonsTable", "cgOneFactorFit",
           comparisonsTable.cgOneFactorFit <-
-          function(fit,  
-                   ## mcadjust=FALSE, 
+          function(fit,
+                   ## mcadjust=FALSE,
                    type="pairwisereflect",
                    ## contrastmatrix=NULL,
                    ## refgrp=NULL,
@@ -531,19 +529,19 @@ setMethod("comparisonsTable", "cgOneFactorFit",
             else {
               mcadjust <- FALSE
             }
-            
+
             contrastmatrixarg <- getDotsArgName(dots, "contrastmatrix")
             if(is.na(contrastmatrixarg)) {
               contrastmatrix <- 1
-              contrastmatrix <- as.null(contrastmatrix)			
+              contrastmatrix <- as.null(contrastmatrix)
             }
-            
+
             refgrparg <- getDotsArgName(dots, "refgrp")
             settings <- fit@settings
             if(!is.na(refgrparg)) {
               refgrp <- eval(parse(text=paste("dots$", refgrparg, sep="")))
-              if(!is.null(refgrp)) { 
-                refgrp <- validArgMatch(refgrp, settings$grpnames) 
+              if(!is.null(refgrp)) {
+                refgrp <- validArgMatch(refgrp, settings$grpnames)
               }
               if(type!="allgroupstocontrol") {
                 stop(cgMessage("If the refgrp= argument is specified",
@@ -552,7 +550,7 @@ setMethod("comparisonsTable", "cgOneFactorFit",
               }
             }
             else refgrp <- settings$refgrp
-            
+
             modelarg <- getDotsArgName(dots, "model")
             if(!is.na(modelarg)) {
               model <- eval(parse(text=paste("dots$", modelarg, sep="")))
@@ -561,7 +559,7 @@ setMethod("comparisonsTable", "cgOneFactorFit",
             else {
               model <- "both"
             }
-            
+
             ## initializations
             aft <- ols <- rr <- uv <- FALSE
             aft.comprs <- ols.comprs <- rr.comprs <- uv.comprs <- NULL
@@ -574,7 +572,7 @@ setMethod("comparisonsTable", "cgOneFactorFit",
             uvfit <- fit@uvfit
             grpnames <- settings$grpnames
             offset <- settings$addconstant
-            
+
             validAddPct(addpct, endptscale)
 
             if(class(aftfit)[1]=="survreg") {
@@ -600,7 +598,7 @@ setMethod("comparisonsTable", "cgOneFactorFit",
             if(!is.null(refgrp) && type=="allgroupstocontrol") {
               grpnamesindex <- c(which(grpnames==refgrp), which(grpnames!=refgrp))
             }
-            
+
             if(rr || ols) {
               df.residual <- olsfit$df.residual
             }
@@ -619,7 +617,7 @@ setMethod("comparisonsTable", "cgOneFactorFit",
                                         offset=offset, addpct=addpct, display="none")
               if(mcadjust) { multcompDone("Classical Least Squares") }
             }
-            
+
             if(rr) {
               rrestimates <- rrfit$coef
               summ.rrfit <- summary(rrfit, method="XtWX", ...)
@@ -634,17 +632,17 @@ setMethod("comparisonsTable", "cgOneFactorFit",
                                        alpha=alpha,
                                        type=type,
                                        contrastmatrix=contrastmatrix,
-                                       offset=offset, 
+                                       offset=offset,
                                        addpct=addpct, display="none")
               if(mcadjust) { multcompDone("Resistant & Robust") }
-            }              
-            
+            }
+
             if(aft) {
               aftestimates <- aftfit$coef
               ## estscaleindex <- length(aftestimates) + 1
               df.residual <- aftfit$df.residual
               varcov.aftfit <- vcov(aftfit)
-              
+
               aft.comprs <- comparisons(aftestimates[grpnamesindex],
                                         varcov.aftfit[grpnamesindex, grpnamesindex],
                                         errordf=df.residual,
@@ -660,7 +658,7 @@ setMethod("comparisonsTable", "cgOneFactorFit",
             if(uv) {
               uvestimates <- uvfit$coef
               varcov.uvfit <- vcov(uvfit)
-              
+
               uv.comprs <- comparisons(uvestimates[grpnamesindex],
                                        varcov.uvfit[grpnamesindex, grpnamesindex],
                                        errordf="approx",
@@ -680,7 +678,7 @@ setMethod("comparisonsTable", "cgOneFactorFit",
                              analysisname=settings$analysisname,
                              endptname=settings$endptname,
                              endptlabel=makeEndptLabel(settings$endptname,
-                               settings$endptunits), 
+                               settings$endptunits),
                              alpha=alpha,
                              mcadjust=mcadjust,
                              digits=settings$digits,
@@ -698,7 +696,7 @@ setMethod("comparisonsTable", "cgOneFactorFit",
                              rr.comprs=rr.comprs,
                              aft.comprs=aft.comprs,
                              uv.comprs=uv.comprs,
-                             settings=settings) 
+                             settings=settings)
             if(display=="print") {
               print(returnObj)
             }
@@ -711,10 +709,10 @@ setMethod("comparisonsTable", "cgOneFactorFit",
           )
 
 pairwisecompsmatrix <- function(comps, grpnames) {
-  ## 
+  ##
   ## PURPOSE: Function for rearranging pairwise comparisons results
   ## and placing in a matrix. The output matrix is designed to be
-  ## used as input to formatting or further processing 
+  ## used as input to formatting or further processing
   ##
   ## comps is assumed to be a data frame such as
   ## created by the comparisons function
@@ -749,11 +747,11 @@ pairwisecompsmatrix <- function(comps, grpnames) {
                            z[upper.tri(z)] <- y[[i]]
                            return(z)
                          }, x=mcp, y=mcp.opp, ngrps=ngrps)
-  
+
   names(mcp.matrices) <- c("diff","se","lcl","ucl","pval")
 
   ## Now we have to combine the matrices into one big table
-  ## which is probably intended for import into something like 
+  ## which is probably intended for import into something like
   ## EXCEL for formatting eventually.  This will involve
   ## interleaving rows and columns and adding some buffer sections to
   ## columns. A tricky part comes with the
@@ -782,7 +780,7 @@ pairwisecompsmatrix <- function(comps, grpnames) {
   thecolnames[seq(1, length(thecolnames), by=2)] <- grpnames
   grpnameheaders <- list(therownames, thecolnames)
   dimnames(mcp.out) <- grpnameheaders
-  
+
                                         # return
   mcp.out
 
@@ -793,7 +791,7 @@ setMethod("print", "cgOneFactorComparisonsTable",
           function(x, digits=NULL, title=NULL, endptname=NULL, ...) {
             ##
             ## PURPOSE: Semi-formatted print version of Comparisons Table
-            ## 
+            ##
             ## NOTE: Had to use x as an argument because of the system defined
             ## generic. I would have preferred to use object; hence the first
             ## statement below.
@@ -824,7 +822,7 @@ setMethod("print", "cgOneFactorComparisonsTable",
             }
             else if(!is.null(uvcomprs)) {
               uv <- TRUE
-              validArgModel(...)              
+              validArgModel(...)
             }
             if(!is.null(rrcomprs) && model!="olsonly" && !aft && !uv) {
               rr <- TRUE
@@ -837,7 +835,7 @@ setMethod("print", "cgOneFactorComparisonsTable",
             alpha <- settings$alpha
             mcadjust <- settings$mcadjust
             addpct <- settings$addpct
-            
+
             if(is.null(digits)) {
               digits <- settings$digits
             }
@@ -849,7 +847,7 @@ setMethod("print", "cgOneFactorComparisonsTable",
             options(scipen=9)
 
             if(is.null(title)) {
-              title <- paste("Comparisons Table of", settings$analysisname) 
+              title <- paste("Comparisons Table of", settings$analysisname)
             }
             else {
               validCharacter(title)
@@ -913,13 +911,13 @@ setMethod("print", "cgOneFactorComparisonsTable",
             curwidth <- getOption("width")
             on.exit(options(width=curwidth), add=TRUE)
             if(curwidth < 500) { options(width=500) }
-            
+
             if(ols) {
               cat("\nClassical Least Squares Model Fit\n")
               informConfidence()
               print(fmtdig(olscomprs, diffmetric, digits), quote=FALSE)
             }
-            
+
             if(rr) {
               cat("\nResistant & Robust Model Fit\n")
               informConfidence()
@@ -945,7 +943,7 @@ setMethod("print", "cgOneFactorComparisonsTable",
               informConfidence()
               print(fmtdig(uvcomprs, diffmetric, digits), quote=FALSE)
             }
-            
+
             invisible()
           })
 
@@ -963,7 +961,7 @@ errorbargraph <- function(estimates, centralvar,
                           digits=NULL,
                           approxstamp=FALSE,
                           titlestamp=TRUE,
-                          offset=NULL, 
+                          offset=NULL,
                           ticklabels=NULL, ...) {
   ##
   ## PURPOSE: Construct an error bar graph based on pairwise
@@ -989,11 +987,11 @@ errorbargraph <- function(estimates, centralvar,
                    upper=estimates + errorbarlength)
   logscale <- ifelse(endptscale=="log", TRUE, FALSE)
   rangedata <- if(logscale) exp(unlist(bardata)) else unlist(bardata)
-  
+
   if(logscale) {
     parmar <- par(mar=c(5, 4, 4, 3) + 0.1)
     curpar$mar <- parmar$mar
-    
+
     errbar(1:numberofgrps, estimates/log(10),
            yplus=bardata$upper/log(10),
            yminus=bardata$lower/log(10),
@@ -1008,17 +1006,17 @@ errorbargraph <- function(estimates, centralvar,
       tickmarks <- makeTickMarks(ticklabels, tickmarks,
                                  offset=offset)
     }
-    
+
     axis(2, at=log10(tickmarks), labels=names(tickmarks),
          cex.axis=0.8, adj=1, las=1)
-    
+
     log10endpt <- unlist(bardata)/log(10)
     axis(4, at=pretty(log10endpt), pretty(log10endpt), cex.axis=0.7,
          adj=0, las=1, tck=-0.0075)
     mtext(side=4, text=if(is.expression(endptname)) {
       catCharExpr("Log10 scale of", endptname)
     } else { paste("Log10 scale of", endptname, sep=" ") },
-          line=2, cex=0.7, adj=0) 
+          line=2, cex=0.7, adj=0)
   }
   else {
     errbar(1:numberofgrps, estimates,
@@ -1041,7 +1039,7 @@ errorbargraph <- function(estimates, centralvar,
   ## Axes Customization
   grpnameticksettings <- setupGrpNameTicks(grpnames, 1:numberofgrps)
   plotGrpNameTicks((grpnames), settings=grpnameticksettings)
-  
+
   minmaxTicks(if(logscale) exp(unlist(bardata)) else
               unlist(bardata),
               theaxis="y", logscale=logscale, digits=digits,
@@ -1054,15 +1052,15 @@ errorbargraph <- function(estimates, centralvar,
     errorBarGraphStamp(alphapercent=100*alpha)
   }
   if(approxstamp) errorBarGraphApproximateStamp()
-  
+
   box()
 
-  invisible() 
+  invisible()
 }
 
 setMethod("errorBarGraph", "cgOneFactorFit",
           errorBarGraph.cgOneFactorFit <-
-          function(fit, mcadjust=FALSE, 
+          function(fit, mcadjust=FALSE,
                    alpha=0.05, cgtheme=TRUE, device="single", ...) {
             ##
             ## PURPOSE: Construct an error bar graph based on pairwise
@@ -1071,7 +1069,7 @@ setMethod("errorBarGraph", "cgOneFactorFit",
             ## Input arguments check
             dots <- list(...)
             validDotsArgs(dots, names=c("model", "ticklabels"))
-            
+
             if(class(fit@uvfit)[1]=="gls" || class(fit@aftfit)[1]=="survreg") {
               stop(cgMessage("There is no errorBarGraph method",
                              "defined for a fitted model that allowed",
@@ -1085,7 +1083,7 @@ setMethod("errorBarGraph", "cgOneFactorFit",
             validBoolean(cgtheme)
             validAlpha(alpha)
             validBoolean(mcadjust)
-            
+
             ticklabelsarg <- getDotsArgName(dots, "ticklabels")
             if(!is.na(ticklabelsarg)) {
               ticklabels <- eval(parse(text=paste("dots$", ticklabelsarg, sep="")))
@@ -1096,7 +1094,7 @@ setMethod("errorBarGraph", "cgOneFactorFit",
             else {
               ticklabels <- NULL
             }
-            
+
             modelarg <- getDotsArgName(dots, "model")
             if(!is.na(modelarg)) {
               model <- eval(parse(text=paste("dots$", modelarg, sep="")))
@@ -1110,13 +1108,13 @@ setMethod("errorBarGraph", "cgOneFactorFit",
 
             settings <- fit@settings
             offset <- settings$addconstant
-            
+
             rrfit <- fit@rrfit
             olsfit <- fit@olsfit
-            
+
             digits <- settings$digits
             analysisname <- settings$analysisname
-            endptlabel <- makeEndptLabel(settings$endptname, settings$endptunits)            
+            endptlabel <- makeEndptLabel(settings$endptname, settings$endptunits)
             endptscale <- settings$endptscale
             stamps <- settings$stamps
 
@@ -1153,7 +1151,7 @@ setMethod("errorBarGraph", "cgOneFactorFit",
               }
               olsestimates <- olsfit$coef
               olscentralstderr <- summary(olsfit)$sigma/sqrt(nharmonic)
-              olscentralvar <- olscentralstderr^2 
+              olscentralvar <- olscentralstderr^2
 
               olscritpoint <-
                 if(!mcadjust) { qt(confquantile, df.residual)  }
@@ -1164,7 +1162,7 @@ setMethod("errorBarGraph", "cgOneFactorFit",
                   glhtobj <- list(object=NULL, linfct=L, coef=olsestimates,
                                   vcov=vcov(olsfit),
                                   type="user-defined", alternative="two.sided",
-                                  df=df.residual, 
+                                  df=df.residual,
                                   rhs=rep(0, nrow(L)))
                   class(glhtobj) <- "glht"
                   ## assign this value:
@@ -1187,18 +1185,18 @@ setMethod("errorBarGraph", "cgOneFactorFit",
                 else {
                   set.seed(17)
                   multcompInform()
-                  
+
                   glhtobj <- list(object=NULL, linfct=L, coef=olsestimates,
                                   vcov=varcov.rrfit,
                                   type="user-defined", alternative="two.sided",
-                                  df=df.residual, 
+                                  df=df.residual,
                                   rhs=rep(0, nrow(L)))
                   class(glhtobj) <- "glht"
                   ## assign this value:
                   attr(confint(glhtobj, level=1-alpha)$confint, "calpha")
                 }
               if(mcadjust) { multcompDone("Resistant & Robust") }
-              
+
             }
 
             if(rr && ols && is.element(model, "both") && device=="single") {
@@ -1225,7 +1223,7 @@ setMethod("errorBarGraph", "cgOneFactorFit",
                 else {
                   "Error bars in Resistant & Robust panel are approximate."
                 }
-              
+
               cgDevice(cgtheme=cgtheme)
               trellispanelstg <- trellis.par.get("clip")$panel
               trellis.par.set("clip", list(panel="off"))
@@ -1243,7 +1241,7 @@ setMethod("errorBarGraph", "cgOneFactorFit",
                                    right=list(pad1=0.5, pad2=1)
                                    ))
               on.exit(trellis.par.set("axis.components", trellisparstg3),
-                      add=TRUE)               
+                      add=TRUE)
 
               ally <- unlist(all.dfr[, c("estimate","lower","upper")])
 
@@ -1379,7 +1377,7 @@ setMethod("errorBarGraph", "cgOneFactorFit",
               if(stamps) graphStampCG()
               errorBarGraphStamp(mcadjust, alphapercent, grid=TRUE)
               errorBarGraphApproximateStamp(grid=TRUE, msg=theapproxmsg)
-              
+
             }
 
             else if((model=="olsonly" || (ols && !rr && model=="both")) &&
@@ -1393,8 +1391,8 @@ setMethod("errorBarGraph", "cgOneFactorFit",
                             digits=digits,
                             approxstamp={nharmonic[1]!=n[1]},
                             titlestamp=FALSE, offset=offset,
-                            ticklabels=ticklabels)              
-              
+                            ticklabels=ticklabels)
+
               if(stamps) graphStampCG(grid=FALSE)
               ## Text Annotations
               title(main=paste("Error Bar Graph, Classical analysis\n",
@@ -1415,7 +1413,7 @@ setMethod("errorBarGraph", "cgOneFactorFit",
                             titlestamp=FALSE,
                             offset=offset,
                             ticklabels=ticklabels)
-              
+
               if(stamps) graphStampCG(grid=FALSE)
               ## Text Annotations
               title(main=paste("Error Bar Graph, Resistant & Robust analysis\n",
@@ -1426,8 +1424,8 @@ setMethod("errorBarGraph", "cgOneFactorFit",
 
             else if(rr && ols &&
                     is.element(device, c("ask","multiple")) &&
-                    is.element(model, "both")) { 
-              
+                    is.element(model, "both")) {
+
               device <- validArgMatch(device, c("multiple", "ask"))
               if(device=="ask") {
                 op <- par(ask = TRUE)
@@ -1461,7 +1459,7 @@ setMethod("errorBarGraph", "cgOneFactorFit",
                               "device.\n",
                               warning=TRUE))
               }
-              
+
               errorbargraph(rrestimates, rrcentralvar,
                             rrcritpoint,
                             endptscale,
@@ -1479,7 +1477,7 @@ setMethod("errorBarGraph", "cgOneFactorFit",
               title(main=paste("Error Bar Graph, Resistant & Robust analysis\n",
                       analysisname, sep=""), line=2, cex.main=1.1)
               errorBarGraphStamp(mcadjust, alphapercent)
-              
+
             }
 
             else {
@@ -1488,7 +1486,7 @@ setMethod("errorBarGraph", "cgOneFactorFit",
                              "or with the fitted model(s) in the fit object.",
                              seeHelpFile("errorBarGraph")))
             }
-            
+
             invisible()
           }
           )
@@ -1497,8 +1495,8 @@ grpsummary <- function(estimates,
                        varcovmatrix,
                        n, errordf=Inf,
                        endptscale="log", mcadjust=FALSE,
-                       alpha=0.05, 
-                       offset=NULL, 
+                       alpha=0.05,
+                       offset=NULL,
                        analysisname="", endptname="",
                        digits=NULL, display="print", ...) {
   ##
@@ -1509,10 +1507,10 @@ grpsummary <- function(estimates,
   n <- validN(n, estimates)
   estimates <- validEstimates(estimates)
   endptscale <- validArgMatch(endptscale, c("log","original"))
-  
+
   validAlpha(alpha)
   display <- validArgMatch(display, c("print","none","show"))
-  
+
   if(!is.numeric(errordf) || any(errordf < 1)) {
     stop(cgMessage("The errordf argument needs to be numeric",
                    "and (each value) set to be 1 or greater."))
@@ -1538,7 +1536,7 @@ grpsummary <- function(estimates,
                     coef=estimates,
                     vcov=varcovmatrix,
                     type="user-defined", alternative="two.sided",
-                    df=errordf, 
+                    df=errordf,
                     rhs=rep(0, nrow(diag(ngrps))))
     class(glhtobj) <- "glht"
     mcpci.fit <- confint(glhtobj, level=1-alpha)
@@ -1565,7 +1563,7 @@ grpsummary <- function(estimates,
   if(endptscale=="log") {
     logscale.est <- thetable[, 2]
     logscale.sd <- thetable[, 3]
-    
+
     thetable[, 2] <- exp(logscale.est) # Point Estimate
     thetable[, 3] <- exp(logscale.est) * logscale.sd  # Std Err
     if(any(logscale.sd > 0.50)) {
@@ -1575,7 +1573,7 @@ grpsummary <- function(estimates,
                         "estimated geometric mean standard",
                         "errors may be nonsensical and should be",
                         "cautiously regarded.")
-              ) 
+              )
     }
     thetable[, 4:5] <- exp(thetable[, 4:5])  # Confidence Limits
   }
@@ -1605,7 +1603,7 @@ grpsummary <- function(estimates,
       fmt.table$lowerci <- fround(fmt.table$lowerci, digits)
       fmt.table$upperci <- fround(fmt.table$upperci, digits)
     }
-    
+
     fmt.table$n <- fround(fmt.table$n, 0)
 
     cat(paste(round(100*(1-alpha), 0), "% Confidence ",
@@ -1617,9 +1615,9 @@ grpsummary <- function(estimates,
     curwidth <- getOption("width")
     on.exit(options(width=curwidth), add=TRUE)
     if(curwidth < 500) { options(width=500) }
-    
+
     print(fmt.table, quote=FALSE)
-    
+
     return(invisible(thetable))
   }
   else if (display=="show") {
@@ -1640,7 +1638,7 @@ setClass("cgOneFactorGrpSummaryTable",
                    settings=list()))
 
 setMethod("grpSummaryTable", "cgOneFactorFit",
-          function(fit, 
+          function(fit,
                    mcadjust=FALSE,
                    alpha=0.05, display="print", ...) {
             ##
@@ -1651,7 +1649,7 @@ setMethod("grpSummaryTable", "cgOneFactorFit",
             dots <- list(...)
             validDotsArgs(dots, names="model")
             settings <- fit@settings
-            
+
             validAlpha(alpha)
             validBoolean(mcadjust)
             display <- validArgMatch(display, c("print","none","show"))
@@ -1665,7 +1663,7 @@ setMethod("grpSummaryTable", "cgOneFactorFit",
               model <- "both"
             }
             ##
-            
+
             ## initializations
             aft <- ols <- rr <- uv <- FALSE
             aft.grps <- ols.grps <- rr.grps <- uv.grps <- NULL
@@ -1677,7 +1675,7 @@ setMethod("grpSummaryTable", "cgOneFactorFit",
             uvfit <- fit@uvfit
             grpnames <- settings$grpnames
             offset <- settings$addconstant
-            
+
             if(class(aftfit)[1]=="survreg") {
               aft <- TRUE
               validArgModel(...)
@@ -1704,7 +1702,7 @@ setMethod("grpSummaryTable", "cgOneFactorFit",
             if(ols) {
               olsestimates <- olsfit$coef
               varcov.olsfit <- vcov(olsfit)
-              
+
               ols.grps <- grpsummary(olsestimates,
                                      varcov.olsfit,
                                      n=n, errordf=df.residual,
@@ -1714,7 +1712,7 @@ setMethod("grpSummaryTable", "cgOneFactorFit",
                                      offset=offset, display="none", ...)
               if(mcadjust) { multcompDone("Classical Least Squares") }
             }
-            
+
             if(rr) {
               rrestimates <- rrfit$coef
               summ.rrfit <- summary(rrfit, method="XtWX")
@@ -1769,7 +1767,7 @@ setMethod("grpSummaryTable", "cgOneFactorFit",
                              sandaft=if(aft) TRUE else FALSE)
 
             returnObj <- new("cgOneFactorGrpSummaryTable",
-                             ols.grps=ols.grps, rr.grps=rr.grps, 
+                             ols.grps=ols.grps, rr.grps=rr.grps,
                              aft.grps=aft.grps, uv.grps=uv.grps,
                              settings=settings)
 
@@ -1789,7 +1787,7 @@ setMethod("print", "cgOneFactorGrpSummaryTable",
           function(x, digits=NULL, title=NULL, endptname=NULL, ...) {
             ##
             ## PURPOSE: Semi-formatted print version of Comparisons Table
-            ## 
+            ##
             ## NOTE: Had to use x as an argument because of the system defined
             ## generic. I would have preferred to use object; hence the first
             ## statement below.
@@ -1820,7 +1818,7 @@ setMethod("print", "cgOneFactorGrpSummaryTable",
             }
             else if(!is.null(uvgrps)) {
               uv <- TRUE
-              validArgModel(...)              
+              validArgModel(...)
             }
             if(!is.null(rrgrps) && model!="olsonly" && !aft && !uv) {
               rr <- TRUE
@@ -1832,7 +1830,7 @@ setMethod("print", "cgOneFactorGrpSummaryTable",
             settings <- object@settings
             alpha <- settings$alpha
             mcadjust <- settings$mcadjust
-            
+
             if(is.null(digits)) {
               digits <- settings$digits
             }
@@ -1842,14 +1840,14 @@ setMethod("print", "cgOneFactorGrpSummaryTable",
             curscipen <- getOption("scipen")
             on.exit(options(scipen=curscipen), add=TRUE)
             options(scipen=9)
-            
+
             if(is.null(title)) {
-              title <- paste("Group Summary Table of", settings$analysisname) 
+              title <- paste("Group Summary Table of", settings$analysisname)
             }
             else {
               validCharacter(title)
             }
-            
+
             if(is.null(endptname)) {
               endptname <- settings$endptname
               if(!is.character(endptname)) {
@@ -1892,13 +1890,13 @@ setMethod("print", "cgOneFactorGrpSummaryTable",
             curwidth <- getOption("width")
             on.exit(options(width=curwidth), add=TRUE)
             if(curwidth < 500) { options(width=500) }
-            
+
             if(ols) {
               cat("\nClassical Least Squares Model Fit\n")
               informConfidence()
               print(fmtdig(olsgrps, digits), quote=FALSE)
             }
-            
+
             if(rr) {
               cat("\nResistant & Robust Model Fit\n")
               informConfidence()
@@ -1924,7 +1922,7 @@ setMethod("print", "cgOneFactorGrpSummaryTable",
               informConfidence()
               print(fmtdig(uvgrps,  digits), quote=FALSE)
             }
-            
+
             invisible()
           })
 
@@ -1954,7 +1952,7 @@ comparisonsgraph <- function(compstable,
   validBoolean(titlestamp)
   validBoolean(explanation)
   digits <- validArgDigits(digits)
-  
+
   options(warn=-1)
   curpar <- par(new=FALSE, mgp=c(3,0.25,0), tck=-0.010, mar=c(5,7,4,2)+0.1)
   options(warn=0)
@@ -1973,20 +1971,20 @@ comparisonsgraph <- function(compstable,
     lower <- log(pctToRatio(lower))
     upper <- log(pctToRatio(upper))
   }
-  
+
   allx <- c(lower, upper, est)
 
   ## We include zero because we always want the
   ## "no-difference" reference line to be visible
   xmin <- min(c(0, allx))
   xmax <- max(c(0, allx))
-  
+
   if(difftype=="percent") {
     ## snippet from Hmisc's errbar function
     plot(est/log(10), compys, ylim = c(0.5, numberofcomprs + 0.5),
          xlim = c(xmin, xmax)/log(10),
          ylab="",
-         xlab = "", 
+         xlab = "",
          pch = 16, axes=FALSE, ...)
     mtext(side=1, text="log-spaced", line=4, cex=0.7)
     ycoord <- par()$usr[3:4]
@@ -1997,7 +1995,7 @@ comparisonsgraph <- function(compstable,
 
     ## zero reference line
     abline(v=0, lty=3)
-    
+
     ## Axes Customization
     log10endpt <- log10(exp(allx))
     xratioticks <- setupAxisTicks(exp(allx), ratio=TRUE, percent=TRUE,
@@ -2007,7 +2005,7 @@ comparisonsgraph <- function(compstable,
       xratioticks <- makeTickMarks(ticklabels, xratioticks,
                                    percent=TRUE)
     }
-    
+
     axis(1,at=log10(xratioticks),
          labels=names(xratioticks),
          tck=-.010, cex.axis=0.8)
@@ -2029,7 +2027,7 @@ comparisonsgraph <- function(compstable,
 
     ## zero reference line
     abline(v=0, lty=3)
-    
+
     ## Axes Customization
     xdiffticks <- setupAxisTicks((allx), ratio=FALSE, difference=TRUE,
                                  logscale=FALSE,
@@ -2038,7 +2036,7 @@ comparisonsgraph <- function(compstable,
       xdiffticks <- makeTickMarks(ticklabels, xdiffticks,
                                   percent=FALSE)
     }
-    
+
     axis(1, at=xdiffticks,
          labels=names(xdiffticks),
          tck=-.010, cex=0.8)
@@ -2052,7 +2050,7 @@ comparisonsgraph <- function(compstable,
   else {
     mtext(side=1, text=paste("in", endptname), line=3)
   }
-  
+
   ## Wrap long comparison labels
   for(i in seq(along=comprnames)) {
     ##if(nchar(comprnames[i]) > wraplength) {
@@ -2066,7 +2064,7 @@ comparisonsgraph <- function(compstable,
   axis(2, at=compys, labels=comprnames,
        adj=1, cex.axis=cex.comps, las=1)
   box()
-  
+
   ## Titles
   par(curpar)
   if(explanation) {
@@ -2074,7 +2072,7 @@ comparisonsgraph <- function(compstable,
   }
   if(titlestamp) {
     title(main=paste("Comparisons Graph\n",
-            analysisname, sep=""), line=2, cex.main=1.1)    
+            analysisname, sep=""), line=2, cex.main=1.1)
   }
 
   ## min-max annotation
@@ -2084,7 +2082,7 @@ comparisonsgraph <- function(compstable,
               ratio=if(difftype=="percent") TRUE else FALSE,
               logscale=if(difftype=="percent") TRUE else FALSE,
               digits=digits)
-  ## Add 0 
+  ## Add 0
   text(y=par("usr")[3], x=0,
        labels="0\n", col="blue", adj=0, cex=0.7)
 
@@ -2148,7 +2146,7 @@ setMethod("comparisonsGraph", "cgOneFactorComparisonsTable",
             }
             else if(!is.null(uvcomprs)) {
               uv <- TRUE
-              validArgModel(...)              
+              validArgModel(...)
             }
             if(!is.null(rrcomprs) && model!="olsonly" && !aft && !uv) {
               rr <- TRUE
@@ -2156,7 +2154,7 @@ setMethod("comparisonsGraph", "cgOneFactorComparisonsTable",
             if(!is.null(olscomprs) && (model!="rronly") && !aft && !uv) {
               ols <- TRUE
             }
-            
+
             device <- validArgMatch(device, c("single","multiple", "ask"))
 
             thetitle <- "Comparisons Graph"
@@ -2209,7 +2207,7 @@ setMethod("comparisonsGraph", "cgOneFactorComparisonsTable",
                 ## ideas in the next call adapted from errbar function
                 thegraph <- xyplot(compys ~ Cbind(est,
                                                   lower,
-                                                  upper) 
+                                                  upper)
                                    | typef,
                                    data=all.dfr,
                                    digits=digits,
@@ -2246,7 +2244,7 @@ setMethod("comparisonsGraph", "cgOneFactorComparisonsTable",
                                                xupper, compys + smidge)
                                      ## zero reference line
                                      panel.abline(v=0, lty=3)
-                                     
+
                                      ## Add 0 if not present
                                      if(all(xratioticks!=1)) {
                                        panel.axis(side="bottom",
@@ -2300,7 +2298,7 @@ setMethod("comparisonsGraph", "cgOneFactorComparisonsTable",
                 ## ideas in the next call adapted from Hmisc::errbar function
                 thegraph <- xyplot(compys ~ Cbind(est,
                                                   lower,
-                                                  upper) 
+                                                  upper)
                                    | typef,
                                    data=all.dfr,
                                    digits=digits,
@@ -2336,10 +2334,10 @@ setMethod("comparisonsGraph", "cgOneFactorComparisonsTable",
                                      lsegments(xlower, compys - smidge,
                                                xlower, compys + smidge)
                                      lsegments(xupper, compys - smidge,
-                                               xupper, compys + smidge)                                     
+                                               xupper, compys + smidge)
                                      ## zero reference line
                                      panel.abline(v=0, lty=3)
-                                     
+
                                      ## Add 0 if not present
                                      if(all(xdiffticks!=0)) {
                                        panel.axis(side="bottom",
@@ -2390,8 +2388,8 @@ setMethod("comparisonsGraph", "cgOneFactorComparisonsTable",
 
 
               }
-              
-              print(thegraph) 
+
+              print(thegraph)
               seekViewport(trellis.vpname("xlab"))
               grid.text(catCharExpr("in ", endptlabel), y = unit(-1, "lines"))
               upViewport(0)
@@ -2399,7 +2397,7 @@ setMethod("comparisonsGraph", "cgOneFactorComparisonsTable",
               comparisonsGraphStamp(mcadjust, alphapercent, grid=TRUE,
                                     desc=settings$type)
               if(stamps) graphStampCG()
-              
+
             }
             else if((model=="olsonly" || (ols && !rr && model=="both")) &&
                     device=="single") {
@@ -2416,7 +2414,7 @@ setMethod("comparisonsGraph", "cgOneFactorComparisonsTable",
               comparisonsGraphStamp(mcadjust, alphapercent,
                                     desc=settings$type)
             }
-            
+
             else if((model=="rronly" || (!ols && rr && model=="both")) &&
                     device=="single") {
               ##            else if(model=="rronly" & rr & device=="single") {
@@ -2437,13 +2435,13 @@ setMethod("comparisonsGraph", "cgOneFactorComparisonsTable",
             else if(rr && ols &&
                     is.element(device, c("ask","multiple")) &&
                     is.element(model, "both")) {
-              
+
               device <- validArgMatch(device, c("multiple", "ask"))
               if(device=="ask") {
                 op <- par(ask = TRUE)
                 on.exit(par(op), add=TRUE)
               }
-              
+
               comparisonsgraph(olscomprs, difftype, analysisname,
                                endptlabel, alpha, digits, titlestamp=FALSE,
                                explanation=FALSE,
@@ -2456,10 +2454,10 @@ setMethod("comparisonsGraph", "cgOneFactorComparisonsTable",
                       analysisname, sep=""), line=2, cex.main=1.1)
               comparisonsGraphStamp(mcadjust, alphapercent,
                                     desc=settings$type)
-              
+
               if(device=="multiple") {
                 ## dots$model <- NULL ## avoid unused argument error
-                
+
                 eval(parse(text=paste("dots$", modelarg, " <- NULL", sep="")))
                 do.call("cgDevice", c(list(new=TRUE), dots))
                 cat(cgMessage("A new graphics device has been generated",
@@ -2482,7 +2480,7 @@ setMethod("comparisonsGraph", "cgOneFactorComparisonsTable",
               comparisonsGraphStamp(mcadjust, alphapercent,
                                     desc=settings$type)
             }
-            
+
             else if(aft && device=="single") {
 
               comparisonsgraph(aftcomprs, difftype, analysisname,
@@ -2519,7 +2517,7 @@ setMethod("comparisonsGraph", "cgOneFactorComparisonsTable",
             }
 
             invisible()
-            
+
           }
           )
 
@@ -2529,7 +2527,7 @@ setMethod("comparisonsGraph", "cgOneFactorComparisonsTable",
 
 validErrorDf <- function(errordf, varcovmatrix,
                          n, mcadjust) {
-  ## 
+  ##
   if(errordf=="approx") {
     ## First check that estimates are uncorrelated, i.e
     ## the varcovmatrix is diagonal.
@@ -2562,12 +2560,12 @@ validErrorDf <- function(errordf, varcovmatrix,
 validComparisonType <- function(type, errordf) {
   type <- try(match.arg(type, c("pairwisereflect","pairwise",
                                 "allgroupstocontrol", "custom")))
-  if(class(type)=="try-error") {
+  if(inherits(type, "try-error")) {
     stop(cgMessage("The type argument must be one of \"pairwisereflect\",",
                    "\"pairwise\", \"allgroupstocontrol\",",
                    "or \"custom\"."))
   }
-  
+
   if(errordf=="approx" && !any(is.element(type,
        c("pairwisereflect","pairwise",
          "allgroupstocontrol")))) {
@@ -2582,7 +2580,7 @@ validComparisonType <- function(type, errordf) {
                    "or \"custom\"."))
   }
   else return(TRUE)
-  
+
 }
 
 

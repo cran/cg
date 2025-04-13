@@ -1,5 +1,3 @@
-## $Id: valid.R 5596 2014-07-16 22:17:15Z bpikouni $ UTC
-
 ## Functions for verifying input arguments to functions
 
 validAlpha <- function(x) {
@@ -152,7 +150,7 @@ validAtomicVec <- function(arg, lengthminreq=2) {
                    " needs to be an atomic vector",
                    if(!is.null(lengthminreq)) "of length at least ", lengthminreq))
   }
-  else return(TRUE) 
+  else return(TRUE)
 }
 
 validArgMatch <- function(arg, choices, argname=NULL) {
@@ -162,8 +160,8 @@ validArgMatch <- function(arg, choices, argname=NULL) {
   ##
   argname <- if(!is.null(argname)) argname else deparse(substitute(arg))
   arg <- try(match.arg(arg, choices))
-  
-  if(class(arg)=="try-error") {
+
+  if(inherits(arg,"try-error")) {
     choicestr <- paste(paste("\"", choices, "\"", sep=""),
                        collapse=" or ")
     choicestr <- paste(choicestr, ".", sep="")
@@ -216,7 +214,7 @@ getDotsArgName <- function(dots, name) {
   ## Check this for a better way
   ## indx <- try(which(pmatch(dots.names, name)==1), silent=TRUE)
   indx <- which(pmatch(dots.names, name)==1)
-  
+
   thearg <- NA ## initialization
   ## if(!inherits(indx, "try-error") && any(!is.na(indx))) {
   if(any(!is.na(indx))) {
@@ -225,14 +223,14 @@ getDotsArgName <- function(dots, name) {
 
   return(thearg)
 }
-                          
+
 parsePartialName <- function(names, fullname, prefix=NULL) {
   indx <- try(pmatch(names, fullname), silent=TRUE)
-  
+
   thearg <- parsedarg <- NA ## initialization
   if(!inherits(indx, "try-error") && any(!is.na(indx))) {
     thearg <- stripmiss(names[as.logical(indx)])
-    parsedarg <- parse(text=paste(prefix, thearg, sep=""))    
+    parsedarg <- parse(text=paste(prefix, thearg, sep=""))
   }
   return(parsedarg)
 }
@@ -262,8 +260,8 @@ validArgMatch <- function(arg, choices, argname=NULL) {
   ##
   argname <- if(!is.null(argname)) argname else deparse(substitute(arg))
   arg <- try(match.arg(arg, choices))
-  
-  if(class(arg)=="try-error") {
+
+  if(inherits(arg,"try-error")) {
     choicestr <- paste(paste("\"", choices, "\"", sep=""),
                        collapse=" or ")
     choicestr <- paste(choicestr, ".", sep="")

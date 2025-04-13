@@ -6,7 +6,7 @@
 }
 \description{
   Create a table of downweighted observations in a resistant & robust
-  fit with the \pkg{cg} package.  
+  fit with the \pkg{cg} package.
 }
 \usage{
 downweightedTable(fit, cutoffwt, display="print", \dots)
@@ -14,17 +14,17 @@ downweightedTable(fit, cutoffwt, display="print", \dots)
 \arguments{
   \item{fit }{
     A fit object created with a \code{\link{fit}} method from the \pkg{cg}
-    package.  
-  }  
+    package.
+  }
   \item{cutoffwt }{
     It has no default and must be specified as a numeric between 0 and 1
     exclusive. It is a threshold. All
     observations that fall \emph{beneath} the threshold will be
     identified. For example, a \code{cutoffwt=0.90} will yield
-    those observations that were downweighted by at least 10\%. 
+    those observations that were downweighted by at least 10\%.
   }
   \item{display}{One of three valid values:
-	
+
     \describe{
       \item{\code{"print"}}{
 	The default value; It calls a \code{print} method for the
@@ -49,13 +49,13 @@ downweightedTable(fit, cutoffwt, display="print", \dots)
 }
 \value{
   A method-specific \code{downweightedTable} object is returned.
-  See the specific methods for discussion of return values. 
+  See the specific methods for discussion of return values.
 }
 \seealso{
-  \code{\link{downweightedTable.cgOneFactorFit}}, \pkg{MASS}::\code{\link{rlm}}
+  \code{\link{downweightedTable.cgOneFactorFit}}, \pkg{MASS}::\code{\link[MASS]{rlm}}
 }
 \references{
-  Venables, W. N. and Ripley, B. D. (2002), 
+  Venables, W. N. and Ripley, B. D. (2002),
   \emph{Modern Applied Statistics with S.}  Fourth edition. Springer.
 }
 \author{
@@ -63,7 +63,7 @@ downweightedTable(fit, cutoffwt, display="print", \dots)
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,
-  concerns, and comments. 
+  concerns, and comments.
 }
 \examples{
 #### One Factor data

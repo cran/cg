@@ -1,4 +1,3 @@
-## $Id: p00ReadInOneFactorData.R 6053 2015-02-22 20:23:45Z bpikouni $
 ## One-Factor Unpaired Groups Case
 
 ## Read-in functionality
@@ -18,7 +17,7 @@ prepareCGOneFactorData <- function(dfr, format="listed",
                                    addconstant=NULL,
                                    rightcensor=NULL,
                                    leftcensor=NULL,
-                                   digits=NULL, 
+                                   digits=NULL,
                                    refgrp=NULL, stamps=FALSE) {
   ##
   ## PURPOSE: Read-in the input data frame and convert it to
@@ -46,7 +45,7 @@ prepareCGOneFactorData <- function(dfr, format="listed",
                    seeHelpFile("prepareCGOneFactorData")))
   }
   ## End input argument handling
- 
+
   if(dataformat=="groupcolumns") {
     validCGOneFacGroupColDfr(dfr)
 
@@ -65,7 +64,7 @@ prepareCGOneFactorData <- function(dfr, format="listed",
 
     ## Check of all values
     validNumericOrCensored(dfru$endpt)
-    
+
     ## Recognize censored data if specified
     endpt <- dfru[, 2]
     endpt.hasrightcens <- (regexpr(">", endpt) > 0)
@@ -74,8 +73,8 @@ prepareCGOneFactorData <- function(dfr, format="listed",
     if(sum(endpt.hasrightcens) > 0) rightcensor <- NULL
     if(sum(endpt.hasleftcens) > 0) leftcensor <- NULL
 
-    dfru <- validCGOneFacListedDfr(dfru, rightcensor, leftcensor)    
-    
+    dfru <- validCGOneFacListedDfr(dfru, rightcensor, leftcensor)
+
   }
 
   else if(dataformat=="listed") {
@@ -85,7 +84,7 @@ prepareCGOneFactorData <- function(dfr, format="listed",
 
   digits <- as.integer(ifelse(is.null(digits),
                               getNumDigits(stripmiss(dfru[,2])), digits))
-    
+
   has.censored <- if(ncol(dfru) > 2) { TRUE } else FALSE
 
   fmt.dfru <- dfru
@@ -94,7 +93,7 @@ prepareCGOneFactorData <- function(dfr, format="listed",
     endpt1f <- dfru$endpt1
     endpt2f <- dfru$endpt2
     status <- dfru$status
-    
+
     ## handle censored representations
     endptf[status==0] <- paste(">", endptf[status==0], sep="")
     endptf[status==2] <- paste("<", endptf[status==2], sep="")
@@ -108,13 +107,13 @@ prepareCGOneFactorData <- function(dfr, format="listed",
   }
 
   if(!is.expression(endptname) && endptname=="") { endptname <- "Endpoint" }
-    
+
   ## Drop any unused factor levels
   dfru$grpf <- factorInSeq(as.character(dfru$grpf))
-  
+
   ## Redefine grpnames to make sure any unused factor levels are dropped
   grpnames <- levels(dfru$grpf)
-  
+
   ## Define reference group
   if(!is.null(refgrp)) {
     if(!is.element(refgrp, grpnames)) {
@@ -163,9 +162,9 @@ prepareCGOneFactorData <- function(dfr, format="listed",
     }
 
     else { ## no censoring
-    
+
       endpt <- dfru$endpt
-    
+
       if(all(endpt > 0)) {
         stop(cgMessage("There do not appear to be any zero",
                        "values in the data, so zeroscore should",
@@ -173,14 +172,14 @@ prepareCGOneFactorData <- function(dfr, format="listed",
                        seeHelpFile("prepareCGOneFactorData")))
       }
       zeroscore <- validZeroScore(zeroscore, endpt)
-      
+
       if(zeroscore >= min(endpt[endpt > 0])) {
         stop(cgMessage("The zeroscore must evaluate to a",
                        "value that is less than all the",
                        "the rest of the endpoint values."),
            seeHelpFile("prepareCGOneFactorData"))
       }
-      
+
       dfru$endpt[dfru$endpt==0] <- zeroscore
     }
   }
@@ -262,7 +261,7 @@ prepareCGOneFactorData <- function(dfr, format="listed",
                    dfr=dfr,
                    dfru=dfru,
                    fmt.dfru=fmt.dfru,
-                   has.censored=has.censored,   
+                   has.censored=has.censored,
                    settings=list(
                      analysisname=analysisname,
                      endptname=endptname,
@@ -276,7 +275,7 @@ prepareCGOneFactorData <- function(dfr, format="listed",
                      grpnames=grpnames,
                      refgrp=refgrp,
                      stamps=stamps))
-  
+
   returnObj
 }
 
@@ -312,7 +311,7 @@ validCGOneFacListedDfr <- function(dfr, rightcensor, leftcensor) {
                    "censored data formats.",
                    seeHelpFile("prepareCGOneFactorData")))
   }
-  
+
   ## Ensure the first column is character and has at least 2 unique values
   if(length(unique(as.character(dfr[,1]))) < 2) {
     stop(cgMessage("The first column of the listed input data format",
@@ -346,23 +345,23 @@ validCGOneFacListedDfr <- function(dfr, rightcensor, leftcensor) {
 
     ## If no censoring is evident return dfr as unchanged
     if(sum(endpt.hasright) + sum(endpt.hasleft) == 0) return(dfr)
-    
+
     dfr[, 2] <- as.numeric(gsub(">|<","", endpt))
     dfr[, "endpt2"] <- dfr[, "endpt1"] <- dfr[, 2]
     dfr[, "status"] <- rep(1, nrow(dfr))
-    
+
     dfr$status[endpt.hasright] <- 0
     dfr$status[endpt.hasleft] <- 2
-    
+
   }
-  
+
   else if(ncol(dfr)==3) {
     ## remove any observations with critically missing information
     dfr <- dfr[!(is.na(dfr[,2]) | is.na(dfr[,3])), ]
-    
+
     if(is.null(leftcensor) && is.null(rightcensor)) {
       ## must have 0, 1, and 2 each represented
-      statuscheck012 <- table(as.numeric(dfr[[3]])) 
+      statuscheck012 <- table(as.numeric(dfr[[3]]))
       if(length(statuscheck012)!=3 || sum(as.numeric(names(statuscheck012)))!=3) {
         stop(cgMessage("Each of 0, 1, and 2",
                        "must be represented at least once in the",
@@ -371,7 +370,7 @@ validCGOneFacListedDfr <- function(dfr, rightcensor, leftcensor) {
                        "when BOTH leftcensor=NULL and rightcensor=NULL.",
                        "Perhaps there is only one of these that",
                        "needs to be specified as TRUE?",
-                       seeHelpFile("prepareCGOneFactorData")))      
+                       seeHelpFile("prepareCGOneFactorData")))
       }
     }
 
@@ -385,20 +384,20 @@ validCGOneFacListedDfr <- function(dfr, rightcensor, leftcensor) {
                        "with this listed input data format.",
                        "One and only one must be specified as TRUE",
                        "and the other as NULL.",
-                       seeHelpFile("prepareCGOneFactorData")))      
+                       seeHelpFile("prepareCGOneFactorData")))
       }
-              
-      statuscheck01 <- table(as.numeric(dfr[[3]])) 
+
+      statuscheck01 <- table(as.numeric(dfr[[3]]))
       if(length(statuscheck01)!=2 || sum(as.numeric(names(statuscheck01)))!=1) {
         stop(cgMessage("The censor status third column",
                        "of the listed input data format must contain",
                        "coercable values of 0 or 1, and each",
                        "must occur at least once.",
-                       seeHelpFile("prepareCGOneFactorData")))      
+                       seeHelpFile("prepareCGOneFactorData")))
       }
 
     }
-      
+
     status <- dfr[, 3]
     dfr[, 3] <- NULL
     dfr[, "endpt2"] <- dfr[, "endpt1"] <- dfr[, 2]
@@ -412,7 +411,7 @@ validCGOneFacListedDfr <- function(dfr, rightcensor, leftcensor) {
   }
 
   else if(ncol(dfr)==4) {
-      
+
     ## assume order of columns as: grpf, endpt1, endpt2, status
     ## check that the last 3 columns are consistent
     if(!is.null(rightcensor)) {
@@ -425,11 +424,11 @@ validCGOneFacListedDfr <- function(dfr, rightcensor, leftcensor) {
                         "and set to NULL.", warning=TRUE))
       leftcensor <- NULL
     }
-    
+
 
     ## remove any observations with critically missing information
     dfr <- dfr[!(xor((is.na(dfr[,2]) & is.na(dfr[,3])), is.na(dfr[,4]))), ]
-    
+
     thecheck <- function(endpt1, endpt2, status) {
       ## assume one observation
       check.rightcens <- (!is.na(endpt1) & !is.na(endpt2) & status==0)
@@ -444,30 +443,30 @@ validCGOneFacListedDfr <- function(dfr, rightcensor, leftcensor) {
       }
       else return(TRUE)
     }
-    
+
     for(i in 1:nrow(dfr)) {
       if(!thecheck(dfr[i, 2], dfr[i, 3], dfr[i, 4])) {
         stop(cgMessage("The censored data values for",
                        "Observation / Row", i, "appears to not",
                        "be set up correctly.",
-                       seeHelpFile("prepareCGOneFactorData")))      
+                       seeHelpFile("prepareCGOneFactorData")))
       }
     }
 
-    
+
     dfr <- data.frame(grpf=I(dfr[, 1]), endpt=pmin(dfr[, 2], dfr[, 3], na.rm=TRUE),
                       endpt1=dfr[, 2], endpt2=dfr[, 3], status=dfr[, 4])
     dfr$endpt[dfr$status==3] <- NA  ## interval censored too ambiguous to
                                     ## represent with one value
-    
+
   }
 
   else {
     stop(cgMessage("There is something unexpectedly wrong with the",
                    "listed data structure that cg cannot specifically identify.",
-                   seeHelpFile("prepareCGOneFactorData")))      
+                   seeHelpFile("prepareCGOneFactorData")))
   }
-  
+
   return(dfr)
 }
 
@@ -525,7 +524,7 @@ validAddConstant <- function(addconstant, endpt, grpf) {
       ## y <- endpt ## needed for following evaluation:
       ## alphalength <- length(eval(formals(MASS:::logtrans.default)$alpha))
       alphalength <- length(seq(0.5, 6, by = 0.25))  ## default of MASS::logtrans
-      
+
       if(indx==1 || indx==alphalength) {
         ## expand alpha argument default in MASS::logtrans
         e.alpha <- c(0.001, 0.01, 0.1,

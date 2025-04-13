@@ -10,7 +10,7 @@
 \description{
   Create a table of comparisons based on the cgOneFactorFit
   object. Pairwise or custom specified contrasts are estimated and
-  tested.  A cgOneFactorComparisonsTable class object is created.    
+  tested.  A cgOneFactorComparisonsTable class object is created.
 }
 \usage{
 \S4method{comparisonsTable}{cgOneFactorFit}(fit, type="pairwisereflect",
@@ -18,7 +18,7 @@
 }
 \arguments{
   \item{fit }{
-    An object of class \code{\link{cgOneFactorFit}}.  
+    An object of class \code{\link{cgOneFactorFit}}.
   }
   \item{type }{Can be one of four values:
 
@@ -44,7 +44,7 @@
 	object, deems it the "control" group, and constructs
 	pairwise comparisons of all other groups to it. This setting is
 	required when the \code{refgrp} argument is specified in the
-	call (see {\dots } section below.)
+	call (see Additional Arguments section below.)
       }
       \item{\code{"custom"}}{Indicates the a custom matrix of
 	comparisons will be constructed, and that matrix needs to be
@@ -54,13 +54,13 @@
   }
   \item{alpha }{Significance level, by default set to \code{0.05}.
   }
-  \item{addpct }{Only relevant if \code{settings$endptscale=="original"} in the 
+  \item{addpct }{Only relevant if \code{settings$endptscale=="original"} in the
     fit object. An column of percent differences is added for the
     comparisons, as a descriptive supplement to the original scale
     differences that are formally estimated.
   }
   \item{display }{One of three valid values:
-    
+
     \describe{
       \item{\code{"print"}}{
 	The default value; It calls a \code{print} method for the
@@ -78,7 +78,7 @@
     }
   }
   \item{\dots }{
-    Additional arguments.  
+    Additional arguments.
     \describe{
       \item{\code{mcadjust} }{
 	Do a multiple comparisons adjustment, based on the simultaneous
@@ -104,19 +104,19 @@
 	REQUIRED when the \code{refgrp} argument is specified in the
 	call with a valid non-\code{NULL} value.
       }
-      \item{\code{model} }{For \code{cgOneFactorFit} \code{fit} objects that have 
+      \item{\code{model} }{For \code{cgOneFactorFit} \code{fit} objects that have
 	classical least squares \code{\link{lm}} or resistant & robust
-	\code{\link{rlm}} fits, the following argument values are possible:
-	
+	\code{\link[MASS]{rlm}} fits, the following argument values are possible:
+
 	\describe{
-	  \item{\code{"both"}}{Comparison tables based on both the ordinary 
+	  \item{\code{"both"}}{Comparison tables based on both the ordinary
 	    classical least squares and resistant & robust fits are
 	    created. This is the default when both fits are present in
 	    the \code{cgOneFactorFit} object specified in the \code{fit}
 	    argument. If the resistant & robust fit is not available,
 	    this value is not relevant.
 	  }
-	  \item{\code{"olsonly"}}{Only a comparison table based on the ordinary 
+	  \item{\code{"olsonly"}}{Only a comparison table based on the ordinary
 	    classical least squares \code{olsfit} fit slot is performed.
 	  }
 	  \item{\code{"rronly"}}{Only a comparison table based on the resistant and
@@ -138,7 +138,7 @@
     call is calculated"} is displayed at the console. This computed critical point
     is used for all subsequent p-value and confidence interval
     calculations.
-    
+
     The \pkg{multcomp} package provides a unified way to calculate
     critical points based on the comparisons of interest in a
     "family". Thus a user does not need to worry about choosing amongst
@@ -147,7 +147,7 @@
   \value{
     Creates an object of class  \code{cgOneFactorComparisonsTable}, with the
     following slots:
-    
+
     \describe{
       \item{\code{ols.comprs}}{The table of comparisons based on the
 	\code{olsfit} component of the \code{\link{cgOneFactorFit}},
@@ -205,7 +205,7 @@
 	\code{estimate}. If \code{settings$endptscale=="log"} in the
 	\code{fit} object, this estimate will be based on the Delta
 	method, and will particularly begin to be a poor approximation when the
-	standard error in the logscale exceeds 0.50. 
+	standard error in the logscale exceeds 0.50.
       }
       \item{\code{lowerci}}{The lower 100 * (1-\code{alpha}) \% confidence limit of the
 	difference \code{estimate}. With the default \code{alpha=0.05},
@@ -235,7 +235,7 @@
 	\code{estimate}. If \code{settings$endptscale=="log"} in the
 	\code{fit} object, this estimate will be based on the Delta
 	method, and will particularly begin to be a poor approximation when the
-	standard error in the logscale exceeds 0.50. 
+	standard error in the logscale exceeds 0.50.
       }
       \item{\code{meanB} or \code{geomeanB}}{The estimated mean for the
 	right hand side "B" of the A vs. B comparison.
@@ -249,14 +249,14 @@
 	\code{estimate}. If \code{settings$endptscale=="log"} in the
 	\code{fit} object, this estimate will be based on the Delta
 	method, and will particularly begin to be a poor approximation when the
-	standard error in the logscale exceeds 0.50. 
+	standard error in the logscale exceeds 0.50.
       }
-    }	
+    }
     An additional column \code{addpct} of percent differences is added if
     \code{endptscale=="original"} and \code{addpct=TRUE},
     as a descriptive supplement to the original scale
     differences that are formally estimated.
-    
+
   }
   \references{
     Hothorn, T., Bretz, F., Westfall, P., Heiberger, R.M., and
@@ -264,14 +264,14 @@
 
     Hothorn, T., Bretz, F., and Westfall, P. (2008).
     "Simultaneous Inference in General Parametric Models",
-    \emph{Biometrical Journal}, 50, 3, 346-363.  
+    \emph{Biometrical Journal}, 50, 3, 346-363.
   }
   \author{
     Bill Pikounis [aut, cre, cph], John Oleynick [aut], Eva Ye [ctb]
   }
   \note{
     Contact \email{cg@billpikounis.net} for bug reports, questions,
-    concerns, and comments. 
+    concerns, and comments.
   }
 
   \examples{

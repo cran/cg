@@ -1,5 +1,3 @@
-## $Id: generics.R 4896 2014-02-21 18:07:14Z bpikouni $
-
 setGeneric("fit",
            function(data, type, ...) {
              standardGeneric("fit")
@@ -36,8 +34,8 @@ setGeneric("globalTest",
            })
 
 setGeneric("comparisonsTable",
-           function(fit, 
-                    type="pairwisereflect", 
+           function(fit,
+                    type="pairwisereflect",
                     alpha=0.05, addpct=FALSE, display="print", ...) {
              standardGeneric("comparisonsTable")
            })
@@ -104,7 +102,7 @@ setGeneric("showObj",
            function(object) {
              standardGeneric("showObj")
            })
-                                           
+
 ##############################
 
 if(FALSE) {
@@ -120,4 +118,4 @@ setGeneric("assessSplineFit",
            })
 
 }
-		   
+

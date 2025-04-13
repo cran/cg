@@ -1,11 +1,10 @@
-## $Id: p04DiagnosticsOneFactorData.R 4891 2014-02-21 17:49:45Z bpikouni $
 ## One-Factor Unpaired Groups Case
 
 ## Diagnostics methods for One-Factor Unpaired Groups Data
 
-variancegraph <- function(resids, fitteds, 
+variancegraph <- function(resids, fitteds,
                           status=NULL,
-                          grp=NULL, 
+                          grp=NULL,
                           desc="", analysisname="",
                           endptname="", trend=NULL,
                           titlestamp=TRUE,
@@ -16,7 +15,7 @@ variancegraph <- function(resids, fitteds,
   ##
   ## NOTE: Incomplete checking is done if censored residuals are
   ## specified. The survival::Surv() convention is presumed as the sole
-  ## required data format. 
+  ## required data format.
   ##
   ## Input Argument Checking
   validAtomicVec(resids)
@@ -35,7 +34,7 @@ variancegraph <- function(resids, fitteds,
       stop(cgMessage("The resids, fitteds, and status argument values",
                      "must be have equal length."))
     }
-    has.censored <- TRUE    
+    has.censored <- TRUE
   }
   else {
     if((length(resids) != length(fitteds)) ) {
@@ -48,7 +47,7 @@ variancegraph <- function(resids, fitteds,
   validBoolean(trendstamp)
 
   ## End input argument handling
-  
+
   options(warn=-1)
   curpar <- par(new=FALSE, mgp=c(3,0.25,0), tck=-0.010)
   options(warn=0)
@@ -70,7 +69,7 @@ variancegraph <- function(resids, fitteds,
   else {
     tukeyresids2 <- NULL
   }
-  
+
   if(!is.null(grp)) {
     grpf <- if(is.factor(grp)) grp else as.numeric(factorInSeq(grp))
     if(has.censored) {
@@ -123,7 +122,7 @@ variancegraph <- function(resids, fitteds,
                text((jittergrpn)[status==2],
                     tukeyresids[status==2], labels="<", srt=90,
                     col="darkgray")
-               
+
              }
            }
            else {
@@ -131,7 +130,7 @@ variancegraph <- function(resids, fitteds,
            }
            if(trend) {
              lines(grpn, trendtukeyresids)
-             
+
            }
          })
 
@@ -148,14 +147,14 @@ variancegraph <- function(resids, fitteds,
               cex=0.6, col="gray", line=0.2, adj=0.5)
       }
     }
-    
+
     if(trend & has.censored && any(n.uncensored < 5)) {
       mtext(side=1, line=4,
             text=paste("NOTE: At least one group has less than 5",
               "complete observations, so trends around it may not make",
               "sense."), col="red", cex=0.6)
     }
-    
+
     ## Axes Customization
     grpnameticksettings <- setupGrpNameTicks(grpnames, 1:numberofgrps)
     plotGrpNameTicks((grpnames), settings=grpnameticksettings)
@@ -180,19 +179,19 @@ variancegraph <- function(resids, fitteds,
   axis(2, at=sqrt(tickmarks), labels=names(tickmarks),
        cex.axis=0.8, adj=1, las=1)
   mtext("square-root spaced", side=2, line=2.25, cex=0.7)
-  
+
   text(x=rep(par("usr")[1], 2), y=range(tukeyresids),
        labels=paste("", signif(range(tukeyresids^2), digits=3)),
        col="blue", adj=0, cex=0.7)
   box()
-  
+
   if(titlestamp) {
     title(main=paste("Variance Graph: ", desc,
             "\n", analysisname, sep=""), line=2, cex.main=1.1)
   }
-  
+
   invisible()
-  
+
 }
 
 setMethod("varianceGraph", "cgOneFactorFit",
@@ -234,7 +233,7 @@ setMethod("varianceGraph", "cgOneFactorFit",
               uv <- TRUE
               validArgModel(...)
             }
-            
+
             if(class(rrfit)[1]=="rlm" && model!="olsonly" && !aft && !uv) {
               rr <- TRUE
             }
@@ -283,7 +282,7 @@ setMethod("varianceGraph", "cgOneFactorFit",
 
               thetitle <- paste(thetitle, "s", sep="")
               thesmoothmsg <- gsub("line", "lines", thesmoothmsg)
-              
+
               all.dfr$typef <- factorInSeq(all.dfr$type)
               all.dfr$grpc <- as.character(all.dfr$grpc)
               grplabels <- with(all.dfr, lapply(split(grpc, typef), unique))
@@ -306,7 +305,7 @@ setMethod("varianceGraph", "cgOneFactorFit",
                                    ))
               on.exit(trellis.par.set("axis.components", trellisparstg3),
                       add=TRUE)
-              
+
               thegraph <- xyplot(Cbind(tukeyresids, trendtukeyresids)
                                  ~ grpn | typef,
                                  data=all.dfr,
@@ -324,7 +323,7 @@ setMethod("varianceGraph", "cgOneFactorFit",
                                    if(is.element(panel.number,
                                                  c(1, nlevels(all.dfr$typef)))) {
                                      panelside <- ifelse(panel.number==1,
-                                                         "left", "right") 
+                                                         "left", "right")
                                      tickmarks <- setupAxisTicks(all.dfr$tukeyresids^2,
                                                                  logscale=FALSE, grid=TRUE)
                                     panel.axis(side=panelside,
@@ -347,7 +346,7 @@ setMethod("varianceGraph", "cgOneFactorFit",
                                                   signif(max(y^2), 3))),
                                               col="blue", adj=0, cex=0.6)
                                  },
-                                 col="black", xlim=c(0, numberofgrps + 0.5),      
+                                 col="black", xlim=c(0, numberofgrps + 0.5),
                                  xlab="",
                                  ylab=list(cex=0.7,
                                    label="  "),
@@ -372,16 +371,16 @@ setMethod("varianceGraph", "cgOneFactorFit",
               grid.text(thesmoothmsg, gp=gpar(col="gray", cex=0.6),
                         y=unit(-1, "lines"))
               upViewport(0)
-              
+
               if(settings$stamps) graphStampCG()
 
               invisible()
             }
-            
+
             else if(model=="olsonly" && ols && device=="single") {
               variancegraph(resid(olsfit), fitted(olsfit),
                             grp = olsfit$dfru$grpf, desc = "Classical",
-                            analysisname=analysisname, 
+                            analysisname=analysisname,
                             endptname=catCharExpr(" Fit of ", endptlabel),
                             trend=trend,
                             titlestamp = TRUE, trendstamp=TRUE)
@@ -394,7 +393,7 @@ setMethod("varianceGraph", "cgOneFactorFit",
               variancegraph(sqrt(rrfit$w)*resid(rrfit), fitted(rrfit),
                             grp = olsfit$dfru$grpf,
                             desc = "Resistant & Robust Weighted",
-                            analysisname=analysisname, 
+                            analysisname=analysisname,
                             endptname=catCharExpr(" Fit of ", endptlabel),
                             trend=trend,
                             titlestamp = TRUE, trendstamp=TRUE)
@@ -405,7 +404,7 @@ setMethod("varianceGraph", "cgOneFactorFit",
               variancegraph(resid(rrfit), fitted(rrfit),
                             grp = olsfit$dfru$grpf,
                             desc = "Resistant & Robust Unweighted",
-                            analysisname=analysisname, 
+                            analysisname=analysisname,
                             endptname=catCharExpr(" Fit of ", endptlabel),
                             trend=trend,
                             titlestamp = TRUE, trendstamp=TRUE)
@@ -426,7 +425,7 @@ setMethod("varianceGraph", "cgOneFactorFit",
               }
               variancegraph(resid(olsfit), fitted(olsfit),
                             grp = olsfit$dfru$grpf, desc = "Classical",
-                            analysisname=analysisname, 
+                            analysisname=analysisname,
                             endptname=catCharExpr(" Fit of ", endptlabel),
                             trend=trend,
                             titlestamp = TRUE, trendstamp=TRUE)
@@ -438,7 +437,7 @@ setMethod("varianceGraph", "cgOneFactorFit",
               variancegraph(sqrt(rrfit$w)*resid(rrfit), fitted(rrfit),
                             grp = olsfit$dfru$grpf,
                             desc = "Resistant & Robust Weighted",
-                            analysisname=analysisname, 
+                            analysisname=analysisname,
                             endptname=catCharExpr(" Fit of ", endptlabel),
                             trend=trend,
                             titlestamp = TRUE, trendstamp=TRUE)
@@ -451,19 +450,19 @@ setMethod("varianceGraph", "cgOneFactorFit",
                 variancegraph(resid(rrfit), fitted(rrfit),
                               grp = olsfit$dfru$grpf,
                               desc = "Resistant & Robust Unweighted",
-                              analysisname=analysisname, 
+                              analysisname=analysisname,
                               endptname=catCharExpr(" Fit of ", endptlabel),
                               trend=trend,
                               titlestamp = TRUE, trendstamp=TRUE)
                 if(settings$stamps) graphStampCG(grid=FALSE)
               }
             }
-            
+
             else if(uv && device=="single") {
               variancegraph(residuals(uvfit, type="pearson"), fitted(uvfit),
                             grp = uvfit$dfru$grpf,
                             desc = "Unequal Variances",
-                            analysisname = analysisname, 
+                            analysisname = analysisname,
                             endptname=catCharExpr("  , Standardized  ",
                               catCharExpr(" Fit of ", endptlabel), rev=TRUE),
                             trend=trend,
@@ -477,7 +476,7 @@ setMethod("varianceGraph", "cgOneFactorFit",
                             status=aftfit$dfru$status,
                             grp = aftfit$dfru$grpf,
                             desc = "AFT Censored",
-                            analysisname=analysisname, 
+                            analysisname=analysisname,
                             endptname=catCharExpr(" Fit of ", endptlabel),
                             trend=trend,
                             titlestamp = TRUE, trendstamp=TRUE)
@@ -491,14 +490,14 @@ setMethod("varianceGraph", "cgOneFactorFit",
                              seeHelpFile("varianceGraph")))
             }
 
-            
-            
+
+
             invisible()
           }
-          )            
+          )
 
 
-qqgraph <- function(resids, line=NULL, status=NULL, 
+qqgraph <- function(resids, line=NULL, status=NULL,
                     desc="", analysisname="",
                     endptname="",  titlestamp=TRUE,
                     ...) {
@@ -522,13 +521,13 @@ qqgraph <- function(resids, line=NULL, status=NULL,
       stop(cgMessage("The resids, fitteds, and status argument values",
                      "must be have equal length."))
     }
-    has.censored <- TRUE    
+    has.censored <- TRUE
   }
   else {
     has.censored <- FALSE
   }
   ## End input argument handling
-  
+
   options(warn=-1)
   curpar <- par(new=FALSE, mgp=c(3,0.25,0), tck=-0.010)
   options(warn=0)
@@ -544,7 +543,7 @@ qqgraph <- function(resids, line=NULL, status=NULL,
   }
 
   xy <- qqnorm(y=resids, main = "",
-               xlab = "Standard Gaussian (Normal) Quantile", 
+               xlab = "Standard Gaussian (Normal) Quantile",
                ylab=ylabchar,
                type="n", axes=FALSE, ...)
   grid(lty=1)
@@ -592,7 +591,7 @@ qqgraph <- function(resids, line=NULL, status=NULL,
         scfit.dfr <- with(summ.scfit,
                           data.frame(resids=time,
                                      sdf.prob=surv))
-        
+
         scfit.dfr <- merge(data.frame(resids=resids), scfit.dfr,
                            by=c("resids"))
         p25 <- with(scfit.dfr, qminmin(sdf.prob, resids, 0.25))
@@ -613,7 +612,7 @@ qqgraph <- function(resids, line=NULL, status=NULL,
           int <- y.res[1L] - slope.res * x.res[1L]
           abline(int, slope.res)
         }
-        
+
       })
     }
   }
@@ -632,13 +631,13 @@ qqgraph <- function(resids, line=NULL, status=NULL,
             " Distribution: ", desc,
             "\n", analysisname, sep=""), line=1, cex.main=1.1)
   }
-  
+
   invisible()
-  
+
 }
 
 setMethod("qqGraph", "cgOneFactorFit",
-          qqGraph.cgOneFactorFit <- 
+          qqGraph.cgOneFactorFit <-
           function(fit, line=NULL, cgtheme=TRUE, device="single", ...) {
             ##
             ## PURPOSE: Create a Q-Q Gaussian Plot(s) of the Residuals
@@ -662,16 +661,16 @@ setMethod("qqGraph", "cgOneFactorFit",
             else {
               model <- "both"
             }
-            
+
             device <- validArgMatch(device, c("single","multiple", "ask"))
-            
+
             rrfit <- fit@rrfit
             olsfit <- fit@olsfit
             aftfit <- fit@aftfit
             uvfit <- fit@uvfit
-            
+
             aft <- ols <- rr <- uv <- FALSE  ## Initializations
-            
+
             if(class(aftfit)[1]=="survreg") {
               aft <- TRUE
               validArgModel(...)
@@ -680,7 +679,7 @@ setMethod("qqGraph", "cgOneFactorFit",
               uv <- TRUE
               validArgModel(...)
             }
-            
+
             if(class(rrfit)[1]=="rlm" && model!="olsonly" && !aft && !uv) {
               rr <- TRUE
             }
@@ -695,7 +694,7 @@ setMethod("qqGraph", "cgOneFactorFit",
 
             numberofgrps <- length(settings$grpnames)
             thetitle <- "Quantile-Quantile (QQ) Graph on\nGaussian (Normal) Distribution"
-            
+
             residual.helper <- function(resid, type) {
               return(data.frame(resid=resid,
                                 type=rep(type, length(resid))))
@@ -706,7 +705,7 @@ setMethod("qqGraph", "cgOneFactorFit",
               ols.dfr <-  residual.helper(residuals(olsfit), "Classical")
               rrwtd.dfr <- residual.helper(sqrt(rrfit$w)*resid(rrfit),
                                            "RR Weighted")
-              
+
               if(model=="both") {
                 all.dfr <- rbind(ols.dfr, rrwtd.dfr)
                 all.resid <- c(ols.dfr$resid, rrwtd.dfr$resid)
@@ -720,7 +719,7 @@ setMethod("qqGraph", "cgOneFactorFit",
                                rrunwtd.dfr$resid)
                 thelayout <- c(3, 1)
               }
-              
+
               thetitle <- "Quantile-Quantile (QQ) Graphs on\nGaussian (Normal) Distribution"
 
               all.dfr$typef <- factorInSeq(all.dfr$type)
@@ -742,7 +741,7 @@ setMethod("qqGraph", "cgOneFactorFit",
                                    right=list(pad1=0.5, pad2=2)
                                    ))
               on.exit(trellis.par.set("axis.components", trellisparstg3),
-                      add=TRUE)              
+                      add=TRUE)
 
               thegraph <- qqmath(~ resid | typef,
                                  distribution=qnorm,
@@ -754,7 +753,7 @@ setMethod("qqGraph", "cgOneFactorFit",
                                    if(is.element(panel.number,
                                                  c(1, nlevels(all.dfr$typef)))) {
                                      panelside <- ifelse(panel.number==1,
-                                                         "left", "right") 
+                                                         "left", "right")
                                      tickmarks <- setupAxisTicks(all.dfr$resid,
                                                                  logscale=FALSE,
                                                                  grid=TRUE)
@@ -797,7 +796,7 @@ setMethod("qqGraph", "cgOneFactorFit",
               grid.text(ylabchar,
                         x = unit(0, "lines"), rot=90, gp=gpar(cex=0.9))
               upViewport(0)
-              
+
               if(settings$stamps) graphStampCG()
             }
 
@@ -816,7 +815,7 @@ setMethod("qqGraph", "cgOneFactorFit",
               qqgraph(sqrt(rrfit$w)*resid(rrfit),
                       line=line,
                       desc = "Resistant & Robust fit Weighted",
-                      analysisname = analysisname, 
+                      analysisname = analysisname,
                       endptname=catCharExpr(" Fit of ", endptlabel),
                       titlestamp = TRUE)
               if(settings$stamps) graphStampCG(grid=FALSE)
@@ -826,7 +825,7 @@ setMethod("qqGraph", "cgOneFactorFit",
               qqgraph(resid(rrfit),
                       line=line,
                       desc = "Resistant & Robust fit Unweighted",
-                      analysisname = analysisname, 
+                      analysisname = analysisname,
                       endptname=catCharExpr(" Fit of ", endptlabel),
                       titlestamp = TRUE)
               if(settings$stamps) graphStampCG(grid=FALSE)
@@ -847,18 +846,18 @@ setMethod("qqGraph", "cgOneFactorFit",
               qqgraph(resid(olsfit),
                       line=line,
                       desc = "Classical",
-                      analysisname = analysisname, 
+                      analysisname = analysisname,
                       endptname=catCharExpr(" Fit of ", endptlabel),
                       titlestamp = TRUE)
               if(settings$stamps) graphStampCG(grid=FALSE)
-              
+
               if(device=="multiple") {
                 do.call("cgDevice", c(list(new=TRUE), dots))
               }
               qqgraph(sqrt(rrfit$w)*resid(rrfit),
                       line=line,
                       desc = "Resistant & Robust fit Weighted",
-                      analysisname = analysisname, 
+                      analysisname = analysisname,
                       endptname=catCharExpr(" Fit of ", endptlabel),
                       titlestamp = TRUE)
               if(settings$stamps) graphStampCG(grid=FALSE)
@@ -870,18 +869,18 @@ setMethod("qqGraph", "cgOneFactorFit",
                 qqgraph(resid(rrfit),
                         line=line,
                         desc = "Resistant & Robust fit Unweighted",
-                        analysisname = analysisname, 
+                        analysisname = analysisname,
                         endptname=catCharExpr(" Fit of ", endptlabel),
                         titlestamp = TRUE)
                 if(settings$stamps) graphStampCG(grid=FALSE)
               }
-            }            
+            }
 
             else if(uv && device=="single") {
               qqgraph(residuals(uvfit, type="pearson"),
                       line=line,
                       desc = "Unequal Variances fit",
-                      analysisname = analysisname, 
+                      analysisname = analysisname,
                       endptname=catCharExpr("  , Standardized  ",
                         catCharExpr(" Fit of ", endptlabel), rev=TRUE),
                       titlestamp = TRUE)
@@ -893,7 +892,7 @@ setMethod("qqGraph", "cgOneFactorFit",
                       status=aftfit$dfru$status,
                       line=line,
                       desc = "AFT Censored",
-                      analysisname = analysisname, 
+                      analysisname = analysisname,
                       endptname=catCharExpr(" Fit of ", endptlabel),
                       titlestamp = TRUE)
               if(settings$stamps) graphStampCG(grid=FALSE)
@@ -910,12 +909,12 @@ setMethod("qqGraph", "cgOneFactorFit",
           })
 
 setClass("cgOneFactorDownweightedTable",
-         representation(contents="dataframeOrNULL", 
+         representation(contents="dataframeOrNULL",
                         settings="list"),
          prototype(contents=NULL, settings=list()))
 
 setMethod("downweightedTable", "cgOneFactorFit",
-          downweightedTable.cgOneFactorFit <- 
+          downweightedTable.cgOneFactorFit <-
           function(fit, cutoffwt, display="print", ...) {
             ##
             ## PURPOSE: Create a table of data observations
@@ -926,7 +925,7 @@ setMethod("downweightedTable", "cgOneFactorFit",
               stop(cgMessage("No resistant & robust fit of class rlm",
                              "is available."))
             }
-            
+
             validCutoffWt(cutoffwt)
             display <- validArgMatch(display, c("print","none","show"))
 
@@ -937,7 +936,7 @@ setMethod("downweightedTable", "cgOneFactorFit",
             settings <- fit@settings
             settings$cutoffwt <- cutoffwt
             tbl <- message <- NULL ## intializations
-            
+
             obsweights <- sqrt(rrfit$w)
             flaggedpoints <- (obsweights <= cutoffwt)
 
@@ -946,14 +945,14 @@ setMethod("downweightedTable", "cgOneFactorFit",
                                 obsweights[flaggedpoints],
                                 100*(1 - obsweights[flaggedpoints]),
                                 row.names=NULL)
-              
+
               names(tbl) <- c("group", "endpoint", "weight", "pct down-weighted")
             }
 
             returnObj <- new("cgOneFactorDownweightedTable",
-                             contents=tbl, 
+                             contents=tbl,
                              settings=settings)
-            
+
             if(display=="print") {
               print(returnObj)
             }
@@ -992,11 +991,11 @@ setMethod("print", "cgOneFactorDownweightedTable",
             curscipen <- getOption("scipen")
             on.exit(options(scipen=curscipen), add=TRUE)
             options(scipen=9)
-            
+
             if(is.null(title)) {
               title <- paste("Downweighted Observations Table from ",
                              "Resistant & Robust Fit\n",
-                             settings$analysisname, sep="") 
+                             settings$analysisname, sep="")
             }
             else {
               validCharacter(title)
@@ -1019,7 +1018,7 @@ setMethod("print", "cgOneFactorDownweightedTable",
               table$endpoint <- fround(table$endpoint, digits)
               table$weight <- fround(table$weight, digits=2)
               table$"pct down-weighted" <- fmtPercent(table$"pct down-weighted")
-              
+
               curwidth <- getOption("width")
               on.exit(options(width=curwidth), add=TRUE)
               if(curwidth < 500) { options(width=500) }
@@ -1038,7 +1037,7 @@ setMethod("print", "cgOneFactorDownweightedTable",
                      "% or more of a downweight of an observation did not occur.", ")",
                      "\n",
                      sep="")
-            
+
             invisible()
           })
 
@@ -1055,7 +1054,7 @@ validCutoffWt <- function(x) {
                    "one.",
                    seeHelpFile("downweightedTable")))
   }
-  
+
   return(TRUE)
 }
 

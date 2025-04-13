@@ -10,7 +10,7 @@
 \description{
   Create a table of downweighted observations based on a rrfit object
   within a cgOneFactorFit object. A cgOneFactorDownweightedTable
-  class object is created.  
+  class object is created.
 }
 \usage{
 \S4method{downweightedTable}{cgOneFactorFit}(fit, cutoffwt, display="print", \dots)
@@ -18,17 +18,17 @@
 
 \arguments{
   \item{fit }{
-   A fit object of class \code{\link{cgOneFactorFit}}.  
+   A fit object of class \code{\link{cgOneFactorFit}}.
   }
   \item{cutoffwt }{
     It has no default and must be specified as a numeric between 0 and 1
     exclusive. It is a threshold. All
     observations that fall \emph{beneath} the threshold will be
     identified. For example, a \code{cutoffwt=0.90} will yield
-    those observations that were downweighted by at least 10\%. 
+    those observations that were downweighted by at least 10\%.
   }
   \item{display}{One of three valid values:
-	
+
     \describe{
       \item{\code{"print"}}{
 	The default value; It calls a \code{print} method for the
@@ -50,7 +50,7 @@
   }
 }
 \details{
-  If no observations meet the cutoff criteria, a text message of the 
+  If no observations meet the cutoff criteria, a text message of the
   \code{cgOneFactorDownweightedTable} content emptiness is output
   instead.
 
@@ -74,10 +74,10 @@
 	\item{\code{pct down-weighted}}{An expression of the weight in
 	  terms of percent reduction from the maximum of 1.}
       }
-	  
+
       If no observations meet the cutoff criteria,
-      the \code{contents} slot is set to \code{NULL}. 
-	  
+      the \code{contents} slot is set to \code{NULL}.
+
     }
     \item{\code{cutoffwt}}{Taken from the specified \code{cutoffwt} argument
       value.}
@@ -92,10 +92,10 @@
 
 }
 \seealso{
-  \code{\link{cgOneFactorFit}}, \pkg{MASS}::\code{\link{rlm}} 
+  \code{\link{cgOneFactorFit}}, \pkg{MASS}::\code{\link[MASS]{rlm}}
 }
 \references{
-  Venables, W. N. and Ripley, B. D. (2002), 
+  Venables, W. N. and Ripley, B. D. (2002),
   \emph{Modern Applied Statistics with S.}  Fourth edition. Springer.
 }
 \author{
@@ -103,7 +103,7 @@
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,
-  concerns, and comments. 
+  concerns, and comments.
 }
 \examples{
 data(canine)

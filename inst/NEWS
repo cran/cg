@@ -1,3 +1,7 @@
+12 April 2025: Version 1.0-4
+===========================
+* Addressed long standing CRAN check notes, and updated to proper syntax, per request from CRAN team, to properly anchor .Rd file links to imported package functions. There are no functionality changes in this release.
+
 04 January 2016: Version 1.0-3
 ===========================
 * Addressed notes arising in building process, in order to follow CRAN and R-core and R-extensions guidelines and standards for packages, 

@@ -27,9 +27,9 @@
     distribution function.
   }
   \item{ylab}{
-    \emph{Optional}, a \code{character} value to label the y-axis of the graph.  If 
+    \emph{Optional}, a \code{character} value to label the y-axis of the graph.  If
     \code{NULL}, it
-    defaults to 
+    defaults to
     either \code{"Probability of Survival"}\cr
     or \code{"Cumulative Probability"},
     depending on the value of \code{distfcn}.
@@ -37,16 +37,16 @@
   \item{title}{
     \emph{Optional}, a \code{character} to show as the title of the graph.  If
     \code{NULL},
-    it defaults to 
+    it defaults to
     either \code{"Nonparametric Survival Curve Estimates"}\cr or
     \code{"Nonparametric Cumulative Distribution Function Estimates"},
     depending on the value of \code{distfcn}.
   }
   \item{\dots}{
     Additional arguments. One is currently valid:
-	
+
     \describe{
-	
+
 	  \item{\code{ticklabels }}{A list of two components:
 	\describe{
 	  \item{\code{mod}}{Can be either of these two values,
@@ -57,7 +57,7 @@
 		\code{marks} component below.
 	      }
 	      \item{\code{"add"}}{Before graphing the data, add
-		tickmarks specified in the 
+		tickmarks specified in the
 		\code{marks} component below, to the automatically
 		generated ones.
 	      }
@@ -70,14 +70,14 @@
 	}
       }
     }
-	
-	
+
+
   }
 }
 \details{
   Graph the estimated survival function or cumulative distribution for
   each group in a
-  \code{cgOneFactorData} object.  For censored data, Kaplan-Meier estimates 
+  \code{cgOneFactorData} object.  For censored data, Kaplan-Meier estimates
   are used. For uncensored data, the conventional step function empirical
   estimates are used.
 
@@ -85,7 +85,7 @@
   match the order of the group name factor levels. The color order is
   given in \code{\link{cgLineColors}}. The line widths are set to be
   thicker (\code{lwd=2}), and the group name label is placed near the line
-  using \code{\link{label}} methodology from the \pkg{Hmisc} package.
+  using \code{\link[Hmisc]{label}} methodology from the \pkg{Hmisc} package.
 
   The x-axis represents response values, and y-axis represents estimated
   probabilities. Minimum and maximum values from ranges of data are
@@ -97,20 +97,20 @@
 
   The number of decimal places printed in the ticks on the x-axis is taken
   from the \code{cgOneFactorData} object,
-  which \code{\link{prepareCGOneFactorData}} sets from its \code{digits} 
+  which \code{\link{prepareCGOneFactorData}} sets from its \code{digits}
   argument.
 }
 \value{
   \code{kmGraph.cgOneFactorFit} returns
   an invisible \code{NULL}. The main purpose is the side
-  effect of graphing to the current device.   
+  effect of graphing to the current device.
 }
 \author{
   Bill Pikounis [aut, cre, cph], John Oleynick [aut], Eva Ye [ctb]
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,
-  concerns, and comments. 
+  concerns, and comments.
 }
 \examples{
 data(canine)

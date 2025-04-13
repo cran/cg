@@ -14,7 +14,7 @@
     A \code{\link{cgOneFactorData}} object.
   }
   \item{\dots }{
-    Additional arguments, both \emph{optional}. Two are currently valid: 
+    Additional arguments, both \emph{optional}. Two are currently valid:
     \describe{
       \item{\code{logscale}}{
 	A \code{logical} value, indicating whether or not the boxplot graph should be
@@ -33,7 +33,7 @@
 		\code{marks} component (see below).
 	      }
 	      \item{\code{"add"}}{Before graphing the data, add
-		tickmarks specified in the 
+		tickmarks specified in the
 		\code{marks} component to the automatically
 		generated ones.
 	      }
@@ -50,15 +50,15 @@
 }
 \details{
   For uncensored data, the boxplot for each group produced is a standard boxplot,
-  similar to that produced by 
+  similar to that produced by
   \pkg{graphics}::\code{\link{boxplot.default}},
   but with the median shown as a "+" and the mean shown as a "o".  A
   warning is added to the plot if any of the groups or all of the groups
   have 5 or fewer observations (in which case a plot from
   \code{\link{pointGraph.cgOneFactorData}} might be more suitable).
 
-  For censored data, Kaplan-Meier estimates are used for the quantiles, as 
-  proposed by Gentleman and Crowley (1991). The \pkg{survival}::\code{\link{survfit}}
+  For censored data, Kaplan-Meier estimates are used for the quantiles, as
+  proposed by Gentleman and Crowley (1991). The \pkg{survival}::\code{\link[survival]{survfit}}
   conventions are followed for interpolation of these quantiles.
   Extreme values that are censored
   are drawn as open arrow heads rather than open circles.
@@ -76,7 +76,7 @@
 
   If \code{logscale=TRUE}, the tick marks for the y-axis
   on the left side of the plot show original values, while the
-  ticks mark for the y-axis on the right side of the graph 
+  ticks mark for the y-axis on the right side of the graph
   show base 10 log values.
 
   Tick marks are attempted to be chosen wisely. For log-scaled axes in
@@ -84,16 +84,16 @@
   possible. Since the algorithm is empirical, the \code{ticklabels}
   argument is available for further refinement or complete replacement
   of tickmarks.
-  
+
   The heading for the graph is taken from the \code{\link{cgOneFactorData}} object,
-  which \code{\link{prepareCGOneFactorData}} sets from its \code{analysisname} 
+  which \code{\link{prepareCGOneFactorData}} sets from its \code{analysisname}
   argument.
   The label for the y-axis is taken from the \code{\link{cgOneFactorData}} object,
-  which \code{\link{prepareCGOneFactorData}} sets from its \code{endptname} 
+  which \code{\link{prepareCGOneFactorData}} sets from its \code{endptname}
   argument.
   The number of decimal places printed in the ticks on the y-axis is taken
   from the \code{\link{cgOneFactorData}} object,
-  which \code{\link{prepareCGOneFactorData}} sets from its \code{digits} 
+  which \code{\link{prepareCGOneFactorData}} sets from its \code{digits}
   argument.
 
   The minimum and maximum values from the range of the data are
@@ -106,7 +106,7 @@
 \value{
   \code{boxplot.cgOneFactorData} returns
   an invisible \code{NULL}. The main purpose is the side
-  effect of graphing to the current device. 
+  effect of graphing to the current device.
 }
 \references{
   Gentleman, R.C. and Crowley, J. (1991).  "Graphical Methods for
@@ -118,7 +118,7 @@
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,
-  concerns, and comments. 
+  concerns, and comments.
 }
 \examples{
 data(canine)

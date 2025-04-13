@@ -8,7 +8,7 @@
   Compute Descriptive Summary Statistics of Groups in a cgOneFactorData object
 }
 \description{
-  Create a table of quantiles and other summary statistics of the data in a 
+  Create a table of quantiles and other summary statistics of the data in a
   \code{\link{cgOneFactorData}} object.
 }
 \usage{
@@ -16,11 +16,11 @@
 }
 \arguments{
   \item{data}{
-    A \code{cgOneFactorData} object, typically created by 
+    A \code{cgOneFactorData} object, typically created by
     \code{\link{prepareCGOneFactorData}}.
   }
 \item{display }{One of three valid values:
-    
+
     \describe{
       \item{\code{"print"}}{
 	The default value; It calls a \code{print} method for the
@@ -38,7 +38,7 @@
     }
   }
   \item{\dots }{
-    Additional arguments. Currently only one is valid: 
+    Additional arguments. Currently only one is valid:
     \describe{
       \item{\code{logscale}}{
 	A \code{logical} value, indicating whether or not the geometric means and
@@ -79,7 +79,7 @@
 
   The data frame structure of the descriptive table in a \code{contents}
   slot consists of \code{row.names} that specify the group, and these columns:
-  
+
   \describe{
     \item{\code{n}}{The sample size of the group.
     }
@@ -131,8 +131,8 @@
   \code{Min} and \code{Max} to character values, with the appropriate ">"
   and "<" symbols for right-censoring and left-censoring, respectively.
 
-  For censored data, Kaplan-Meier estimates are used for the quantiles, as 
-  proposed by Gentleman and Crowley (1991).  The \pkg{survreg}::\code{\link{survfit}}
+  For censored data, Kaplan-Meier estimates are used for the quantiles, as
+  proposed by Gentleman and Crowley (1991).  The \pkg{survival}::\code{\link[survival]{survfit}}
   conventions are followed for interpolation of these quantiles.
   With enough censored data
   observations in a group, certain quantiles may not be estimable. If
@@ -151,7 +151,7 @@ Data", \emph{Journal of the American Statistical Association}, Volume
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,
-  concerns, and comments. 
+  concerns, and comments.
 }
 
 \examples{

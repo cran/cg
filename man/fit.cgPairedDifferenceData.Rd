@@ -19,7 +19,7 @@
 }
 \arguments{
   \item{data}{
-    A data object of class \code{\link{cgPairedDifferenceData}}.  
+    A data object of class \code{\link{cgPairedDifferenceData}}.
   }
   \item{type }{Type of model to fit, represented by a character
     value. The default value is \code{"rr"}. The two current
@@ -27,15 +27,15 @@
 
     \describe{
       \item{\code{"ols"}}{Only fit an ordinary, classical least squares
-	model with the base \code{\link{lm}} linear model function. 
+	model with the base \code{\link{lm}} linear model function.
       }
       \item{\code{"rr"}}{Fit a Resistant / Robust model based on M- and
-	S-estimation, using the \code{\link{rlm}} function from the
+	S-estimation, using the \code{\link[MASS]{rlm}} function from the
 	\pkg{MASS} package (Venables and Ripley, 2002).
 	This is the default character value for the
 	\code{type} argument. See the \code{\dots} argument and
 	Details below for what options are available when
-	\code{\link{rlm}} is used in this wrapper method. 
+	\code{\link[MASS]{rlm}} is used in this wrapper method.
       }
     }
   }
@@ -45,18 +45,18 @@
     effect on the fit:
     \describe{
     \item{\code{maxIter}}{
-      If \code{type="rr"} 
+      If \code{type="rr"}
       then \code{maxIter} can be specified as a numeric postive
-      integer. The default value of \code{maxIter} is \code{100}. 
+      integer. The default value of \code{maxIter} is \code{100}.
       This gets passed to the \code{maxit} argument in the
-      \code{\link{rlm}} method. 
+      \code{\link[MASS]{rlm}} method.
     }
   }
   }
 }
 \details{
   In the current version of the \pkg{cg} package, most default settings
-  for \code{\link{rlm}} are kept for the
+  for \code{\link[MASS]{rlm}} are kept for the
   \code{fit.cgPairedDifferenceData} method wrapper call  when
   \code{type="rr"}, with no capability to choose
   another value for an arguments such as \code{psi}, \code{scale.est},
@@ -70,7 +70,7 @@
       data. This is always populated with an \code{\link{lm}} object
       no matter the choice of the \code{type} argument, such as \code{code="rr"}.
     }
-    \item{\code{rrfit}}{The contents of a \code{\link{rlm}} fit to the
+    \item{\code{rrfit}}{The contents of a \code{\link[MASS]{rlm}} fit to the
       data, housed as a \code{rrfit} class object.
       If \code{type="rr"} is not selected, then this is set
       to a simple character value of \code{"No fit was selected."}.
@@ -83,16 +83,16 @@
 	the \code{\link{cgPairedDifferenceData}} object in the \code{data}
 	argument, then a score value near zero was derived to replace
 	all zeroes for subsequent
-	log-scale analyses. Alternatively, if \code{addconstant} is specified 
+	log-scale analyses. Alternatively, if \code{addconstant} is specified
 	as a non-\code{NULL} number in the
 	\code{\link{cgPairedDifferenceData}} object in the \code{data}
 	argument, then a value was added to shift up all observations for subsequent
-	log-scale analyses. 
+	log-scale analyses.
       }
     }
 }
 \references{
-  Venables, W. N. and Ripley, B. D. (2002), 
+  Venables, W. N. and Ripley, B. D. (2002),
   \emph{Modern Applied Statistics with S.}  Fourth edition. Springer.
 }
 \author{
@@ -100,7 +100,7 @@
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,
-  concerns, and comments. 
+  concerns, and comments.
 }
 \examples{
 data(anorexiaFT)
@@ -110,7 +110,7 @@ anorexiaFT.data <- prepareCGPairedDifferenceData(anorexiaFT, format="groupcolumn
                                                  endptunits="lbs",
                                                  expunitname="Patient",
                                                  digits=1, logscale=TRUE)
-anorexiaFT.fit <- fit(data=anorexiaFT.data, type="rr")					  
+anorexiaFT.fit <- fit(data=anorexiaFT.data, type="rr")
 
 }
 \keyword{models}

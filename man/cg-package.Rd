@@ -14,13 +14,13 @@ modern statistical methods, and useful displays of results are emphasized.
 \details{
 Package: cg\cr
 Type: Package\cr
-Version: 1.0-3\cr
-Date: 2016-01-05\cr
+Version: 1.0-4\cr
+Date: 2025-04-12\cr
 License: GPL (>= 2)\cr
 LazyLoad: yes\cr
 LazyData: yes\cr
 Depends: R (>= 3.2.3), Hmisc (>= 3.17-1)
-Imports: VGAM (>= 1.0-0), methods, grDevices, graphics, stats, utils, grid, MASS, lattice, survival, multcomp, nlme, rms
+Imports: VGAM (>= 1.0-0), methods, graphics, stats, utils, grid, MASS, lattice, survival, multcomp, nlme, rms
 }
 \author{
 Bill Pikounis [aut, cre, cph], John Oleynick [aut], Eva Ye [ctb]
@@ -30,7 +30,7 @@ Maintainer: Bill Pikounis <cg@billpikounis.net>
 }
 \references{
   Pikounis, B. and Oleynick, J. (2013).  "The cg Package for Comparison of Groups",
-  \emph{Journal of Statistical Software}, Volume 52, Issue 1, 1-27, \url{http://www.jstatsoft.org/v52/i01/}.
+  \emph{Journal of Statistical Software}, Volume 52, Issue 1, 1-27, \url{https://www.jstatsoft.org/v52/i01/}.
 }
 \examples{
 #### One Factor data
@@ -67,10 +67,10 @@ varianceGraph(canine.fit)
 
 qqGraph(canine.fit)
 
-downweightedTable(canine.fit, cutoff=0.95)
+# downweightedTable(canine.fit, cutoff=0.95)
 
 ## Sample Size calculations
-canine.samplesize <- samplesizeTable(canine.fit, direction="increasing", 
+canine.samplesize <- samplesizeTable(canine.fit, direction="increasing",
                                      mmdvec=c(10, 25, 50, 75, 100))
 
 samplesizeGraph(canine.samplesize)

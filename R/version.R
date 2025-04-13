@@ -1,3 +1,2 @@
-
-cgVersion <- "1.0-3"
+cgVersion <- "1.0-4"
 

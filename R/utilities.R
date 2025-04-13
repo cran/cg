@@ -1,5 +1,3 @@
-## $Id: utilities.R 6053 2015-02-22 20:23:45Z bpikouni $ 
-
 ## Functions & objects internal for the cg Library
 ## and definitely not intended for user-level calls
 
@@ -70,8 +68,8 @@ graphStampCG <- function(grid=TRUE) {
             " v", cgVersion, "  \n",
             newdate,"", sep="")
   if(grid) {
-    grid::grid.text(thetext, x = 0.99, y = 0.01, 
-                    default.units = "npc", 
+    grid::grid.text(thetext, x = 0.99, y = 0.01,
+                    default.units = "npc",
                     just = c("right", "bottom"),
                     gp=gpar(cex=0.6))
   }
@@ -92,13 +90,13 @@ setupAxisTicks <- function(x, ratio=FALSE, percent=FALSE,
                            offset=NULL, grid=FALSE, xcex=1, ycex=1) {
   ##
   ## PURPOSE:  Try to setup good ticks for log spacing
-  ## or original scale spacing: 
+  ## or original scale spacing:
   ## Ensure no overlap, and
   ## Ensure space for later addition of min and max
   ## NOTE: x is assumed to span the whole axis range of data
   ##
   if(is.null(digits)) digits <- 4
-  
+
   x <- x[!is.na(x)]
 
   if (!is.null(offset)) {
@@ -108,7 +106,7 @@ setupAxisTicks <- function(x, ratio=FALSE, percent=FALSE,
     }
     x <- (x - offset)
   }
-  
+
   if(any(x < 0)) {
     ## generating ticks on the magnitude of values
     x.pos <- abs(x)
@@ -117,8 +115,8 @@ setupAxisTicks <- function(x, ratio=FALSE, percent=FALSE,
   else {
     x.pos <- x
   }
-  
-  log10endpt <- log10(x.pos) 
+
+  log10endpt <- log10(x.pos)
 
   if(ratio==TRUE) {
     ## to impose that zero change is always represented
@@ -139,9 +137,9 @@ setupAxisTicks <- function(x, ratio=FALSE, percent=FALSE,
 
   ## Additional adjustments for Ratio/Percent Change
   if(ratio==TRUE) {
-    powersof10 <- (powersof10/10) + 1  
+    powersof10 <- (powersof10/10) + 1
   }
-  
+
   powersof10 <- powersof10[powersof10 >= round(min(x), digits) &
                            powersof10 <= round(max(x), digits)]
 
@@ -153,13 +151,13 @@ setupAxisTicks <- function(x, ratio=FALSE, percent=FALSE,
     interimticks <- (interimticks/10) + 1
   }
   else {
-    interimticks <- as.vector(outer(c(1,2,5),10^(0:digitplacement)))    
+    interimticks <- as.vector(outer(c(1,2,5),10^(0:digitplacement)))
   }
-  
+
   ## use only those that fall within range
   interimticks <- interimticks[interimticks >= (round(min(x), digits) - 1e-8) &
                                interimticks <= (round(max(x), digits) + 1e-8) ]
-  
+
   ## If Ratio, we also need to include the
   ## "no-difference" reference which is 1 on the ratio scale
   ## Also need to make sure extremes of axes are included
@@ -170,13 +168,13 @@ setupAxisTicks <- function(x, ratio=FALSE, percent=FALSE,
               round(100*(min(x.pos) - 1),0),
               round(100*(max(x.pos) - 1),0),
               ceiling(100*(max(x.pos) - 1)))
-    
+
     ## if 0 at lower end replace with 1
     ends[ends==0] <- 1
 
     ## transform to ratio
     ends <- (ends/100) + 1
-    
+
     xticks <- c(1, tickmarks, powersof10, interimticks, ends,
                 pretty(x.pos))
   }
@@ -233,7 +231,7 @@ setupAxisTicks <- function(x, ratio=FALSE, percent=FALSE,
   ## but that nothing else of consequence will be.
   xticks <- xticks[xticks >= (round(min(x), digits) - 1e-8) &
                    xticks <= (round(max(x), digits) + 1e-8)]
-  
+
   ## Take out duplicates and ensure sorted order
   xticks <- sort(unique(xticks))
   ## Empty case handling
@@ -291,7 +289,7 @@ setupLog10AxisTicks <- function(endpt, offset) {
   ## PURPOSE: Create log110 tickmarks intended for
   ## axis = 4 and that can accomodate log(x + addconstant)
   ## transformed data
-  ##  
+  ##
   prettyticks.log10endpt <- if(is.null(offset)) {
     pretty(log10(endpt))
   }
@@ -328,7 +326,7 @@ seeHelpFile <- function(x) {
 paragraphWrap <- function (x, width = 80) {
   ##
   ## PURPOSE: Format a string for use in stop() or warning().
-  ## 
+  ##
   ## NOTE: Adapted from R function base:::strwrap
   ##
   indent <- 0
@@ -339,7 +337,7 @@ paragraphWrap <- function (x, width = 80) {
   y <- list()
 
   z <- lapply(strsplit(x, "\n[        \n]*\n"), strsplit, "[  \n]")
-  
+
   for (i in seq(along = z)) {
     yi <- character(0)
     for (j in seq(along = z[[i]])) {
@@ -370,8 +368,8 @@ paragraphWrap <- function (x, width = 80) {
           maxLength <- maxLength + indent - exdent
         }
         currentIndex <- currentIndex + k
-        if (nc[currentIndex] == 0) 
-          upperBlockIndex <- c(upperBlockIndex, currentIndex - 
+        if (nc[currentIndex] == 0)
+          upperBlockIndex <- c(upperBlockIndex, currentIndex -
                                1)
         else upperBlockIndex <- c(upperBlockIndex, currentIndex)
         if (length(lens) > k) {
@@ -379,19 +377,19 @@ paragraphWrap <- function (x, width = 80) {
             currentIndex <- currentIndex + 1
             k <- k + 1
           }
-          lowerBlockIndex <- c(lowerBlockIndex, currentIndex + 
+          lowerBlockIndex <- c(lowerBlockIndex, currentIndex +
                                1)
         }
-        if (length(lens) > k) 
+        if (length(lens) > k)
           lens <- lens[-(1:k)] - lens[k]
         else lens <- NULL
       }
       nBlocks <- length(upperBlockIndex)
-      s <- paste(prefix, c(indentString, rep(exdentString, 
+      s <- paste(prefix, c(indentString, rep(exdentString,
                                              nBlocks - 1)), sep = "")
       for (k in (1:nBlocks))
         s[k] <- paste(s[k],
-                      paste(words[lowerBlockIndex[k]:upperBlockIndex[k]], 
+                      paste(words[lowerBlockIndex[k]:upperBlockIndex[k]],
                             collapse = " "), sep = "")
       yi <- c(yi, s, prefix)
     }
@@ -405,8 +403,8 @@ paragraphWrap <- function (x, width = 80) {
   y <- paste(y, collapse="\n")
 
   ## and add a blank space after periods followed by an upper case characters
-  y <- gsub('\\.([A-Z])', '\\.\\ \\1', y, perl=TRUE)  
-  
+  y <- gsub('\\.([A-Z])', '\\.\\ \\1', y, perl=TRUE)
+
   ## Add a newline so the first line is flush left when shown
   ## and another at the end.
   return(paste("\n", y, "\n",sep=""))
@@ -450,7 +448,7 @@ setupGrpNameTicks <- function(x, grplocation=1:length(x),
   ##
   if(!grid) { ## Traditional Graphics
     axislength <- par("pin")[1]
-    axismin <- par("usr")[1] 
+    axismin <- par("usr")[1]
     axisrange <- par("usr")[2] - par("usr")[1]
 
     ## Since widths will vary
@@ -461,7 +459,7 @@ setupGrpNameTicks <- function(x, grplocation=1:length(x),
     usrx <- convertX(unit(0:1, "npc"), "native", TRUE)
     usry <- convertY(unit(0:1, "npc"), "native", TRUE)
     ## grid lattice natural coordinates for panel
-    axislength <- 1 
+    axislength <- 1
 
     chrspaces <- convertX(stringWidth(x), "npc", TRUE)
     chrspace <- max(convertX(stringWidth(letters), "npc", TRUE))
@@ -469,22 +467,22 @@ setupGrpNameTicks <- function(x, grplocation=1:length(x),
     axisrange <- usrx[2] - usrx[1]
 
   }
-  
+
   ## Need to map response scale to device inches scale
   n <- length(x)
   p <- (axislength/axisrange) * (grplocation - axismin)
-  
+
   ## Construct comparisons to determine overlap
   ppart <- p[-1] - p[-n]
   chrpart <- (chrspaces[-n] + chrspaces[-1])/2
-  
+
   comparisons <- ppart - chrpart
-  
+
   ## Initializations
   thecex <- cexinit
   thesrt <- 0
   theadj <- 0.5
-  
+
   overlapchecks <- c(TRUE, comparisons > chrspace/1.2)
   while(any(overlapchecks==FALSE) && thecex >= cexthreshold) {
     thecex <- thecex - 0.05
@@ -506,11 +504,11 @@ setupGrpNameTicks <- function(x, grplocation=1:length(x),
         max(convertX(stringHeight(letters), "inches", TRUE))
       }
     ## we only need to worry about 1 character since
-    ## they labels are virtually perpendicular to the axis   
+    ## they labels are virtually perpendicular to the axis
     chrspaces <- rep(chrspace, length(x))
     chrpart <- (chrspaces[-n] + chrspaces[-1])/2
     comparisons <- ppart - chrpart
-    
+
     thecex <- 1
     overlapchecks <- c(TRUE, comparisons > chrspace/1.2)
     while(any(overlapchecks==FALSE) && thecex >= cexthreshold) {
@@ -518,9 +516,9 @@ setupGrpNameTicks <- function(x, grplocation=1:length(x),
       chrspace <- chrspace*thecex
       overlapchecks <- c(TRUE, comparisons > chrspace/1.2)
     }
-    
+
   }
-  
+
   if(!grid) {
     ## If the labels are to be rotated, then we need to make sure they are
     ## shrunk within the margin available.
@@ -533,7 +531,7 @@ setupGrpNameTicks <- function(x, grplocation=1:length(x),
   }
 
   return(list(cex=thecex, srt=thesrt, adj=theadj))
-  
+
 }
 
 xTicksCex <- function(x, thenames=names(x),
@@ -544,7 +542,7 @@ xTicksCex <- function(x, thenames=names(x),
   thenames <- names(x)
   if(!grid) { ## Traditional Graphics
     axislength <- par("pin")[1]
-    axismin <- par("usr")[1] 
+    axismin <- par("usr")[1]
     axisrange <- par("usr")[2] - par("usr")[1]
 
     ## Since widths will vary
@@ -560,28 +558,28 @@ xTicksCex <- function(x, thenames=names(x),
     chrspaces <- convertX(stringWidth(thenames), "npc", TRUE)
     chrspace <- max(convertX(stringWidth(letters), "npc", TRUE))
   }
-  
+
   ## Need to map response scale to device inches scale for traditional,
   ## npc for grid
   n <- length(x)
   p <- (axislength/axisrange) * (x - axismin)
-  
+
   ## Construct comparisons to determine overlap
   ppart <- p[-1] - p[-n]
   chrpart <- (chrspaces[-n] + chrspaces[-1])/2
-  
+
   comparisons <- ppart - chrpart
-  
+
   ## Initializations
   thecex <- cexinit
-  
+
   overlapchecks <- c(TRUE, comparisons > chrspace/1.2)
   while(any(overlapchecks==FALSE) && thecex > cexthreshold) {
     thecex <- thecex - 0.05
     chrspace <- chrspace*thecex
     overlapchecks <- c(TRUE, comparisons > chrspace/1.2)
   }
-  
+
   return(thecex)
 }
 
@@ -593,7 +591,7 @@ yTicksCex <- function(y,
   thenames <- names(y)
   if(!grid) { ## Traditional Graphics
     axislength <- par("pin")[2]
-    axismin <- par("usr")[2] 
+    axismin <- par("usr")[2]
     axisrange <- par("usr")[4] - par("usr")[3]
 
     chrspace <-  par("cin")[2]
@@ -604,32 +602,32 @@ yTicksCex <- function(y,
     ## grid lattice natural coordinates for panel
     axislength <- 1
     axismin <- usry[1]
-    axisrange <- usry[2] - usry[1]      
+    axisrange <- usry[2] - usry[1]
 
     chrspaces <- convertY(stringHeight(thenames), "npc", TRUE)
     chrspace <- max(convertY(stringHeight(letters), "npc", TRUE))
   }
-  
+
   ## Need to map response scale to device inches scale
   n <- length(y)
   p <- (axislength/axisrange) * (y - axismin)
-  
+
   ## Construct comparisons to determine overlap
   ppart <- p[-1] - p[-n]
   chrpart <- (chrspaces[-n] + chrspaces[-1])/2
-  
+
   comparisons <- ppart - chrpart
-  
+
   ## Initializations
   thecex <- cexinit
-  
+
   overlapchecks <- c(TRUE, comparisons > chrspace/1.2)
   while(any(overlapchecks==FALSE) && thecex > cexthreshold) {
     thecex <- thecex - 0.05
     chrspace <- chrspace*thecex
     overlapchecks <- c(TRUE, comparisons > chrspace/1.2)
   }
-  
+
   return(thecex)
 }
 
@@ -651,24 +649,24 @@ rmTicks <- function(x, axis="y", logscale=TRUE, ratio=FALSE, percent=FALSE,
   if(logscale) {
     x <- log10(x)
   }
-  
+
   if(!grid) { ## Traditional Graphics
     if(axis=="x") {
       chrspace <- par("cin")[1]
       axislength <- par("pin")[1]
-      axismin <- par("usr")[1] 
+      axismin <- par("usr")[1]
       axisrange <- par("usr")[2] - par("usr")[1]
-      
+
       chrspaces <- chrspace*nchar(names(x))
       thecex <- xcex
     }
-    
+
     else { ## axis="y"
       chrspace <- par("cin")[2]
       axislength <- par("pin")[2]
-      axismin <- par("usr")[3] 
+      axismin <- par("usr")[3]
       axisrange <- par("usr")[4] - par("usr")[3]
-      
+
       ## in the y-axis case we only need to worry about 1 character since
       ## the y labels are perpendicular to the axis
       chrspaces <- rep(chrspace, length(x))
@@ -679,20 +677,20 @@ rmTicks <- function(x, axis="y", logscale=TRUE, ratio=FALSE, percent=FALSE,
     usrx <- convertX(unit(0:1, "npc"), "native", TRUE)
     usry <- convertY(unit(0:1, "npc"), "native", TRUE)
     ## grid lattice natural coordinates for panel
-    axislength <- 1 
+    axislength <- 1
     if(axis=="x") {
       chrspaces <- convertX(stringWidth(names(x)), "npc", TRUE)
       axismin <- usrx[1]
       axisrange <- usrx[2] - usrx[1]
-      chrspace <- convertX(stringWidth("0"), "npc", TRUE) 
+      chrspace <- convertX(stringWidth("0"), "npc", TRUE)
       thecex <- xcex
     }
-    
+
     else { ## axis="y"
       chrspaces <- convertY(stringHeight(names(x)), "npc", TRUE)
       axismin <- usry[1]
       axisrange <- usry[2] - usry[1]
-      chrspace <- convertY(stringHeight("0"), "npc", TRUE) 
+      chrspace <- convertY(stringHeight("0"), "npc", TRUE)
       thecex <- ycex
     }
   }
@@ -727,7 +725,7 @@ rmTicks <- function(x, axis="y", logscale=TRUE, ratio=FALSE, percent=FALSE,
 
     ## Purposely trim the minimum and maximum
     overlapchecks[c(1, n)] <- FALSE
-    
+
     keep <- p[overlapchecks]
 
     ## Go back to the x space
@@ -781,16 +779,16 @@ minmaxTicks <- function(x, theaxis="y", logscale=TRUE,
 
   axisrange <- range(x)
   if(is.numeric(offset)) { x <- x - offset }
-  labelrange <- range(x) 
+  labelrange <- range(x)
   if(is.null(digits)) digits <- 4
 
   if(logscale) {
     if(percent==TRUE && theaxis=="x") {
-      thelabels <- fmtRatioToPercent(axisrange) 
+      thelabels <- fmtRatioToPercent(axisrange)
     }
     else if(percent==TRUE && theaxis=="y") {
       thelabels <- fmtRatioToPercent(axisrange)
-    } 
+    }
     else {
       thelabels <- trimWhiteSpace(chopZeroes(fround(labelrange, digits)))
     }
@@ -851,7 +849,7 @@ plotGrpNameTicks <- function(grpnames, settings, grid=FALSE) {
   padEnd <- function(x, length=2) {
     paste(x, paste(rep(" ", length), collapse=""), sep="")
   }
-  
+
   numberofgrps <- length(grpnames)
   if(!grid) {
     if(settings$srt==0) {
@@ -891,7 +889,7 @@ boxplotStamp <- function() {
   ## PURPOSE: Add explanatory message to boxplot rendering
   ##
   u <- par("usr")
-  
+
   if(FALSE) {
     text(u[2] - 0.15 *(u[2] - u[1]),
        u[4] + 0.15 * (u[4] - u[3]),
@@ -927,7 +925,7 @@ errorBarGraphStamp <- function(mcadjust=FALSE, alphapercent, grid=FALSE) {
             "significant difference(s) ",
             sep=" ")
     }
-  
+
   secondline <- paste("at", alphapercent,
                       "% significance level",
                       if(mcadjust) {
@@ -948,7 +946,7 @@ errorBarGraphStamp <- function(mcadjust=FALSE, alphapercent, grid=FALSE) {
               gp=gpar(col="red", cex=0.7, fontface="bold"),
               just=c("centre","centre"))
   }
-  
+
   invisible()
 }
 
@@ -977,7 +975,7 @@ comparisonsGraphStamp <- function(mcadjust=FALSE, alphapercent, grid=FALSE, desc
             cex=0.6, col="gray", line=0.1, adj=0.5,
             xpd=NA)
     }
-    
+
   }
   else {
     seekViewport(trellis.vpname("main"))
@@ -992,7 +990,7 @@ comparisonsGraphStamp <- function(mcadjust=FALSE, alphapercent, grid=FALSE, desc
                 gp=gpar(col="gray", cex=0.6))
     }
   }
-  
+
   invisible()
 }
 
@@ -1070,7 +1068,7 @@ fmtRatioToPercent <- function(x, digitsbelow10=1) {
 
 fmtDifference <- function(x, digits) {
   ##
-  ## PURPOSE: Prettify Differences for tick labels 
+  ## PURPOSE: Prettify Differences for tick labels
   ##
   trimWhiteSpace(ifelse(abs(x) < 10,
                         chopZeroes(formatC(round(x, digits=digits),
@@ -1082,7 +1080,7 @@ fmtDifference <- function(x, digits) {
 
 fmtRatio <- function(x) {
   ##
-  ## PURPOSE: Prettify Ratios for tick labels 
+  ## PURPOSE: Prettify Ratios for tick labels
   ##
   trimWhiteSpace(ifelse(abs(x) < 0.1, formatC(round(x, 3), format="f", digits=3),
                         chopZeroes(round(x, 2))))
@@ -1094,7 +1092,7 @@ fmtPercent <- function(x, decimalthreshold=10) {
   out <- fround(x, 0)
   for(i in seq(along=out)) {
     if(out[i]=="-100") {
-      out[i] <- "< -99.9" 
+      out[i] <- "< -99.9"
     }
     ## else if(out[i]=="0") {
     else if(abs(x[i]) < decimalthreshold) {
@@ -1110,7 +1108,7 @@ fmtPvalue <- function(x) {
   out <- fround(x, 3)
   for(i in seq(along=x)) {
     if(x[i] < 0.0005) {
-      out[i] <- "<0.001" 
+      out[i] <- "<0.001"
     }
   }
   return(out)
@@ -1127,7 +1125,7 @@ cgDevice <- function(cgtheme=TRUE, new=FALSE, ...) {
                      strip.shingle = list(col = "white"),
                      strip.background = list(col = "white"))
   }
-  else {   
+  else {
     thetheme <- trellis.par.get()
   }
   if(.Device=="null device") {
@@ -1156,7 +1154,7 @@ contrastMatrix <- function(listoflevels,
 
   ## start of R multcomp::contrMat code adaptation
   type <- match.arg(type) ## ensure default is 'allgroupstocontrol'
-  
+
   ## Note that "grpnames" is just a generic term for
   ## the different levels of a factor
   genAtOneLevel <- function(grpnames, type=type) {
@@ -1164,19 +1162,19 @@ contrastMatrix <- function(listoflevels,
     rnames <- c()
     k <- length(grpnames)
     kindx <- 1:k
-    
+
     switch(type,
            allgroupstocontrol = {
-             for (i in 2:k) CM <- rbind(CM, as.numeric(kindx == i) - 
+             for (i in 2:k) CM <- rbind(CM, as.numeric(kindx == i) -
                                         as.numeric(kindx == 1))
              rnames <- paste(grpnames[2:k], " vs. ", grpnames[1], sep = "")
            },
            pairwisereflect = {
              for (i in 1:k) {
                for (j in (1:k)[-i]) {
-                 CM <- rbind(CM, as.numeric(kindx == j) - as.numeric(kindx == 
+                 CM <- rbind(CM, as.numeric(kindx == j) - as.numeric(kindx ==
                                               i))
-                 rnames <- c(rnames, paste(grpnames[j], " vs. ", grpnames[i], 
+                 rnames <- c(rnames, paste(grpnames[j], " vs. ", grpnames[i],
                                            sep = ""))
                }
              }
@@ -1184,16 +1182,16 @@ contrastMatrix <- function(listoflevels,
            pairwise = {
              for (i in 1:(k - 1)) {
                for (j in (i + 1):k) {
-                 CM <- rbind(CM, as.numeric(kindx == j) - as.numeric(kindx == 
+                 CM <- rbind(CM, as.numeric(kindx == j) - as.numeric(kindx ==
                                               i))
-                 rnames <- c(rnames, paste(grpnames[j], " vs. ", grpnames[i], 
+                 rnames <- c(rnames, paste(grpnames[j], " vs. ", grpnames[i],
                                            sep = ""))
                }
              }
            },
            successivetimes = {
              for(i in 2:k) {
-               CM <- rbind(CM, as.numeric(kindx == i) - 
+               CM <- rbind(CM, as.numeric(kindx == i) -
                            as.numeric(kindx == (i-1)))
                rnames <- c(rnames, paste(grpnames[i], " vs. ", grpnames[i-1], sep = ""))
              }
@@ -1203,7 +1201,7 @@ contrastMatrix <- function(listoflevels,
     CM
 
   }
-  
+
   ## end of R multcomp::contrMat code adaptation
   listLs <- lapply(listoflevels, genAtOneLevel, type=type)
   if(length(listLs)==1) {
@@ -1212,9 +1210,9 @@ contrastMatrix <- function(listoflevels,
   else {
     Lcomparisonmat <- blockDiag(listLs)
   }
-  
+
   return(Lcomparisonmat)
-  
+
 }
 
 #####################
@@ -1243,7 +1241,7 @@ blockDiag <- function(listmat) {
   attr(ret, "colsperblock") <- nc
   attr(ret, "rowsperblock") <- nr
   ret
-} 
+}
 
 #####################
 
@@ -1294,7 +1292,7 @@ makeCensored <- function(x, boundary, direction=">") {
 
 cgLineColors <- c("black", "blue", "green", "red", "orange", "brown", "yellow",
                   "darkblue", "darkgreen", "darkgrey",
-                  "black", "blue", "green", "red", "orange", "darkgrey") 
+                  "black", "blue", "green", "red", "orange", "darkgrey")
 
 #####################
 
@@ -1369,7 +1367,7 @@ catCharExpr <- function(char, expr, rev=FALSE) {
                    " , ",
                    paste("plain('",char,"')", sep=""),
                    ")",
-                   sep=" ")) 
+                   sep=" "))
 
   }
   return(out)
@@ -1381,13 +1379,13 @@ catCharExpr <- function(char, expr, rev=FALSE) {
 
 residualgrptrend.helper <- function(tukeyresids, fitteds, tukeyresids2=NULL,
                                     status=NULL, grpf, desc="") {
-  ## 
+  ##
   ## PURPOSE: Determine a trend for residuals (y) against
   ## fitted values (x), with likely option of rescaling the fitted values
   ## to integer values afterwards: 1 to number of groups.
   ##
   trend.index <- order(fitteds)
-  
+
   thegrpf <- factorInSeq(grpf[trend.index])
   tukeyresids <- tukeyresids[trend.index]
   fitteds <- fitteds[trend.index]
@@ -1436,7 +1434,7 @@ residualgrptrend.helper <- function(tukeyresids, fitteds, tukeyresids2=NULL,
     has.censored <- FALSE
     trendtukeyresids <- lowess(fitteds, tukeyresids)$y
   }
-  
+
   dfr <- data.frame(grpc=I(as.character(thegrpf)),
                     grpn=as.numeric(thegrpf),
                     tukeyresids=tukeyresids,
@@ -1460,7 +1458,7 @@ fround <- function(x, digits=0) {
 fround.charcens <- function(x, digits=0) {
   ## generalization when x has "<" and ">" representations
   for(i in seq(along=x)) {
-    if(is.na(x[i]) || x[i]=="<NA>") next  
+    if(is.na(x[i]) || x[i]=="<NA>") next
     else if(regexpr("<|>", x[i]) > 0) {
       pieces <- strsplit(x[i], "<|>")
       x[i] <- paste(substr(x[i], 1, 1), fround(as.numeric(pieces[[1]][2]), digits),
@@ -1487,7 +1485,7 @@ chop.matrix <- function(x) {
 prepare <- function(type, ... ) {
   ##
   ## PURPOSE: Read-in the input data frame, and create
-  ## an object with it 
+  ## an object with it
   ## and add metadata for cg methods.
   ## Essentially supplies alias to specific prepare* methods
   type <- validArgMatch(type, c("onefactor","unpairedgroups",
@@ -1506,7 +1504,7 @@ prepare <- function(type, ... ) {
                   "pairedgroups"={ prepareCGPairedDifferenceData(...) }
     ))
   }
-   
+
   invisible()
 
 }
@@ -1529,7 +1527,7 @@ makeTickMarks <- function(ticklabels, tickmarks, percent=FALSE,
   mod <- validArgMatch(mod, choices=c("add", "replace"))
   marks <- eval(parsePartialName(names(ticklabels), "marks",
                                  prefix="ticklabels$"))
-  
+
   if(mod=="replace") {
     tickmarks <- as.numeric(marks)
     if(percent) { tickmarks <- pctToRatio(tickmarks) }
@@ -1543,7 +1541,7 @@ makeTickMarks <- function(ticklabels, tickmarks, percent=FALSE,
     names(addedtickmarks) <- marks
     tickmarks <- sort(c(tickmarks, addedtickmarks))
   }
-  
+
   return(tickmarks)
 }
 
@@ -1608,12 +1606,12 @@ qminmin <- function(y, x, q) {
   ## in earlier survival package versions).
   p <- 1 - q
   keep <- (!is.na(y) & y <= p)
-  if (!any(keep)) 
+  if (!any(keep))
     NA
   else {
     x <- x[keep]
     y <- y[keep]
-    if (y[1] == p && any(y < p)) 
+    if (y[1] == p && any(y < p))
       (x[1] + x[min(which(y < p))])/2
     else x[1]
   }

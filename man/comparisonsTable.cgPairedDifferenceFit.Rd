@@ -9,7 +9,7 @@
 }
 \description{
   Create a table of comparisons based on the cgPairedDifferenceFit
-  object. A cgPairedDifferenceComparisonsTable class object is created.    
+  object. A cgPairedDifferenceComparisonsTable class object is created.
 }
 \usage{
 \S4method{comparisonsTable}{cgPairedDifferenceFit}(fit, type="pairwisereflect",
@@ -42,13 +42,13 @@
   }
   \item{alpha }{Significance level, by default set to \code{0.05}.
   }
-  \item{addpct }{Only relevant if \code{settings$endptscale=="original"} in the 
+  \item{addpct }{Only relevant if \code{settings$endptscale=="original"} in the
     fit object. An column of percent differences is added for the
     comparisons, as a descriptive supplement to the original scale
     differences that are formally estimated.
   }
   \item{display }{One of three valid values:
-    
+
 	\describe{
 	  \item{\code{"print"}}{
 	    The default value; It calls a \code{print} method for the
@@ -66,24 +66,24 @@
 	}
   }
   \item{\dots }{
-    Additional arguments. Only one is currently valid: 
+    Additional arguments. Only one is currently valid:
     \describe{
-      \item{\code{model} }{For \code{cgPairedDifferenceFit} \code{fit} objects that have 
+      \item{\code{model} }{For \code{cgPairedDifferenceFit} \code{fit} objects that have
 	classical least squares \code{\link{lm}} or resistant & robust
-	\code{\link{rlm}} fits, the following argument values are possible:
-	
+	\code{\link[MASS]{rlm}} fits, the following argument values are possible:
+
 	\describe{
-	  \item{\code{"both"}}{Comparison tables based on both the ordinary 
+	  \item{\code{"both"}}{Comparison tables based on both the ordinary
 	    classical least squares and resistant & robust fits are
 	    created. This is the default when both fits are present in
 	    the \code{cgPairedDifferenceFit} object specified in the \code{fit}
 	    argument. If the resistant & robust fit is not available,
 	    this value is not relevant.
 	  }
-	  \item{\code{"olsonly"}}{Only a comparison table based on the ordinary 
+	  \item{\code{"olsonly"}}{Only a comparison table based on the ordinary
 	    classical least squares \code{olsfit} fit slot is performed.
 	  }
-	  \item{\code{"rronly"}}{Only a comparison table based on the 
+	  \item{\code{"rronly"}}{Only a comparison table based on the
             resistant and robust \code{rrfit} fit slot is performed.
 	  }
 	}
@@ -135,7 +135,7 @@
 	\code{estimate}. If \code{settings$endptscale=="log"} in the
 	\code{fit} object, this estimate will be based on the Delta
 	method, and will particularly begin to be a poor approximation when the
-	standard error in the logscale exceeds 0.50. 
+	standard error in the logscale exceeds 0.50.
       }
       \item{\code{lowerci}}{The lower 100 * (1-\code{alpha}) \% confidence limit of the
 	difference \code{estimate}. With the default \code{alpha=0.05},
@@ -165,7 +165,7 @@
 	\code{estimate}. If \code{settings$endptscale=="log"} in the
 	\code{fit} object, this estimate will be based on the Delta
 	method, and will particularly begin to be a poor approximation when the
-	standard error in the logscale exceeds 0.50. 
+	standard error in the logscale exceeds 0.50.
       }
       \item{\code{meanB} or \code{geomeanB}}{The estimated mean for the
 	right hand side "B" of the A vs. B comparison.
@@ -179,9 +179,9 @@
 	\code{estimate}. If \code{settings$endptscale=="log"} in the
 	\code{fit} object, this estimate will be based on the Delta
 	method, and will particularly begin to be a poor approximation when the
-	standard error in the logscale exceeds 0.50. 
+	standard error in the logscale exceeds 0.50.
       }
-    }	
+    }
     An additional column \code{addpct} of percent differences is added if
     \code{endptscale=="original"} and \code{addpct=TRUE},
     as a descriptive supplement to the original scale
@@ -194,7 +194,7 @@
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,
-  concerns, and comments. 
+  concerns, and comments.
 }
 \examples{
 data(anorexiaFT)
@@ -213,8 +213,8 @@ anorexiaFT.fit <- fit(anorexiaFT.data)
 anorexiaFT.comps <- comparisonsTable(anorexiaFT.fit, display="none")
 print(anorexiaFT.comps)
 
-comparisonsTable(anorexiaFT.fit, model="olsonly") 
-comparisonsTable(anorexiaFT.fit, model="rronly") 
+comparisonsTable(anorexiaFT.fit, model="olsonly")
+comparisonsTable(anorexiaFT.fit, model="rronly")
 
 
 ## original scale evaluation
@@ -227,7 +227,7 @@ anorexiaFT.orig.data <- prepareCGPairedDifferenceData(anorexiaFT, format="groupc
                                                       logscale=FALSE)
 anorexiaFT.orig.fit <- fit(anorexiaFT.orig.data)
 
-comparisonsTable(anorexiaFT.orig.fit)  
+comparisonsTable(anorexiaFT.orig.fit)
 
 comparisonsTable(anorexiaFT.orig.fit, addpct=TRUE)
 

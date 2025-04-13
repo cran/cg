@@ -25,7 +25,7 @@ import("rms")
 export("prepare", "prepareCGOneFactorData",
 	   "prepareCGPairedDifferenceData",
        "comparisons", "comparisonsgraph","errorbargraph",
-       "factorInSeq"	
+       "factorInSeq"
 )
 
 exportMethods(
@@ -51,8 +51,8 @@ exportMethods(
 )
 
 S3method(boxplot,cgOneFactorData)
-S3method(print,cgOneFactorComparisonsTable) 
-S3method(print,cgOneFactorDescriptiveTable) 
+S3method(print,cgOneFactorComparisonsTable)
+S3method(print,cgOneFactorDescriptiveTable)
 S3method(print,cgOneFactorDownweightedTable)
 S3method(print,cgOneFactorFit)
 S3method(print,cgOneFactorGlobalTest)
@@ -61,7 +61,7 @@ S3method(print,cgOneFactorSampleSizeTable)
 S3method(print,cgPairedDifferenceComparisonsTable)
 S3method(print,cgPairedDifferenceCorrelationTable)
 S3method(print,cgPairedDifferenceDescriptiveTable)
-S3method(print,cgPairedDifferenceDownweightedTable) 
+S3method(print,cgPairedDifferenceDownweightedTable)
 S3method(print,cgPairedDifferenceFit)
 S3method(print,cgPairedDifferenceSampleSizeTable)
 S3method(print,cgPairedDifferenceVarianceTable)
@@ -91,7 +91,7 @@ exportPattern("print[.*]",
               "samplesizeTable[.*]",
 			  "showObj[.*]",
 			  "varianceGraph[.*]",
-			  "varianceTable[.*]"			  
+			  "varianceTable[.*]"
 )
 
 exportClasses("olsfit","rrfit","aftfit","uvfit",
@@ -113,5 +113,5 @@ exportClasses("olsfit","rrfit","aftfit","uvfit",
      "cgPairedDifferenceDownweightedTable" ,
      "cgPairedDifferenceFit",
      "cgPairedDifferenceSampleSizeTable",
-     "cgPairedDifferenceVarianceTable"	 
+     "cgPairedDifferenceVarianceTable"
 )

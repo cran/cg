@@ -2,7 +2,7 @@
 
 \alias{comparisonsgraph}
 \title{
-   Create an graph of comparisons 
+   Create an graph of comparisons
 }
 \description{
   Creates a graph to see comparisons based on group estimates and
@@ -13,12 +13,12 @@ comparisonsgraph(compstable, difftype, analysisname = "",
                  endptname = "", alpha = 0.05, digits = NULL,
                  titlestamp = TRUE, explanation = TRUE,
                  wraplength = 20, cex.comps = 0.7,
-                 ticklabels = NULL, ...) 
+                 ticklabels = NULL, ...)
 }
 \arguments{
   \item{compstable }{
     A data frame object of form like that created by the \code{\link{comparisons}}
-    function. 
+    function.
   }
   \item{difftype }{Must be specified as one of the following:
     \describe{
@@ -71,7 +71,7 @@ comparisonsgraph(compstable, difftype, analysisname = "",
    adjustment of this argument parameter can
    be made to fit the comparison labels on the left hand axis.
  }
- \item{ticklabels }{\emph{Optional}, 
+ \item{ticklabels }{\emph{Optional},
     before graphing the data, remove
     any automatically generated tickmarks for the x-axis,
     and use these tickmarks instead. A vector of tickmarks to be
@@ -92,7 +92,7 @@ comparisonsgraph(compstable, difftype, analysisname = "",
   are added inside the plot region in
   blue, flush against the x-axis. In two panel cases, there is a
   tendency to fall outside the panel area even though right justified is
-  used for the \code{adj} parameter of functions like \code{\link{panel.text}}.
+  used for the \code{adj} parameter of functions like \code{\link[lattice]{panel.text}}.
 }
 \value{
   \code{comparisonsgraph} returns
@@ -104,7 +104,7 @@ comparisonsgraph(compstable, difftype, analysisname = "",
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,
-  concerns, and comments. 
+  concerns, and comments.
 }
 \seealso{
   \code{\link{comparisons}}
@@ -139,8 +139,8 @@ comparisonsgraph(canine.compstable,
                  analysisname="Canine",
                  digits=1,
                  endptname=expression(paste( plain('Prostate Volume'),
-                                      ' (', plain(cm)^3  ,  ')' ))  
-                ) 
+                                      ' (', plain(cm)^3  ,  ')' ))
+                )
 }
 
 \concept{comparisons}

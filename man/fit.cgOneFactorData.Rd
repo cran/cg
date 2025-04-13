@@ -18,7 +18,7 @@
 }
 \arguments{
   \item{data}{
-    A data object of class \code{\link{cgOneFactorData}}.  
+    A data object of class \code{\link{cgOneFactorData}}.
   }
   \item{type }{Type of model to fit, represented by a character
     value. The default value is \code{"rr"}. The four current
@@ -26,28 +26,28 @@
 
     \describe{
       \item{\code{"ols"}}{Only fit an ordinary, classical least squares
-	model with the base \code{\link{lm}} linear model function. 
+	model with the base \code{\link{lm}} linear model function.
       }
       \item{\code{"rr"}}{Fit a Resistant / Robust model based on M- and
-	S-estimation, using the \code{\link{rlm}} function from the
+	S-estimation, using the \code{\link[MASS]{rlm}} function from the
 	\pkg{MASS} package (Venables and Ripley, 2002).
 	This is the default character value for the
 	\code{type} argument. See the \code{\dots} argument and
 	Details below for what options are available when
-	\code{\link{rlm}} is used in this wrapper method. 
+	\code{\link[MASS]{rlm}} is used in this wrapper method.
       }
       \item{\code{"aft"}}{Fit an accelerated failure time model, using the
-	\code{\link{survreg}} function from the
+	\code{\link[survival]{survreg}} function from the
 	\pkg{survival} package. If the \code{data} object has censored
 	data and a slot state of \code{has.censored=TRUE}, then
 	\code{type="aft"} will be set. See the \code{\dots} argument and
 	Details below for what options are used when
-	\code{\link{survreg}} is used in this wrapper method; in
-	particular, the \code{robust} argument. 
+	\code{\link[survival]{survreg}} is used in this wrapper method; in
+	particular, the \code{robust} argument.
       }
       \item{\code{"uv"}}{Fit an unequal variances model, with a simple
-	wrapper method around the \code{\link{gls}} from the \pkg{nlme} package.
-	No optional arguments are passed down to \code{\link{gls}}
+	wrapper method around the \code{\link[nlme]{gls}} from the \pkg{nlme} package.
+	No optional arguments are passed down to \code{\link[nlme]{gls}}
 	through the \code{\dots} argument.
       }
     }
@@ -62,12 +62,12 @@
       then \code{maxIter} can be specified as a numeric postive
       integer. The default value of \code{maxIter} is \code{100}. For
       \code{"rr"}, this gets passed to the \code{maxit} argument in the
-      \code{\link{rlm}} method. For \code{"aft"}, this gets
-      passed to the \code{maxiter} argument in the \code{\link{survreg}} function.
+      \code{\link[MASS]{rlm}} method. For \code{"aft"}, this gets
+      passed to the \code{maxiter} argument in the \code{\link[survival]{survreg}} function.
     }
     \item{\code{sandaft}}{
       If \code{type="aft"}, then \code{sandaft} is passed to the
-      \code{robust} argument of the \code{\link{survreg}} function. The
+      \code{robust} argument of the \code{\link[survival]{survreg}} function. The
       default value of \code{sandaft} is \code{TRUE} when
       \code{type="aft"}, which applies the Huber-type (1967)
       sandwich estimator to the
@@ -78,7 +78,7 @@
 }
 \details{
   In the current version of the \pkg{cg} package, most default settings
-  for \code{\link{rlm}} are kept for the
+  for \code{\link[MASS]{rlm}} are kept for the
   \code{fit.cgOneFactorData} method wrapper call  when
   \code{type="rr"}, with no capability to choose
   another value for an arguments such as \code{psi}, \code{scale.est},
@@ -102,17 +102,17 @@
       \code{type} argument, even though it is certainly inappropriate in
       the \code{type="aft"} case.
     }
-    \item{\code{rrfit}}{The contents of a \code{\link{rlm}} fit to the
+    \item{\code{rrfit}}{The contents of a \code{\link[MASS]{rlm}} fit to the
       data, housed as a \code{rrfit} class object.
       If \code{type="rr"} is not selected, then this is set
       to a simple character value of \code{"No fit was selected."}.
     }
-    \item{\code{aftfit}}{The contents of a \code{\link{survreg}} fit to the
+    \item{\code{aftfit}}{The contents of a \code{\link[survival]{survreg}} fit to the
       data, with some annotations, to be a \code{aftfit} class object.
       If \code{type="aft"} is not selected, then this is set
       to a simple character value of \code{"No fit was selected."}.
     }
-    \item{\code{uvfit}}{The contents of a \code{\link{gls}} fit to the
+    \item{\code{uvfit}}{The contents of a \code{\link[nlme]{gls}} fit to the
       data, housed as a \code{uvfit} class object.
       If \code{type="uv"} is not selected, then this is set
       to a simple character value of \code{"No fit was selected."}.
@@ -124,11 +124,11 @@
 	if \code{zeroscore} is specified as a non-\code{NULL} number in
 	the \code{\link{cgOneFactorData}} object in the \code{data}
 	argument, then a score value near zero was derived to replace all zeroes for subsequent
-	log-scale analyses. Alternatively, if \code{addconstant} is specified 
+	log-scale analyses. Alternatively, if \code{addconstant} is specified
 	as a non-\code{NULL} number in the
 	\code{\link{cgOneFactorData}} object in the \code{data}
 	argument, then a value was added to shift up all observations for subsequent
-	log-scale analyses. 
+	log-scale analyses.
       }
     }
 }
@@ -138,8 +138,8 @@
   Nonstandard Conditions",
   \emph{Proceedings of the Fifth Berkeley Symposium on Mathematical
     Statistics and Probability}, Volume 1, 221-233.
-  
-  Venables, W. N. and Ripley, B. D. (2002), 
+
+  Venables, W. N. and Ripley, B. D. (2002),
   \emph{Modern Applied Statistics with S.}  Fourth edition. Springer.
 }
 \author{
@@ -147,7 +147,7 @@
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,
-  concerns, and comments. 
+  concerns, and comments.
 }
 \examples{
 data(canine)
@@ -156,7 +156,7 @@ canine.data <- prepareCGOneFactorData(canine, format="groupcolumns",
                                       endptname="Prostate Volume",
                                       endptunits=expression(plain(cm)^3),
                                       digits=1, logscale=TRUE, refgrp="CC")
-									  
+
 canine.fit <- fit(data=canine.data, type="rr")
 
 

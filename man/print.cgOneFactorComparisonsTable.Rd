@@ -7,7 +7,7 @@
 }
 \description{
   Print a \code{cgOneFactorComparisonsTable} object, which contains a
-  table of comparisons based on the \code{cgOneFactorFit} 
+  table of comparisons based on the \code{cgOneFactorFit}
   object.
 }
 \usage{
@@ -21,39 +21,39 @@
   \item{digits }{
     The number of decimal places to use in the output.  If \code{NULL}, then
     the number of decimal places is taken from the \code{digits} value
-    in the \code{settings} slot of the\cr 
-    \code{\link{cgOneFactorComparisonsTable}} object. 
+    in the \code{settings} slot of the\cr
+    \code{\link{cgOneFactorComparisonsTable}} object.
   }
   \item{title }{
     The title printed out with the table.
     If \code{NULL}, it is set to be "Comparisons Table of"
-    the \code{analysisname} value from the \code{settings} slot of the 
+    the \code{analysisname} value from the \code{settings} slot of the
     \cr\code{\link{cgOneFactorComparisonsTable}} object.
   }
   \item{endptname }{
-    The endpoint name, printed out with the table. 
-    If \code{NULL}, it is set to 
-    the \code{endptname} value from the \code{settings} slot of the  
+    The endpoint name, printed out with the table.
+    If \code{NULL}, it is set to
+    the \code{endptname} value from the \code{settings} slot of the
     \code{\link{cgOneFactorComparisonsTable}} object.
   }
   \item{\dots }{
-    Additional arguments. Only one is currently valid: 
+    Additional arguments. Only one is currently valid:
     \describe{
       \item{\code{model}}{
 	  For \code{cgOneFactorComparisonsTable}
 	  objects that have tables derived from
 	  classical least squares \code{\link{lm}} or resistant & robust
-	\code{\link{rlm}} fits, the following argument values are possible:
-	
+	\code{\link[MASS]{rlm}} fits, the following argument values are possible:
+
 	\describe{
-	  
-	  \item{\code{"both"}}{Both the ordinary 
+
+	  \item{\code{"both"}}{Both the ordinary
 	    classical least squares and resistant robust comparisons
 	    tables are printed. This is the default when both fits are present in
 	    the \code{cgOneFactorComparisonsTable} object specified in the \code{x}
 	    argument.
 	  }
-	  \item{\code{"olsonly"}}{Only the ordinary 
+	  \item{\code{"olsonly"}}{Only the ordinary
 	    classical least squares group comparisons table is printed.
 	  }
 	  \item{\code{"rronly"}}{Only the resistant & robust
@@ -68,7 +68,7 @@
     argument is not relevant, and the single table will just be printed
     for these model types.
   }
-   
+
 }
 \details{
   The smallest actual p-value that will be printed is \code{0.001}. Anything
@@ -90,7 +90,7 @@
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,
-  concerns, and comments. 
+  concerns, and comments.
 }
 \examples{
 data(canine)

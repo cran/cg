@@ -6,8 +6,8 @@
   Print a One Factor Sample Size Table object with some format options
 }
 \description{
-  Print a \code{cgOneFactorSampleSizeTable} object, which contains a table of 
-  sample size estimates based on a \code{cgOneFactorFit} 
+  Print a \code{cgOneFactorSampleSizeTable} object, which contains a table of
+  sample size estimates based on a \code{cgOneFactorFit}
   object.
 }
 \usage{
@@ -16,7 +16,7 @@
 \arguments{
  \item{x}{
    A \code{cgOneFactorSampleSizeTable} object,
-   typically created by\cr 
+   typically created by\cr
    \code{\link{samplesizeTable.cgOneFactorFit}}.
  }
  \item{title}{
@@ -26,37 +26,37 @@
     \code{cgOneFactorSampleSizeTable} object.
   }
   \item{endptname}{
-    The endpoint name, printed out with the table. 
-    If \code{NULL}, it is set to 
-    the \code{endptname} value from the \code{settings} slot of the  
+    The endpoint name, printed out with the table.
+    If \code{NULL}, it is set to
+    the \code{endptname} value from the \code{settings} slot of the
     \code{cgOneFactorSampleSizeTable} object.
   }
   \item{\dots }{
-    Additional arguments. Currently one is valid: 
+    Additional arguments. Currently one is valid:
     \describe{
       \item{\code{model}}{
 	For \code{cgOneFactorComparisonsTable}
 	objects that have tables derived from
 	classical least squares \code{\link{lm}} or resistant & robust
-	\code{\link{rlm}} fits, the following argument values are possible:
+	\code{\link[MASS]{rlm}} fits, the following argument values are possible:
 
 	\describe{
-	  
-	  \item{\code{"both"}}{Both the ordinary 
+
+	  \item{\code{"both"}}{Both the ordinary
 	    classical least squares and resistant robust sample size
 	    tables are printed. This is the default when both fits are present in
 	    the \code{cgOneFactorSampleSizeTable} object specified in the \code{x}
 	    argument. If only one of the two tables were computed, then
 	    only that single table is printed.
 	  }
-	  \item{\code{"olsonly"}}{Only the ordinary 
+	  \item{\code{"olsonly"}}{Only the ordinary
 	    classical least squares group summary table is printed.
 	  }
 	  \item{\code{"rronly"}}{Only the resistant & robust
 	    group summary table is printed.
 	  }
 	}
-	
+
       }
 
     }
@@ -72,14 +72,14 @@
   \code{print.cgOneFactorSampleSizeTable} returns \code{\link{invisible}}.
   The main purpose is the side
   effect of printing to the current output connection, which is
-  typically the console. 
+  typically the console.
 }
 \author{
   Bill Pikounis [aut, cre, cph], John Oleynick [aut], Eva Ye [ctb]
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,
-  concerns, and comments. 
+  concerns, and comments.
 }
 \seealso{
   \code{\link{cgOneFactorSampleSizeTable}}

@@ -12,7 +12,7 @@
   settings
   in order to create a
   \code{cgOneFactorData} object. The created object is designed to have exploratory and
-  fit methods applied to it. 
+  fit methods applied to it.
 }
 \usage{
 prepareCGOneFactorData(dfr, format = "listed", analysisname = "",
@@ -123,7 +123,7 @@ prepareCGOneFactorData(dfr, format = "listed", analysisname = "",
       either the \code{listed} or \code{groupcolumns} formats for \code{dfr}.
 
       No interval-censored representations are currently handled when
-      \code{format="groupcolumns"}. 
+      \code{format="groupcolumns"}.
 
       If \code{format="groupcolumns"} for \code{dfr} is specified, then the
       number of columns must equal the number of groups, and any censored
@@ -137,7 +137,7 @@ prepareCGOneFactorData(dfr, format = "listed", analysisname = "",
 
       If \code{format="listed"} for \code{dfr} is specified, then there may be
       anywhere from two to four columns for an input data frame.
-      
+
       \describe{
 	\item{\bold{two columns}}{The first column has the group levels to define the
 	  factor, and the second column contains the response values. Censored
@@ -158,13 +158,13 @@ prepareCGOneFactorData(dfr, format = "listed", analysisname = "",
 	  levels to define the
 	  factor, and the second column contains the response values, which will
 	  all be coerced to numeric. Any censoring information must be specified
-	  in the third column. Borrowing the convention of \code{\link{Surv}}
+	  in the third column. Borrowing the convention of \code{\link[survival]{Surv}}
 	  from the \pkg{survival} package, \code{0}=right censored, \code{1}=no censoring, and
 	  \code{2}=left censored. If \code{rightcensor=NULL} and
 	  \code{leftcensor=NULL} are left as defaults in the call, and
 	  values of 0, 1, and 2 are all represented, then the
 	  processing will create a suitable data frame \code{dfru} for
-	  modeling that the canonical \code{\link{survreg}} function understands.
+	  modeling that the canonical \code{\link[survival]{survreg}} function understands.
 
 	  However, if 0 and 1 are the only specified values
 	  in the third censoring status column, then one of
@@ -180,7 +180,7 @@ prepareCGOneFactorData(dfr, format = "listed", analysisname = "",
 	  of left-censoring, right-censoring, and interval-censoring is
 	  permitted. The \code{rightcensor} and \code{leftcensor} input
 	  arguments are ignored and set to \code{NULL}. \bold{IMPORTANT:} The
-	  convention of \code{\link{Surv}}
+	  convention of \code{\link[survival]{Surv}}
 	  from the \pkg{survival} package, 0=right censored, 1=no censoring, and
 	  2=left censored, 3=interval censored, and
 	  \code{type="interval"},
@@ -189,16 +189,16 @@ prepareCGOneFactorData(dfr, format = "listed", analysisname = "",
 	  fourth column distinguishes the lower and upper bounds for the
 	  right-censored (0) and left-censored (2) cases.
 	  For status=3, the two values differ to
-	  define the interval boundaries. The 
+	  define the interval boundaries. The
 	  processing will create a suitable data frame \code{dfru} for
 	  modeling that the canonical \code{survreg} and \code{survfit}
 	  functions from the \pkg{survival} package understand.
 	}
       }
     }
-    
+
     \item{\bold{zeroscore}}{
-      If \code{zeroscore="estimate"} is specified, a number 
+      If \code{zeroscore="estimate"} is specified, a number
       close to zero is derived to replace all zeroes for subsequent
       log-scale analyses. A spline fit (using \code{\link{spline}} and
       \code{method="natural"})
@@ -209,22 +209,22 @@ prepareCGOneFactorData(dfr, format = "listed", analysisname = "",
       arithmetic-logarithmic scaling discussed in Tukey, Ciminera, and
       Heyse (1985).
     }
-    
+
     \item{\bold{addconstant}}{
-      If \code{addconstant="simple"} or  
+      If \code{addconstant="simple"} or
       \code{addconstant="VR"} is specified, a number is derived and added
       to all response values.
-      
+
       \describe{
-	\item{\code{"simple"}}{Taken from the "white" book on S (Chambers and Hastie, 1992), 
+	\item{\code{"simple"}}{Taken from the "white" book on S (Chambers and Hastie, 1992),
 	  page 68. The range (\code{max - min}) of the response values
 	  is multiplied by \code{0.0001} to derive the number to add to all the
 	  response values.
-	} 
-	\item{\code{"VR"}}{Based on the \code{\link{logtrans}} function discussed in Venables and Ripley 
+	}
+	\item{\code{"VR"}}{Based on the \code{\link[MASS]{logtrans}} function discussed in Venables and Ripley
 	  (2002), pages 171-172 and available in the \pkg{MASS}
 	  package. The algorithm applies a Box-Cox profile likelihood
-	  approach with a log scale translation model. 
+	  approach with a log scale translation model.
 	}
       }
     }
@@ -282,21 +282,21 @@ prepareCGOneFactorData(dfr, format = "listed", analysisname = "",
   Statistical Certainty of a Response to Increasing Doses of a
   Drug," \emph{Biometrics}, Volume 41, 295-301.
 
-  Chambers, J.M, and Hastie, T.R. (1992), 
+  Chambers, J.M, and Hastie, T.R. (1992),
   \emph{Statistical Modeling in S.}  Chapman & Hall/CRC.
 
-  Venables, W. N., and Ripley, B. D. (2002), 
+  Venables, W. N., and Ripley, B. D. (2002),
   \emph{Modern Applied Statistics with S.}  Fourth edition. Springer.
 }
 \author{
-  Bill Pikounis [aut, cre, cph], John Oleynick [aut], Eva Ye [ctb] 
+  Bill Pikounis [aut, cre, cph], John Oleynick [aut], Eva Ye [ctb]
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,
   concerns, and comments.
 }
 \seealso{
-  \code{\link{Surv}}, \code{\link{canine}},
+  \code{\link[survival]{Surv}}, \code{\link{canine}},
   \code{\link{gmcsfcens}},
   \code{\link{prepare}}
 }
