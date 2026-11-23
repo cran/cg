@@ -1,8 +1,7 @@
 ## Virtual Classes for cg package
 ## For Polymorphic slots
 
-setOldClass("lm")
-setOldClass("rlm")
+setOldClass(c("rlm","lm"))
 setOldClass("survreg")
 setOldClass("gls")
 

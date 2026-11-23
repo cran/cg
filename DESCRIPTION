@@ -1,6 +1,6 @@
 Package: cg
 Type: Package
-Version: 1.0-4
+Version: 1.0-5
 Title: Compare Groups, Analytically and Graphically
 Authors@R: c(person(given = "Bill",
                     family = "Pikounis",
@@ -19,11 +19,12 @@ LazyLoad: yes
 LazyData: true
 Depends: R (>= 3.2.3), Hmisc (>= 3.17-1)
 Imports: VGAM (>= 1.0-0), methods, graphics, stats, utils, grid, MASS,
-        lattice, survival, multcomp, nlme, rms
+        lattice, survival, multcomp, nlme
+Config/roxygen2/version: 8.1.1
 NeedsCompilation: no
-Packaged: 2025-04-13 15:25:24 UTC; bill
+Packaged: 2026-11-23 02:53:05 UTC; bill
 Author: Bill Pikounis [aut, cre, cph],
   John Oleynick [aut],
   Eva Ye [ctb]
 Repository: CRAN
-Date/Publication: 2025-04-13 16:00:11 UTC
+Date/Publication: 2026-11-23 04:20:02 UTC

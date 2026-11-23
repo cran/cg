@@ -1,6 +1,6 @@
-9fdb1ca9d39382150c081cb4ac1ebd5c *DESCRIPTION
-48c9581eb810b499315252dc7ffa1a34 *NAMESPACE
-042aa749023d8682e464cf157a2b15c1 *R/00virtual.R
+d3e354ff85b85558538a70e6446345e5 *DESCRIPTION
+d269720bc60bfd671322e1268895d60f *NAMESPACE
+8fdcfceac895c447d1cce2ef2a16ffc5 *R/00virtual.R
 68935a63889e1358bea67cb198f3a46b *R/generics.R
 b3dd858f190daf33525f5cd58386f698 *R/p00ReadInOneFactorData.R
 b466de2af86400ef95ea5a76bcbf90ca *R/p01FitOneFactorData.R
@@ -32,7 +32,7 @@ aaa1d2d94aa9d16d060cfd08f9a2e228 *data/gmcsfcens.listfmt2.tab.gz
 e21103cac26292cdbbe8d1c1251c7255 *data/gmcsfcens.rda
 7e264208e4d09ea2018556f88690e0b0 *data/gmcsfcens.tab.gz
 86267222bf2c50f48a46855297dc8523 *inst/CITATION
-f36fb52640bb21e46d20de520737eba4 *inst/NEWS
+30a1e052ed42554f79256c6c17b23090 *inst/NEWS
 2938c9eee853ee00b366ee759ecf5f4c *man/anorexiaFT.Rd
 2a17024f3e980aa9764de7f510fed560 *man/boxplot.cgOneFactorData.Rd
 9f351321c4f90899aecd1a6444d32a03 *man/canine.Rd
@@ -55,8 +55,8 @@ a54315dedbf9e1f928c2fceb4bcddba6 *man/correlationTable.cgPairedDifferenceData.Rd
 aa916519af6819e0e34a7c922c32a9d4 *man/descriptiveTable.Rd
 0748f85dcc528d561c781dd4da6344dd *man/descriptiveTable.cgOneFactorData.Rd
 31792ab2a79bc778886f8db58f8a9fbe *man/descriptiveTable.cgPairedDifferenceData.Rd
-39028aa92f083e5df74f0ad4c0b10e65 *man/diffGraph.Rd
-7cc73981776c8d1da25704399405f1cc *man/diffGraph.cgPairedDifferenceData.Rd
+c5feaf8afb09a7193d73a351a93a256d *man/diffGraph.Rd
+eef9438f7c04f322cff1a319977e7ccc *man/diffGraph.cgPairedDifferenceData.Rd
 28793845dbe339634f04a3f2cc4ac464 *man/downweightedTable.Rd
 40f9f68490066b0901c6a3ceeb5100e8 *man/downweightedTable.cgOneFactorFit.Rd
 c39d7f7f0b6f07f40bd057250a0d3ef8 *man/downweightedTable.cgPairedDifferenceFit.Rd
@@ -93,8 +93,8 @@ acde050770878670c480204cad58d55e *man/print.cgOneFactorGrpSummaryTable.Rd
 70b4d5aa496ad6fac7e436fbae7cfe76 *man/print.cgPairedDifferenceFit.Rd
 de41294fb08f315d0a0d709b30897268 *man/print.cgPairedDifferenceSampleSizeTable.Rd
 76863cfa3376309f7e60cddf3e826a75 *man/print.cgPairedDifferenceVarianceTable.Rd
-91d75f3ef1da4ca071b575b6be84b4a0 *man/profileGraph.Rd
-04e5b6f3b3f13b9fa271288cbaa852d0 *man/profileGraph.cgPairedDifferenceData.Rd
+507e2c500d8ffacc9254dde8bc1c3e82 *man/profileGraph.Rd
+576a35aebdc223139a2097ff6ce46cf1 *man/profileGraph.cgPairedDifferenceData.Rd
 7f250dfcdc250ddc83201a9c8376ddc1 *man/qqGraph.Rd
 465144abbb2659251ebaeb32f9cef3d5 *man/qqGraph.cgOneFactorFit.Rd
 8ee2e3fc23249e8938d8695ce91f44c7 *man/qqGraph.cgPairedDifferenceFit.Rd

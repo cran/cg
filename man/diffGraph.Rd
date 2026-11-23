@@ -7,7 +7,7 @@
 \description{
   Generic function to create a graph of differences
   from a data object created by the \pkg{cg}
-  package.  
+  package.
 }
 \usage{
 diffGraph(data, \dots)
@@ -18,7 +18,7 @@ diffGraph(data, \dots)
     or method from the \pkg{cg}
     package. The only class of object currently
     valid is \code{\link{cgPairedDifferenceData}}, which is created by the
-    \code{\link{prepareCGPairedDifferenceData}} function.  
+    \code{\link{prepareCGPairedDifferenceData}} function.
   }
  \item{\dots }{
     Additional arguments, depending on the specific method written for
@@ -30,7 +30,7 @@ diffGraph(data, \dots)
 \details{
   Minimum and maximum values from ranges of data are
   respectively labeled in the bottom and top left corners of graph regions.
-  
+
   Tick marks are attempted to be chosen wisely. For log-scaled axes in
   particular, leading digits of 2, 5, and 10 for values are included if
   possible. Since the algorithm is empirical, the \code{ticklabels}
@@ -47,21 +47,21 @@ diffGraph(data, \dots)
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,
-  concerns, and comments. 
+  concerns, and comments.
 }
 \seealso{
   \code{\link{diffGraph.cgPairedDifferenceData}}
 }
 
 \examples{
-data(anorexia.FT)
+data(anorexiaFT)
 anorexiaFT.data <- prepareCGPairedDifferenceData(anorexiaFT, format="groupcolumns",
                                                  analysisname="Anorexia FT",
                                                  endptname="Weight",
                                                  endptunits="lbs",
                                                  expunitname="Patient",
                                                  digits=1, logscale=TRUE)
-diffGraph(anorexiaFT.data) 
+diffGraph(anorexiaFT.data)
 
 # Graph the data on the original scale instead of the log scale.
 diffGraph(anorexiaFT.data, logscale=FALSE)

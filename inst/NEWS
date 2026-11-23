@@ -1,25 +1,30 @@
+22 November 2026: Version 1.0-5
+===========================
+* Addressed CRAN check warning of "Warning: replacing previous import ‘survival::cluster’ by ‘rms::cluster’ when loading ‘cg’",
+by removing the rms package as an import.
+
 12 April 2025: Version 1.0-4
 ===========================
 * Addressed long standing CRAN check notes, and updated to proper syntax, per request from CRAN team, to properly anchor .Rd file links to imported package functions. There are no functionality changes in this release.
 
 04 January 2016: Version 1.0-3
 ===========================
-* Addressed notes arising in building process, in order to follow CRAN and R-core and R-extensions guidelines and standards for packages, 
-such as export and import directives in the NAMESPACE file and Title in the DESCRIPTION file. 
+* Addressed notes arising in building process, in order to follow CRAN and R-core and R-extensions guidelines and standards for packages,
+such as export and import directives in the NAMESPACE file and Title in the DESCRIPTION file.
 
 31 December 2014: Version 1.0-2
 ===========================
 * Fixed missing requirements of digits argument in the comparisonsGraph method for OneFactor and PairedDifference
-objects. The main error appeared when graphing the min and max digits range of "differences". 
-This discovery happened when data was fit and analyzed in its original scale. 
-The default logarithmic scale case was unaffected since the min and max "percent/ratio difference" numbers does not 
-need the missing digits= argument. 
+objects. The main error appeared when graphing the min and max digits range of "differences".
+This discovery happened when data was fit and analyzed in its original scale.
+The default logarithmic scale case was unaffected since the min and max "percent/ratio difference" numbers does not
+need the missing digits= argument.
 
 * Fixed an oversight to check that if the refgrp= argument is used in a comparisonsTable call for a OneFactorFit
 object, then the type= argument needs to be also set to "allgroupstocontrol."  Thanks again to Vince Pileggi for
 reporting these bugs.
 
-* Corrected placement of warning message in samplesizeGraph() calls when the calculated sample sizes are greater than a specified threshold (default 1000). This placement is based on the largest.empty() function in Frank Harrell's Hmisc package. 
+* Corrected placement of warning message in samplesizeGraph() calls when the calculated sample sizes are greater than a specified threshold (default 1000). This placement is based on the largest.empty() function in Frank Harrell's Hmisc package.
 
 13 July 2014: Version 1.0-1
 ===========================
@@ -34,18 +39,18 @@ reporting these bugs.
 * deprecated an internal, non-exported function validDataFormat(); replaced by validArgMatch()
 
 * Reformatted this file to conform to R special requirements. Thanks go to Hadley Wickam and his
-  http://adv-r.had.co.nz/Documenting-packages.html link to clarify that for me. 
+  http://adv-r.had.co.nz/Documenting-packages.html link to clarify that for me.
 
 14 February 2014: Version 1.0-0
 ===============================
 
-* Added paired samples methods and functions, with a base label "PairedDifference".  
+* Added paired samples methods and functions, with a base label "PairedDifference".
 
-* Removed specific arguments in these generics: comparisonsTable, samplesizeTable, 
-  and samplesizeGraph. The arguments included: mcadjust, contrastmatrix, device, and refgrp. 
+* Removed specific arguments in these generics: comparisonsTable, samplesizeTable,
+  and samplesizeGraph. The arguments included: mcadjust, contrastmatrix, device, and refgrp.
   All of these have no meaning for the PairedDifference methods, so to use the same
   generics as used for the OneFactor methods, these are now callable through the dots
-  arguments. 
+  arguments.
 
 * Revised Depends and Imports configurations to align with CRAN checks.
 
@@ -55,7 +60,7 @@ reporting these bugs.
 ==============================
 
 * Refined use of the Hmisc::largest.empty function to avoid warning of
-  "Foreign function call with �PACKAGE� argument in a different package"
+  "Foreign function call with ?PACKAGE? argument in a different package"
 
 * Added CITATION file since a Journal of Statistical Software article on
   the manuscript is due to soon be published in 2013.
@@ -97,7 +102,7 @@ reporting these bugs.
   this bug.
 
 * For output from the comparisonsTable method, the label "geomean" is used in place
-  for "mean" to make clear that geometric means are displayed. Thanks to JSS anonymous 
+  for "mean" to make clear that geometric means are displayed. Thanks to JSS anonymous
   reviewer for remarks that led to the decision of this label change.
 
 * Added simple print and summary methods for the cgOneFactorFit object, again thanks
@@ -106,8 +111,8 @@ reporting these bugs.
 26 June 2011: Version 0.9-1
 ===========================
 
-* Changed calls of VGAM:::cnormal1 to VGAM:::cennormal1 due to rename in 
-  VGAM package when version 0.8-3 was released 17 June 2011. 
+* Changed calls of VGAM:::cnormal1 to VGAM:::cennormal1 due to rename in
+  VGAM package when version 0.8-3 was released 17 June 2011.
 
 * Since VGAM 0-8.3 would not load in R 2.11 in my Windows installation, the cg package
   now requires >= R 2.12.0 and VGAM >= 0.8-3.
@@ -120,4 +125,4 @@ reporting these bugs.
 
 * No functional changes were made in the package in this release.
 
-* Added this CHANGES file. 
+* Added this CHANGES file.

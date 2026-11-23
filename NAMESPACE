@@ -19,7 +19,6 @@ import("multcomp")
 import("nlme")
 import("survival")
 import("Hmisc")
-import("rms")
 
 
 export("prepare", "prepareCGOneFactorData",

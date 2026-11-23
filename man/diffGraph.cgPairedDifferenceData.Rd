@@ -13,10 +13,10 @@
 }
 \arguments{
   \item{data }{
-    A \code{\link{cgPairedDifferenceData}} object. 
+    A \code{\link{cgPairedDifferenceData}} object.
   }
  \item{\dots }{
-Additional arguments, both \emph{optional}. Two are currently valid: 
+Additional arguments, both \emph{optional}. Two are currently valid:
     \describe{
       \item{\code{logscale}}{
 	A \code{logical} value, indicating whether or not the
@@ -37,7 +37,7 @@ Additional arguments, both \emph{optional}. Two are currently valid:
 		\code{marks} component below.
 	      }
 	      \item{\code{"add"}}{Before graphing the data, add
-		tickmarks specified in the 
+		tickmarks specified in the
 		\code{marks} component below, to the automatically
 		generated ones.
 	      }
@@ -65,12 +65,12 @@ Additional arguments, both \emph{optional}. Two are currently valid:
   are used to alleviate potential overlap and the danger of representing
   multiple points as a single point.
 
-  In the right hand section, a boxplot is added, similar to to that produced by 
+  In the right hand section, a boxplot is added, similar to to that produced by
   \pkg{graphics}::\code{\link{boxplot.default}},
   but with the median shown as a "+" and the mean shown as a "o".  A
-  warning on the lack of usefulness of a boxplot is added to the graph if there are 
+  warning on the lack of usefulness of a boxplot is added to the graph if there are
   have 5 or fewer paired differences.
- 
+
   Tick marks are attempted to be chosen wisely. For log-scaled axes in
   particular, leading digits of 2, 5, and 10 for values are included if
   possible. Since the algorithm is empirical, the \code{ticklabels}
@@ -83,13 +83,13 @@ Additional arguments, both \emph{optional}. Two are currently valid:
   setting from the
   \code{\link{cgPairedDifferenceData}}
   object.
-  
-  The label for the y-axis also includes the \code{B vs. A} 
+
+  The label for the y-axis also includes the \code{B vs. A}
   character description of the comparison. If \code{logscale=TRUE},
   precent differences represent the tickmarks on the log-spaced scale,
   since the differences in the log scale correspond to ratios in the
   original scale, e.g. \code{B / A}. Also included in the y-axis label
-  is a character string derived from the \code{endptname} 
+  is a character string derived from the \code{endptname}
   and \code{endptunits} settings in the \code{\link{cgPairedDifferenceData}}
   object. Percent differences make up the left-hand y-axis, and the
   corresponding Ratios make the right-hand left axis.
@@ -101,28 +101,28 @@ Additional arguments, both \emph{optional}. Two are currently valid:
 \value{
   \code{diffGraph.cgPairedDifferenceData} returns
   an invisible \code{NULL}. The main purpose is the side
-  effect of graphing to the current device. 
+  effect of graphing to the current device.
 }
 \author{
   Bill Pikounis [aut, cre, cph], John Oleynick [aut], Eva Ye [ctb]
 }
 \note{
   Contact \email{cg@billpikounis.net} for bug reports, questions,
-  concerns, and comments. 
+  concerns, and comments.
 }
 \seealso{
   \code{\link{diffGraph.cgPairedDifferenceData}}
 }
 
 \examples{
-data(anorexia.FT)
+data(anorexiaFT)
 anorexiaFT.data <- prepareCGPairedDifferenceData(anorexiaFT, format="groupcolumns",
                                                  analysisname="Anorexia FT",
                                                  endptname="Weight",
                                                  endptunits="lbs",
                                                  expunitname="Patient",
                                                  digits=1, logscale=TRUE)
-diffGraph(anorexiaFT.data) 
+diffGraph(anorexiaFT.data)
 
 ## Graph the data on the original scale instead of the log scale.
 diffGraph(anorexiaFT.data, logscale=FALSE)
